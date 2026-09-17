@@ -1,0 +1,69 @@
+<template>
+    <lightning-card>
+
+        <!-- HEADER -->
+        <div class="header slds-p-around_medium slds-border_bottom">
+            <lightning-icon icon-name="utility:event" size="small" class="slds-m-right_small"></lightning-icon>
+            <span class="header-title">Event Billing Job</span>
+        </div>
+
+        <!-- BODY -->
+        <div class="slds-p-around_medium">
+
+            <!-- STATUS + JOB ID ROW -->
+            <div class="slds-grid slds-wrap slds-m-bottom_medium">
+
+                <!-- STATUS -->
+                <div class="slds-col slds-size_1-of-2">
+                    <p class="label">STATUS</p>
+                    <span class={statusPillClass}>
+                        <lightning-icon 
+                            icon-name="utility:success"
+                            size="x-small"
+                            class="slds-m-right_x-small">
+                        </lightning-icon>
+                        {status}
+                    </span>
+                </div>
+
+                <!-- JOB ID -->
+                <div class="slds-col slds-size_1-of-2">
+                    <p class="label">JOB ID</p>
+                    <p class="value">{jobId}</p>
+                </div>
+
+            </div>
+
+            <!-- LAST RUN -->
+            <div class="slds-m-bottom_medium">
+                <p class="label">LAST RUN</p>
+                <p class="value">{lastRunTime}</p>
+            </div>
+
+            <!-- SPINNER -->
+            <template if:true={isRunning}>
+                <lightning-spinner size="small"></lightning-spinner>
+            </template>
+
+            <!-- BUTTONS -->
+            <!-- ✅ No date inputs here — dates come from EventPendingBillingList via @api -->
+            <div class="slds-m-top_medium">
+                <lightning-button 
+                    label="Run Billing Job"
+                    variant="brand"
+                    onclick={handleRun}
+                    disabled={isRunning}>
+                </lightning-button>
+
+                <lightning-button 
+                    label="Refresh Status"
+                    onclick={handleManualRefresh}
+                    class="slds-m-left_small"
+                    variant="neutral">
+                </lightning-button>
+            </div>
+
+        </div>
+
+    </lightning-card>
+</template>

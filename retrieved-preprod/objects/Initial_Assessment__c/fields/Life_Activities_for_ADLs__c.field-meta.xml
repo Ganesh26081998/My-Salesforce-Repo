@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Life_Activities_for_ADLs__c</fullName>
+    <label>Life Activities</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Ambulation &amp; Transfer</fullName>
+                <default>false</default>
+                <label>Ambulation &amp; Transfer</label>
+            </value>
+            <value>
+                <fullName>Bathing</fullName>
+                <default>false</default>
+                <label>Bathing</label>
+            </value>
+            <value>
+                <fullName>Continence</fullName>
+                <default>false</default>
+                <label>Continence</label>
+            </value>
+            <value>
+                <fullName>Dressing &amp; Grooming</fullName>
+                <default>false</default>
+                <label>Dressing &amp; Grooming</label>
+            </value>
+            <value>
+                <fullName>Eating</fullName>
+                <default>false</default>
+                <label>Eating</label>
+            </value>
+            <value>
+                <fullName>Toileting</fullName>
+                <default>false</default>
+                <label>Toileting</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

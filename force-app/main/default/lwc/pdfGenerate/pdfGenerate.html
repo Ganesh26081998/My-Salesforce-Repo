@@ -1,0 +1,95 @@
+<template>
+
+    <!-- Modal for Multiple Related Patients -->
+    <template if:true={showModal}>
+        <section role="dialog" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+
+                <!-- Header -->
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">
+                        Select Family Members for Household Invoice
+                    </h2>
+                </header>
+
+                <!-- Body -->
+                <div class="slds-modal__content slds-p-around_medium">
+
+                    <!-- Select All -->
+                    <lightning-input
+                        type="checkbox"
+                        label="Select All"
+                        checked={selectAll}
+                        onchange={handleSelectAll}>
+                    </lightning-input>
+
+                    <!-- Related Patients -->
+                    <template for:each={relatedPatients} for:item="patient">
+                        <div key={patient.accountId} class="slds-grid slds-m-top_small">
+
+                            <div >
+                                <lightning-input
+                                    type="checkbox"
+                                    variant="label-hidden"
+                                    data-id={patient.accountId}
+                                    checked={patient.selected}
+                                    onchange={handleCheckboxChange}>
+                                </lightning-input>
+                            </div>
+                                <div>
+
+                                    <!-- Bold Name -->
+                                    <span class="slds-text-heading_small slds-text-title_bold">
+                                        {patient.name}
+                                    </span>
+
+                                    <!-- Role -->
+                                    <template if:true={patient.roleName}>
+                                        <span class="slds-text-color_weak slds-m-left_x-small">
+                                            – {patient.roleName}
+                                        </span>
+                                    </template>
+
+                                </div>
+
+                            
+
+                        </div>
+                    </template>
+                    <!-- <template for:each={relatedPatients} for:item="patient">
+                        <div key={patient.accountId} class="slds-m-top_small">
+                            <lightning-input
+                                type="checkbox"
+                                label={patient.name}
+                                data-id={patient.accountId}
+                                checked={patient.selected}
+                                onchange={handleCheckboxChange}>
+                            </lightning-input>
+                        </div>
+                    </template> -->
+
+                </div>
+
+                <!-- Footer -->
+                <footer class="slds-modal__footer slds-text-align_right">
+                    <lightning-button
+                        label="Cancel"
+                        class="slds-m-right_small"
+                        onclick={handleCancel}>
+                    </lightning-button>
+                    
+                        <lightning-button
+                            variant="brand"
+                            label="Generate Household Invoice"
+                            disabled={isGenerateDisabled}
+                            onclick={handleGenerateClick}>
+                        </lightning-button>                    
+                </footer>
+
+            </div>
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+</template>

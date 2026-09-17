@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Symptoms__c</fullName>
+    <label>Symptoms</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Frequent Mood Changes</fullName>
+                <default>false</default>
+                <label>Frequent Mood Changes</label>
+            </value>
+            <value>
+                <fullName>Hallucinations</fullName>
+                <default>false</default>
+                <label>Hallucinations</label>
+            </value>
+            <value>
+                <fullName>Problem Solving</fullName>
+                <default>false</default>
+                <label>Problem Solving</label>
+            </value>
+            <value>
+                <fullName>Short Term Memory Loss</fullName>
+                <default>false</default>
+                <label>Short Term Memory Loss</label>
+            </value>
+            <value>
+                <fullName>Completing Tasks</fullName>
+                <default>false</default>
+                <label>Completing Tasks</label>
+            </value>
+            <value>
+                <fullName>Sundowning</fullName>
+                <default>false</default>
+                <label>Sundowning</label>
+            </value>
+            <value>
+                <fullName>Spatial/Visual Relationships</fullName>
+                <default>false</default>
+                <label>Spatial/Visual Relationships</label>
+            </value>
+            <value>
+                <fullName>Misplacing Items</fullName>
+                <default>false</default>
+                <label>Misplacing Items</label>
+            </value>
+            <value>
+                <fullName>Poor Eating</fullName>
+                <default>false</default>
+                <label>Poor Eating</label>
+            </value>
+            <value>
+                <fullName>Speaking/Conversing</fullName>
+                <default>false</default>
+                <label>Speaking/Conversing</label>
+            </value>
+            <value>
+                <fullName>Poor Judgment</fullName>
+                <default>false</default>
+                <label>Poor Judgment</label>
+            </value>
+            <value>
+                <fullName>Sleeping Problems</fullName>
+                <default>false</default>
+                <label>Sleeping Problems</label>
+            </value>
+            <value>
+                <fullName>Anxiety</fullName>
+                <default>false</default>
+                <label>Anxiety</label>
+            </value>
+            <value>
+                <fullName>Agitation</fullName>
+                <default>false</default>
+                <label>Agitation</label>
+            </value>
+            <value>
+                <fullName>Fear</fullName>
+                <default>false</default>
+                <label>Fear</label>
+            </value>
+            <value>
+                <fullName>Paranoia</fullName>
+                <default>false</default>
+                <label>Paranoia</label>
+            </value>
+            <value>
+                <fullName>Suspicion</fullName>
+                <default>false</default>
+                <label>Suspicion</label>
+            </value>
+            <value>
+                <fullName>Aggression</fullName>
+                <default>false</default>
+                <label>Aggression</label>
+            </value>
+            <value>
+                <fullName>Confusion of Time/Place</fullName>
+                <default>false</default>
+                <label>Confusion of Time/Place</label>
+            </value>
+            <value>
+                <fullName>Withdrawal</fullName>
+                <default>false</default>
+                <label>Withdrawal</label>
+            </value>
+            <value>
+                <fullName>Depression</fullName>
+                <default>false</default>
+                <label>Depression</label>
+            </value>
+            <value>
+                <fullName>Repetition</fullName>
+                <default>false</default>
+                <label>Repetition</label>
+            </value>
+            <value>
+                <fullName>Wandering</fullName>
+                <default>false</default>
+                <label>Wandering</label>
+            </value>
+            <value>
+                <fullName>Oriented</fullName>
+                <default>false</default>
+                <label>Oriented</label>
+            </value>
+            <value>
+                <fullName>Comatose</fullName>
+                <default>false</default>
+                <label>Comatose</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

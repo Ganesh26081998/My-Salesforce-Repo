@@ -1,0 +1,30 @@
+<template>    
+    <div class="container">
+        <div class="header">Status:</div>
+        <template for:each={stages} for:item="stage">
+            <div key={stage.label} class="row">
+                
+                <div class="slds-checkbox">
+                    <input
+                        type="checkbox"
+                        checked={stage.completed}
+                        disabled
+                        id={stage.id}
+                        name={stage.id}
+                    />
+                    <label class="slds-checkbox__label" for={stage.id}>
+                        <span class="slds-checkbox_faux"></span>
+                        <span class={stage.textClass}>{stage.label}</span>
+                    </label>
+                </div>
+                
+                <template if:true={stage.date}>
+                    <span class="date">
+                        <span>{stage.date}</span>
+                    </span>
+                </template>
+
+            </div>
+        </template>
+    </div>
+</template>

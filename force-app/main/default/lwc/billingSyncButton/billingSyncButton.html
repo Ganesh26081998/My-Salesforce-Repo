@@ -1,0 +1,68 @@
+<template>
+
+    <lightning-card title="QuickBooks Sync" icon-name="standard:account">
+
+        <div class="slds-p-around_medium">
+
+            <!-- 👇 🚨 NEW: If Already Synced 🚨 👇 -->
+            <template if:true={isAlreadySynced}>
+                <div class="slds-text-align_center slds-text-color_success">
+                    <lightning-icon icon-name="utility:success"
+                                    alternative-text="Synced"
+                                    size="small">
+                    </lightning-icon>
+
+                    <p class="slds-m-top_small">
+                        This billing record is already synced with QuickBooks.
+                    </p>
+                </div>
+            </template>
+            <!-- 👆 🚨 -------------------------------- 🚨 👆 -->
+
+            <!-- 👇 🚨 NEW: If Not Synced 🚨 👇 -->
+            <template if:false={isAlreadySynced}>
+
+                <!-- Loading Spinner While Syncing -->
+                <template if:true={isSyncing}>
+                    <div class="slds-text-align_center">
+                        <lightning-spinner alternative-text="Syncing..." size="small"></lightning-spinner>
+                        <p class="slds-m-top_medium">Syncing to QuickBooks...</p>
+                    </div>
+                </template>
+                
+                <!-- Sync Button (When Not Syncing) -->
+                <template if:false={isSyncing}>
+                    <button class="slds-button slds-button_brand slds-button_stretch" onclick={handleSync}>
+                        <lightning-icon icon-name="utility:sync" class="slds-button__icon_left"></lightning-icon>
+                        Sync to QuickBooks
+                    </button>
+                </template>
+
+            </template>
+            <!-- 👆 🚨 -------------------------------- 🚨 👆 -->
+            
+            <!-- Success Message -->
+            <template if:true={showSuccess}>
+                <lightning-alert
+                    variant="success"
+                    title="Success! ✓"
+                    message={successMessage}
+                    class="slds-m-top_medium">
+                </lightning-alert>
+            </template>
+            
+            <!-- Error Message -->
+            <template if:true={showError}>
+                <lightning-alert
+                    variant="error"
+                    title="Sync Failed ✗"
+                    message={errorMessage}
+                    class="slds-m-top_medium">
+                </lightning-alert>
+            </template>
+
+        </div>
+
+    </lightning-card>
+
+</template>

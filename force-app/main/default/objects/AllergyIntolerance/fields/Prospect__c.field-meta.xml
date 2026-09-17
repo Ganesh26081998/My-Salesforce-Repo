@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prospect__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <label>Prospect</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Allergy Intolerances</relationshipLabel>
+    <relationshipName>Allergy_Intolerances</relationshipName>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

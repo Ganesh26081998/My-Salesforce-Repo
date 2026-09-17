@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Plan_Adjustment__c</fullName>
+    <label>Plan Adjustment</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Continue current interventions</fullName>
+                <default>false</default>
+                <label>Continue current interventions</label>
+            </value>
+            <value>
+                <fullName>Modify frequency or intensity</fullName>
+                <default>false</default>
+                <label>Modify frequency or intensity</label>
+            </value>
+            <value>
+                <fullName>Add new intervention</fullName>
+                <default>false</default>
+                <label>Add new intervention</label>
+            </value>
+            <value>
+                <fullName>Add new goal</fullName>
+                <default>false</default>
+                <label>Add new goal</label>
+            </value>
+            <value>
+                <fullName>Escalate level of care</fullName>
+                <default>false</default>
+                <label>Escalate level of care</label>
+            </value>
+            <value>
+                <fullName>Close goal</fullName>
+                <default>false</default>
+                <label>Close goal</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

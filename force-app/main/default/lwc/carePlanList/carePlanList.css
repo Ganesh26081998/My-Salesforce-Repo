@@ -1,0 +1,72 @@
+.view-all-container {
+    text-align: center;
+    padding-top: 8px;
+}
+.edit-modal{
+    max-width: 65rem;
+    width: 100%;
+}
+.slds-modal__container{
+    max-width: 65rem;
+    width: 100%;
+}
+
+.manage-style {
+    --slds-c-button-border-radius: 24px;
+    border-radius: 24px;
+   
+    color: #0070d2;
+    background: white;
+    padding: 0.375rem -0.1rem;
+    
+    font-weight: 600;
+    box-shadow: none;
+}
+/* .manage-style:hover {
+    background: #f0f7ff;
+} */
+.slds-text-heading_small{
+    font-weight: 600;
+    color:black;
+    
+}
+
+/* ensure button aligns visually with header */
+
+.empty-state-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: #000000;
+}
+.slds-modal__footer{
+    gap: 10px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px;
+}
+.slds-text-heading_medium{
+    font-weight: 600;
+    color:black;
+}
+.slds-modal__content{
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+} 
+.slds-m-around_medium.slds-grid.slds-grid_align-spread.slds-align-middle{
+    display: flex;
+    align-items: center;
+    margin-top: -10px;
+}
+/* .destructive-btn .slds-button_destructive{
+    background-color: #066afe !important;
+    border: none !important;
+} */
+ .destructive-btn{
+    --slds-c-button-brand-color-background: #066afe;
+    border:none;
+ }
+ .careplan-table{
+     --slds-s-table-header-color:#000000;
+ }

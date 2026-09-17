@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dressing__c</fullName>
+    <label>Dressing</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Dresses Self</fullName>
+                <default>false</default>
+                <label>Dresses Self</label>
+            </value>
+            <value>
+                <fullName>Light Assistance</fullName>
+                <default>false</default>
+                <label>Light Assistance</label>
+            </value>
+            <value>
+                <fullName>Heavy Assistance</fullName>
+                <default>false</default>
+                <label>Heavy Assistance</label>
+            </value>
+            <value>
+                <fullName>Total Assistance</fullName>
+                <default>false</default>
+                <label>Total Assistance</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

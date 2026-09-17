@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>CM Standard</fullName>
+        <default>false</default>
+        <label>CM Standard</label>
+    </customValue>
+    <customValue>
+        <fullName>CM Evening / Weekend</fullName>
+        <default>false</default>
+        <label>CM Evening / Weekend</label>
+    </customValue>
+    <customValue>
+        <fullName>CM Holiday</fullName>
+        <default>false</default>
+        <label>CM Holiday</label>
+    </customValue>
+    <customValue>
+        <fullName>Admin</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Admin</label>
+    </customValue>
+    <masterLabel>Type of Rate</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

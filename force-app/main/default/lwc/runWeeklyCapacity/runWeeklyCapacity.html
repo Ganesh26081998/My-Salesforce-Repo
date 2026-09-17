@@ -1,0 +1,16 @@
+<template>
+    <lightning-card>
+        <div class="slds-p-around_medium">
+            <lightning-button 
+                label="Run Weekly Capacity"
+                variant="brand"
+                onclick={handleRunBatch}
+                disabled={isLoading}>
+            </lightning-button>
+
+            <template if:true={isLoading}>
+                <lightning-spinner size="medium"></lightning-spinner>
+            </template>
+        </div>
+    </lightning-card>
+</template>

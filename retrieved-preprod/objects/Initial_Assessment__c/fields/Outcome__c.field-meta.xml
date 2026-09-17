@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Outcome__c</fullName>
+    <label>Outcome</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Proceed as Active Client</fullName>
+                <default>false</default>
+                <label>Proceed as Active Client</label>
+            </value>
+            <value>
+                <fullName>Remain as Prospect</fullName>
+                <default>false</default>
+                <label>Remain as Prospect</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

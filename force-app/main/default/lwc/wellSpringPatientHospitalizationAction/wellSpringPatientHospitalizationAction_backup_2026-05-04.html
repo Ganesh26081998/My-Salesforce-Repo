@@ -1,0 +1,82 @@
+<template>
+    <div>
+
+        <lightning-record-edit-form
+            object-api-name="Hospitalization__c"
+            onsubmit={preventNativeSubmit}>
+
+            <div class="slds-p-around_medium">
+                <div class="slds-grid slds-gutters slds-wrap">
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class={statusClass}>
+                            <lightning-input-field field-name="Hospitalization_Status__c" onchange={handleStatusChange}></lightning-input-field>
+                            <template lwc:if={errStatus}><p class="errtext">{errStatus}</p></template>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input label={labels.client} value={clientName} disabled></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class={admTypeClass}>
+                            <lightning-input-field field-name="Admission_Type__c" onchange={handleAdmissionTypeChange}></lightning-input-field>
+                            <template lwc:if={errAdmissionType}><p class="errtext">{errAdmissionType}</p></template>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class={admDateClass}>
+                            <lightning-input-field field-name="Admission_Date__c" value={admissionDate} required disabled={isAdmissionDateDisabled} onchange={handleAdmissionDateChange}></lightning-input-field>
+                            <template lwc:if={errAdmissionDate}><p class="errtext">{errAdmissionDate}</p></template>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class={hospitalNameClass}>
+                            <lightning-input-field field-name="Hospital_Name__c" onchange={handleHospitalNameChange}></lightning-input-field>
+                            <template lwc:if={errHospitalName}><p class="errtext">{errHospitalName}</p></template>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class={primaryDiagClass}>
+                            <lightning-input-field field-name="Primary_diagnosis__c" onchange={handlePrimaryDiagChange}></lightning-input-field>
+                            <template lwc:if={errPrimaryDiag}><p class="errtext">{errPrimaryDiag}</p></template>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class={dischDateClass}>
+                            <lightning-input-field field-name="Discharge_Date__c" disabled={isDischargeDateDisabled} onchange={handleDischargeDateChange}></lightning-input-field>
+                            <template lwc:if={errDischargeDate}><p class="errtext">{errDischargeDate}</p></template>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class={roleClass}>
+                            <lightning-input-field field-name="Role_during_hospitalization__c" value={roleValue} onchange={handleRoleChange}></lightning-input-field>
+                            <template lwc:if={errRole}><p class="errtext">{errRole}</p></template>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1">
+                        <div class={reasonClass}>
+                            <lightning-input-field field-name="Reason_for_admission__c" onchange={handleReasonChange}></lightning-input-field>
+                            <template lwc:if={errReason}><p class="errtextNote">{errReason}</p></template>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </lightning-record-edit-form>
+
+        <footer class="slds-modal__footer">
+            <button type="button" class="slds-button slds-button_neutral" onclick={handleCancel}>{labels.cancel}</button>
+            <button type="button" class="slds-button slds-button_brand" onclick={handleSave} disabled={isSaving}>{labels.save}</button>
+        </footer>
+
+    </div>
+</template>

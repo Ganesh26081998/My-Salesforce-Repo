@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Activities_Permitted__c</fullName>
+    <label>Activities Permitted</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Complete Bedrest</fullName>
+                <default>false</default>
+                <label>Complete Bedrest</label>
+            </value>
+            <value>
+                <fullName>Bedrest BRP</fullName>
+                <default>false</default>
+                <label>Bedrest BRP</label>
+            </value>
+            <value>
+                <fullName>Up as Tolerated</fullName>
+                <default>false</default>
+                <label>Up as Tolerated</label>
+            </value>
+            <value>
+                <fullName>Transfer Bed/Chair</fullName>
+                <default>false</default>
+                <label>Transfer Bed/Chair</label>
+            </value>
+            <value>
+                <fullName>Exercises Prescribed</fullName>
+                <default>false</default>
+                <label>Exercises Prescribed</label>
+            </value>
+            <value>
+                <fullName>Partial Weight Bearing</fullName>
+                <default>false</default>
+                <label>Partial Weight Bearing</label>
+            </value>
+            <value>
+                <fullName>Independent at Home</fullName>
+                <default>false</default>
+                <label>Independent at Home</label>
+            </value>
+            <value>
+                <fullName>Crutches</fullName>
+                <default>false</default>
+                <label>Crutches</label>
+            </value>
+            <value>
+                <fullName>Cane</fullName>
+                <default>false</default>
+                <label>Cane</label>
+            </value>
+            <value>
+                <fullName>Wheelchair</fullName>
+                <default>false</default>
+                <label>Wheelchair</label>
+            </value>
+            <value>
+                <fullName>Walker</fullName>
+                <default>false</default>
+                <label>Walker</label>
+            </value>
+            <value>
+                <fullName>No Restrictions</fullName>
+                <default>false</default>
+                <label>No Restrictions</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

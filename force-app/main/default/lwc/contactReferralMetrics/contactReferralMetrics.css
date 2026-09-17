@@ -1,0 +1,76 @@
+/* MAIN CARD */
+.referral-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px 26px 28px;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* GRID LAYOUT */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    text-align: center;
+}
+
+/* LABEL */
+.label {
+    font-size: 15px;
+    color: #6b7280;
+    margin-bottom: 6px;
+}
+
+/* MAIN VALUE */
+.value {
+    font-size: 38px;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* REVENUE */
+.revenue {
+    grid-column: span 2;
+    margin-top: 14px;
+}
+
+.revenue-value {
+    font-size: 44px;
+    font-weight: 800;
+    color: #16a34a;
+}
+
+/* LAST UPDATED BOX */
+.updated-box {
+    grid-column: span 2;
+    background: #f9fafb;
+    border-radius: 14px;
+    padding: 18px;
+    margin-top: 24px;
+}
+
+.date {
+    font-size: 16px;
+    color: #374151;
+}
+
+/* ACTION */
+.action {
+    margin-top: 28px;
+    text-align: center;
+}
+
+/* BUTTON STYLING */
+.action lightning-button {
+    --slds-c-button-brand-color-background: #2563eb;
+    --slds-c-button-brand-color-border: #2563eb;
+    --slds-c-button-brand-color-background-hover: #1d4ed8;
+    --slds-c-button-radius-border: 999px;
+    font-size: 16px;
+    padding: 6px 28px;
+}
+
+/* SPINNER CENTER */
+lightning-spinner {
+    margin-top: 20px;
+}

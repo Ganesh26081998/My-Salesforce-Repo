@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SelfFound__c</fullName>
+    <label>Self-Found</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>HowDidYouFindUs__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Online search</fullName>
+                <default>false</default>
+                <label>Online search</label>
+            </value>
+            <value>
+                <fullName>Social media</fullName>
+                <default>false</default>
+                <label>Social media</label>
+            </value>
+            <value>
+                <fullName>Online directory</fullName>
+                <default>false</default>
+                <label>Online directory</label>
+            </value>
+            <value>
+                <fullName>Website</fullName>
+                <default>false</default>
+                <label>Website</label>
+            </value>
+            <value>
+                <fullName>Saw brochure/flyer</fullName>
+                <default>false</default>
+                <label>Saw brochure/flyer</label>
+            </value>
+            <value>
+                <fullName>Event</fullName>
+                <default>false</default>
+                <label>Event</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Self-Found</controllingFieldValue>
+            <valueName>Online search</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self-Found</controllingFieldValue>
+            <valueName>Social media</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self-Found</controllingFieldValue>
+            <valueName>Online directory</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self-Found</controllingFieldValue>
+            <valueName>Website</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self-Found</controllingFieldValue>
+            <valueName>Saw brochure/flyer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self-Found</controllingFieldValue>
+            <valueName>Event</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self-Found</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

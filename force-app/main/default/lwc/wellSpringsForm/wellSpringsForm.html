@@ -1,0 +1,190 @@
+<template>
+    <template if:false={showThankYou}>
+    <div class="page-bg">
+        <div class="form-container">
+            <h1 class="title">Welcome to Well Spring</h1>
+            <p class="subtitle">Please fill out the form below, and our team will get back to you shortly.</p>
+
+            <div class="form-grid">
+
+                <lightning-input 
+                    label="First Name" 
+                    data-field="firstName" 
+                    onchange={handleChange} 
+                    type="text" 
+                    pattern="^[A-Za-z ]+$"
+                    message-when-pattern-mismatch="Only letters and spaces are allowed" 
+                    required>
+                </lightning-input>
+
+                <lightning-input 
+                    label="Last Name" 
+                    data-field="lastName" 
+                    onchange={handleChange} 
+                    type="text" 
+                    pattern="^[A-Za-z ]+$"
+                    message-when-pattern-mismatch="Only letters and spaces are allowed" 
+                    required>
+                </lightning-input>
+
+                <lightning-input 
+                    label="Email" 
+                    type="email" 
+                    data-field="email" 
+                    onchange={handleChange}  
+                    pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+                    message-when-pattern-mismatch="Enter a valid email address (e.g., name@example.com)" 
+                    required>
+                </lightning-input>
+
+                <lightning-input 
+                    label="Phone Number" 
+                    data-field="phone" 
+                    onchange={handleChange} 
+                    type="phone" 
+                    pattern="^\(?\d{3}\)?-?\d{3}-?\d{4}$"
+                    message-when-pattern-mismatch="Enter a valid 10 digit phone number" 
+                    max-length="14">
+                </lightning-input>
+
+                <lightning-input 
+                    label="Street Address" 
+                    data-field="street" 
+                    onchange={handleChange} 
+                    required>
+                </lightning-input>
+
+                <lightning-input 
+                    label="City" 
+                    data-field="city" 
+                    onchange={handleChange} 
+                    required>
+                </lightning-input>
+
+                <lightning-combobox
+                    label="State"
+                    data-field="state"
+                    value={state}
+                    options={stateOptions}
+                    onchange={handleChange}
+                    required>
+                </lightning-combobox>
+
+                <lightning-input 
+                    label="Postal Code" 
+                    data-field="zip" 
+                    onchange={handleChange} 
+                    pattern="^[0-9]{5}(-[0-9]{4})?$"
+                    message-when-pattern-mismatch="Enter a valid 5-digit or ZIP+4 Postal Code" 
+                    required>
+                </lightning-input>
+
+                <!-- "I Am" Field - Primary Selector -->
+                <lightning-combobox
+                    label="I am"
+                    data-field="iAm"
+                    value={iAm}
+                    options={iAmOptions}
+                    onchange={handleChange}
+                    required>
+                </lightning-combobox>
+
+                <!-- "Your Relationship" Field - Conditionally Filtered Based on "I Am" Selection -->
+                <!-- HIDE when "Other" is selected, SHOW the relationship dropdown instead -->
+                <template if:true={showRelationshipDropdown}>
+                    <template if:true={otherOptions.length}>
+                        <lightning-combobox
+                            label="Your Relationship"
+                            data-field="otherRelationship"
+                            value={otherRelationship}
+                            options={otherOptions}
+                            onchange={handleChange}
+                            required>
+                        </lightning-combobox>
+                    </template>
+
+                    <!-- Message shown when "I am" is not selected -->
+                    <template if:false={otherOptions.length}>
+                        <template if:true={iAm}>
+                            <div class="info-message">
+                                No relationship options available for the selected type. Please select a different option.
+                            </div>
+                        </template>
+                    </template>
+                </template>
+
+                <!-- "Please specify" Field - SHOW when "Other" is selected in "I am" -->
+                <template if:true={showOtherIAmField}>
+                    <lightning-input 
+                        label="Please specify your connection"
+                        data-field="otherIAm"
+                        onchange={handleChange}
+                        type="text"
+                        placeholder="e.g., Healthcare consultant, Family advisor, etc."
+                        required>
+                    </lightning-input>
+                </template>
+
+                <lightning-combobox
+                    label="How did you hear about us?"
+                    data-field="heardAboutUs"
+                    value={heardAboutUs}
+                    options={heardOptions}
+                    onchange={handleChange}
+                    required>
+                </lightning-combobox>
+
+                <!-- Conditional field: Show when "Other" is selected -->
+                <template if:true={showOtherHeardAboutUsField}>
+                    <lightning-input 
+                        label="Please specify how you heard about us" 
+                        data-field="otherHeardAboutUs" 
+                        onchange={handleChange} 
+                        type="text"
+                        placeholder="Enter the source"
+                        required>
+                    </lightning-input>
+                </template>
+
+                <lightning-textarea
+                    label="Message"
+                    data-field="message"
+                    onchange={handleChange}
+                    maxlength="2000"
+                    required>
+                </lightning-textarea>
+
+            </div>
+
+            <div class="btn-container">
+                <button class="submit-btn" onclick={handleSubmit} disabled={isSubmitting}>
+                    <template if:true={isSubmitting}>
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                        Submitting...
+                    </template>
+                    <template if:false={isSubmitting}>
+                        Submit
+                    </template>
+                </button>
+            </div>
+
+            <p class="footer-text">
+                By submitting this form, you are consenting to receive marketing emails from:
+                WellSpring, 6980 N. Port Washington Road, Suite 204, Glendale, WI, 53217,
+                <a href="https://www.wellspringcaremanagement.com" target="_blank">www.wellspringcaremanagement.com</a>.
+                You can revoke your consent at any time by using the SafeUnsubscribe® link, found at the bottom of every email.
+                Emails are serviced by Constant Contact.
+            </p>
+        </div>
+    </div>
+    </template>
+
+    <template if:true={showThankYou}>
+        <div class="thankyou-page">
+            <h1 class="thankyou-text">
+                Thank you! Your data has been submitted successfully.
+            </h1>
+        </div>
+    </template>
+
+</template>

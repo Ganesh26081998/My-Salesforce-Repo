@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Home</fullName>
+        <default>false</default>
+        <label>Home</label>
+    </customValue>
+    <customValue>
+        <fullName>Hospital</fullName>
+        <default>false</default>
+        <label>Hospital</label>
+    </customValue>
+    <customValue>
+        <fullName>Rehab/SNF</fullName>
+        <default>false</default>
+        <label>Rehab/SNF</label>
+    </customValue>
+    <customValue>
+        <fullName>Independent Living Community</fullName>
+        <default>false</default>
+        <label>Independent Living Community</label>
+    </customValue>
+    <customValue>
+        <fullName>Assisted Living</fullName>
+        <default>false</default>
+        <label>Assisted Living</label>
+    </customValue>
+    <customValue>
+        <fullName>Memory Care</fullName>
+        <default>false</default>
+        <label>Memory Care</label>
+    </customValue>
+    <customValue>
+        <fullName>Independent Living Community – add name (from list)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Independent Living Community – add name (from list)</label>
+    </customValue>
+    <customValue>
+        <fullName>Assisted Living – add name (from list)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Assisted Living – add name (from list)</label>
+    </customValue>
+    <customValue>
+        <fullName>Memory Care – add name (from list)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Memory Care – add name (from list)</label>
+    </customValue>
+    <masterLabel>Where is the client now?</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

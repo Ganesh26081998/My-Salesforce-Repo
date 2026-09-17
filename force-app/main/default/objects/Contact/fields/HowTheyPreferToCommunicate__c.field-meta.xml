@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HowTheyPreferToCommunicate__c</fullName>
+    <label>How they prefer to communicate</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>Phone call</fullName>
+                <default>false</default>
+                <label>Phone call</label>
+            </value>
+            <value>
+                <fullName>Text message</fullName>
+                <default>false</default>
+                <label>Text message</label>
+            </value>
+            <value>
+                <fullName>Portal / written summary</fullName>
+                <default>false</default>
+                <label>Portal / written summary</label>
+            </value>
+            <value>
+                <fullName>No direct communication</fullName>
+                <default>false</default>
+                <label>No direct communication</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

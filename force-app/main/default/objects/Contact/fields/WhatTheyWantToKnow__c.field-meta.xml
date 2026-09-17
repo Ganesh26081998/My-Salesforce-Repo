@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WhatTheyWantToKnow__c</fullName>
+    <label>What they want to know</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Clinical updates</fullName>
+                <default>false</default>
+                <label>Clinical updates</label>
+            </value>
+            <value>
+                <fullName>Care plan changes</fullName>
+                <default>false</default>
+                <label>Care plan changes</label>
+            </value>
+            <value>
+                <fullName>Appointment updates</fullName>
+                <default>false</default>
+                <label>Appointment updates</label>
+            </value>
+            <value>
+                <fullName>Medication changes</fullName>
+                <default>false</default>
+                <label>Medication changes</label>
+            </value>
+            <value>
+                <fullName>General check-ins</fullName>
+                <default>false</default>
+                <label>General check-ins</label>
+            </value>
+            <value>
+                <fullName>Billing / payment-related updates</fullName>
+                <default>false</default>
+                <label>Billing / payment-related updates</label>
+            </value>
+            <value>
+                <fullName>Emergency-only updates</fullName>
+                <default>false</default>
+                <label>Emergency-only updates</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

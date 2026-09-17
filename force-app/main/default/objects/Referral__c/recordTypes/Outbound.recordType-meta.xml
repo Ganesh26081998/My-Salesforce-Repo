@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Outbound</fullName>
+    <active>true</active>
+    <label>Outbound</label>
+    <picklistValues>
+        <picklist>Outcome__c</picklist>
+        <values>
+            <fullName>Couldn%E2%80%99t reach</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Declined services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Signed up for services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Referral_Type__c</picklist>
+        <values>
+            <fullName>Adult Day Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assisted Living</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attorney</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fiduciary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial Advisor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Google Ads</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Google Search</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Home Care Agency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Home Healthcare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hospice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hospital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inbound Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independent Living</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legal Office</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Local Government Agency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marketing email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Memory Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Met at event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personal Assistant%2FFamily Consultant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Physician</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Place of Worship</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Placement Company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private duty nurse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Real Estate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Skilled Nursing Facility</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transportation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Word of Mouth</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Word of Mouth %28current%2Fpast client%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status__c</picklist>
+        <values>
+            <fullName>Closed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sent</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+</RecordType>

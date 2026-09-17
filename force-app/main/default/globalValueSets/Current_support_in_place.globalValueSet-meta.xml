@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>No support</fullName>
+        <default>false</default>
+        <label>No support</label>
+    </customValue>
+    <customValue>
+        <fullName>Family support</fullName>
+        <default>false</default>
+        <label>Family support</label>
+    </customValue>
+    <customValue>
+        <fullName>Private duty caregiving</fullName>
+        <default>false</default>
+        <label>Private duty caregiving</label>
+    </customValue>
+    <customValue>
+        <fullName>Facility staff</fullName>
+        <default>false</default>
+        <label>Facility staff</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Other</label>
+    </customValue>
+    <customValue>
+        <fullName>Private home care</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Private home care</label>
+    </customValue>
+    <customValue>
+        <fullName>Private home care – Number of Hours - Name of company</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Private home care – Number of Hours - Name of company</label>
+    </customValue>
+    <masterLabel>Current support in place</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

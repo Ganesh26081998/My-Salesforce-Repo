@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Assessment_Type__c</fullName>
+    <label>Assessment Type</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Geriatric Depression Scale</fullName>
+                <default>false</default>
+                <label>Geriatric Depression Scale</label>
+            </value>
+            <value>
+                <fullName>Emergency Scenario Assessment</fullName>
+                <default>false</default>
+                <label>Emergency Scenario Assessment</label>
+            </value>
+            <value>
+                <fullName>Home Safety Assessment</fullName>
+                <default>false</default>
+                <label>Home Safety Assessment</label>
+            </value>
+            <value>
+                <fullName>Family Caregiver Assessment</fullName>
+                <default>false</default>
+                <label>Family Caregiver Assessment</label>
+            </value>
+            <value>
+                <fullName>Home from the Hospital Assessment</fullName>
+                <default>false</default>
+                <label>Home from the Hospital Assessment</label>
+            </value>
+            <value>
+                <fullName>Katz ADL Assessment</fullName>
+                <default>false</default>
+                <label>Katz ADL Assessment</label>
+            </value>
+            <value>
+                <fullName>Balance &amp; Gait Assessment</fullName>
+                <default>false</default>
+                <label>Balance &amp; Gait Assessment</label>
+            </value>
+            <value>
+                <fullName>Quality of Life Assessment</fullName>
+                <default>false</default>
+                <label>Quality of Life Assessment</label>
+            </value>
+            <value>
+                <fullName>Caregiver Assessment</fullName>
+                <default>false</default>
+                <label>Caregiver Assessment</label>
+            </value>
+            <value>
+                <fullName>Nursing Assessment</fullName>
+                <default>false</default>
+                <label>Nursing Assessment</label>
+            </value>
+            <value>
+                <fullName>IADL Assessment</fullName>
+                <default>false</default>
+                <label>IADL Assessment</label>
+            </value>
+            <value>
+                <fullName>Mini Mental State Examination</fullName>
+                <default>false</default>
+                <label>Mini Mental State Examination</label>
+            </value>
+            <value>
+                <fullName>Quality of Life Therapeutic Program Assessment</fullName>
+                <default>false</default>
+                <label>Quality of Life Therapeutic Program Assessment</label>
+            </value>
+            <value>
+                <fullName>Psychosocial Assessment</fullName>
+                <default>false</default>
+                <label>Psychosocial Assessment</label>
+            </value>
+            <value>
+                <fullName>Medication Management Assessment</fullName>
+                <default>false</default>
+                <label>Medication Management Assessment</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

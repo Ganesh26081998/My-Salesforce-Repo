@@ -1,0 +1,77 @@
+<!-- <template>
+
+
+    <template if:true={isLoading}>
+        <div class="spinner-container">
+            <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+        </div>
+    </template>
+
+    
+    <template if:true={showEmptyState}>
+        <div class="empty-state-container">
+            <div class="empty-state-icon">
+                <lightning-icon icon-name="utility:file" size="large" class="empty-icon"></lightning-icon>
+            </div>
+            <h2 class="empty-state-heading">No Working Care Plan Yet</h2>
+            <p class="empty-state-sub">
+                No care plans have been created for this client yet.
+                Use the <strong>Care Plan</strong> tab to create one.
+            </p>
+        </div>
+    </template>
+
+    
+    <template if:true={showEditor}>
+        <c-care-plan-edit
+            record-id={latestCarePlanId}
+            onclose={handleClose}>
+        </c-care-plan-edit>
+    </template>
+
+</template> -->
+
+<template>
+
+    <!-- LOADING SPINNER -->
+    <template if:true={isLoading}>
+        <div class="slds-is-relative slds-p-vertical_large">
+            <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+        </div>
+    </template>
+
+    <!-- NO CARE PLANS STATE -->
+    <template if:true={showEmptyState}>
+        <div class="slds-align_absolute-center slds-p-around_large">
+            <div class="slds-text-align_center">
+
+                <!-- <div class="slds-m-bottom_medium">
+                    <lightning-icon 
+                        icon-name="utility:file" 
+                        size="large"
+                        class="slds-icon-text-default">
+                    </lightning-icon>
+                </div> -->
+
+                <h2 class="slds-text-heading_medium slds-m-bottom_small">
+                    No Working Care Plan Yet
+                </h2>
+
+                <p class="slds-text-body_regular slds-text-color_weak">
+                    No care plans have been created for this client yet.
+                    Use the <strong>Care Plan</strong> tab to create one.
+                </p>
+
+            </div>
+        </div>
+    </template>
+
+    <!-- FULL EDIT FORM -->
+    <template if:true={showEditor}>
+        <c-care-plan-edit
+            record-id={latestCarePlanId}
+            onclose={handleClose}>
+        </c-care-plan-edit>
+    </template>
+
+</template>

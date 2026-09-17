@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Use_Organization_Address__c</fullName>
+    <defaultValue>false</defaultValue>
+    <inlineHelpText>If unchecked, address will not be automatically updated from the Account. You can manually edit the address</inlineHelpText>
+    <label>Use Organization Address</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

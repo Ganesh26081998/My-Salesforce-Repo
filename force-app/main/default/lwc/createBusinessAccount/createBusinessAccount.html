@@ -1,0 +1,142 @@
+<template>
+
+    <lightning-modal-header label="New Account: Business Account"></lightning-modal-header>
+
+    <lightning-modal-body>
+
+        <lightning-record-edit-form
+            density="comfy"
+            object-api-name="Account"
+            record-type-id={recordTypeId}
+            
+        >
+
+            <div class="slds-grid slds-wrap slds-gutters">
+
+                <div class="slds-col slds-size_1-of-2">
+
+                    <lightning-input-field field-name="Organization_Name__c" required></lightning-input-field>
+
+                    
+
+                    <lightning-input-field field-name="Email__c"></lightning-input-field>
+
+                    <lightning-input-field field-name="Mobile_Phones__c"></lightning-input-field>
+                    <lightning-input-field field-name="Work_Phones__c"></lightning-input-field>
+                    <lightning-input-field field-name="Home_Phones__c"></lightning-input-field>
+                    <lightning-input-field field-name="Location_g__c"></lightning-input-field>
+                    
+            <div class="slds-m-top_medium">
+                <lightning-input-address
+                    address-label="Address"
+                    address-lookup-placeholder="Search address"
+                    street-label="Address (Street)"
+                    city-label="Address (City)"
+                    country-label="Address (Country)"
+                    province-label="Address (State)"
+                    postal-code-label="Address (Postal Code)"
+                    show-address-lookup
+                    street={street}
+                    city={city}
+                    country={country}
+                    province={state}
+                    postal-code={postalCode}
+                    onchange={handleAddressChange}
+                >
+                </lightning-input-address>
+
+            </div>
+
+                </div>
+
+                <div class="slds-col slds-size_1-of-2">
+
+                    <!-- <lightning-input-field field-name="ParentId"></lightning-input-field> -->
+                    <lightning-input-field field-name="Fax"></lightning-input-field>
+
+                    <lightning-input-field field-name="Referral_Source_Type__c"></lightning-input-field>
+
+                    <lightning-input-field field-name="Business_Stage__c"></lightning-input-field>
+
+                    <lightning-input-field field-name="Website"></lightning-input-field>
+                    <lightning-input-field 
+                        field-name="On_contract__c"
+                        onchange={handleContractChange}>
+                    </lightning-input-field>
+                    <template if:true={showContractType}>
+                        <lightning-input-field field-name="Contract_Type__c"></lightning-input-field>
+                    </template>
+
+                    
+
+                </div>
+
+            </div>
+
+
+        </lightning-record-edit-form>
+
+    </lightning-modal-body>
+
+    <lightning-modal-footer>
+
+        <template if:true={showDuplicateWarning}>
+
+                <div class="slds-notify slds-scoped-notification slds-notify_alert slds-theme_warning slds-m-bottom_medium" role="alert">
+                    <span class="slds-assistive-text">warning</span>
+
+                    <lightning-icon
+                        icon-name="utility:warning"
+                        alternative-text="Warning"
+                        size="small"
+                        class="slds-m-right_small">
+                    </lightning-icon>
+
+                    <h2>
+                        <strong>Duplicate found.</strong>
+                        A similar Business Account already exists. Save anyway?
+                    </h2>
+                </div>
+
+            </template>
+
+        <div class="slds-grid slds-grid_align-end">
+
+    <lightning-button
+        label="Cancel"
+        onclick={handleCancel}>
+    </lightning-button>
+
+    <template if:false={showDuplicateWarning}>
+        <lightning-button
+            class="slds-m-left_small"
+            variant="brand"
+            onclick={handleSubmit}
+            label="Save">
+        </lightning-button>
+    </template>
+
+    <template if:true={showDuplicateWarning}>
+
+        <lightning-button
+            class="slds-m-left_small"
+            variant="brand"
+            onclick={handleDuplicateConfirm}
+            label="Save Anyway">
+        </lightning-button>
+
+        <lightning-button
+            class="slds-m-left_small"
+            variant="destructive-text"
+            onclick={handleDuplicateCancel}
+            label="Discard">
+        </lightning-button>
+
+    </template>
+
+</div>
+        
+
+    </lightning-modal-footer>
+
+</template>

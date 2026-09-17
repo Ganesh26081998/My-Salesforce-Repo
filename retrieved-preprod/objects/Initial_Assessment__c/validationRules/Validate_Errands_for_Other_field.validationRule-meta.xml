@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Errands_for_Other_field</fullName>
+    <active>true</active>
+    <description>The Errands field is required for the Errands value in Other field in the Driving Section</description>
+    <errorConditionFormula>AND(
+INCLUDES( Other_for_Driving__c , &quot;Errands&quot;),
+ISBLANK( Errands__c )
+)</errorConditionFormula>
+    <errorDisplayField>Errands__c</errorDisplayField>
+    <errorMessage>Please provide details when &quot;Errands&quot; is selected for the Other field in Driving Section.</errorMessage>
+</ValidationRule>

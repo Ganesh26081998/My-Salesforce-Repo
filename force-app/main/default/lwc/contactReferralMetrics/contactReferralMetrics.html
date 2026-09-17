@@ -1,0 +1,67 @@
+<template>
+    <lightning-card>
+        <template if:true={contact}>
+            <div class="referral-card">
+
+                <div class="metrics-grid">
+                    <!-- Prospects -->
+                    <div>
+                        <div class="label">Prospects Referred</div>
+                        <div class="value">
+                            {contact.Prospects_Referred__c}
+                        </div>
+                    </div>
+
+                    <!-- Clients -->
+                    <div>
+                        <div class="label">Clients Referred</div>
+                        <div class="value">
+                            {contact.Clients_Referred__c}
+                        </div>
+                    </div>
+
+                    <!-- Revenue -->
+                    <div class="revenue">
+                        <div class="label">Lifetime Revenue</div>
+                        <div class="value revenue-value">
+                            <lightning-formatted-number 
+                                value={lifetimeRevenue}
+                                format-style="currency">
+                            </lightning-formatted-number>
+                            <!-- ${contact.Lifetime_Revenue__c || 0} -->
+                        </div>
+                    </div>
+
+                    <!-- Last Updated -->
+                    <div class="updated-box">
+                        <div class="label">Last Updated</div>
+                        <div class="date">
+                            {formattedDate}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action -->
+                <div class="action">
+                    <lightning-button
+                        variant="brand"
+                        label="Sync Latest Data"
+                        onclick={handleSync}
+                        disabled={loading}>
+                    </lightning-button>
+                </div>
+
+            </div>
+        </template>
+
+        <!-- Loader while data loads -->
+        <template if:false={contact}>
+            <div class="slds-p-around_medium slds-align_absolute-center">
+                <lightning-spinner
+                    alternative-text="Loading"
+                    size="medium">
+                </lightning-spinner>
+            </div>
+        </template>
+    </lightning-card>
+</template>

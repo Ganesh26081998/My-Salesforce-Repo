@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Auto_Clock_out__c</fullName>
+    <defaultValue>false</defaultValue>
+    <inlineHelpText>If this option is enabled, alerts will be turned off and WellSky Personal Care will automatically clock the caregiver in and out for each shift for this client and set the status of the resulting care log to the status you specify here. The caregiver will be able to call in during the shift to update tasks, report mileage, and record general comments but will not be permitted to clock in or out.</inlineHelpText>
+    <label>Auto Clock-out</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

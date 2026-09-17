@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Capacity_Used__c</fullName>
+    <formula>IF(Desired_Weekly_Hours__c &gt; 0, 
+      Actual_Scheduled_Hours__c / Desired_Weekly_Hours__c, 
+      0)</formula>
+    <label>Capacity Used %</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Percent</type>
+</CustomField>

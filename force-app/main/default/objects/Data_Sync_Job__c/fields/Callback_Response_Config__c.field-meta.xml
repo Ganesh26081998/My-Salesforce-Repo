@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Callback_Response_Config__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Callback/Response Config</label>
+    <referenceTo>Data_Sync_Job_Config__c</referenceTo>
+    <relationshipLabel>Data Sync Jobs (Callback/Response Config)</relationshipLabel>
+    <relationshipName>Data_Sync_Jobs1</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Additional_Email_For_Homecare</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISPICKVAL( Referral_Type__c , &quot;Homecare&quot;),
+    ISBLANK( Additional_Email_Addresses__c )
+)</errorConditionFormula>
+    <errorDisplayField>Additional_Email_Addresses__c</errorDisplayField>
+    <errorMessage>Additional Email Addresses are required when Referral Type is Homecare.</errorMessage>
+</ValidationRule>

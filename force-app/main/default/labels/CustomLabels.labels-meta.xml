@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>ADD_MEDICATION_LABEL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ADD MEDICATION LABEL</shortDescription>
+        <value>Add Medication Not in Database</value>
+    </labels>
+    <labels>
+        <fullName>Config_WellSky_Insert_Patient</fullName>
+        <categories>Data Sync Job Config</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Config - WellSky Insert Patient</shortDescription>
+        <value>WellSky Insert Patient</value>
+    </labels>
+    <labels>
+        <fullName>Config_WellSky_Insert_Patient_callback</fullName>
+        <categories>Data Sync Job Config</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Config - WellSky Insert Patient callback</shortDescription>
+        <value>WellSky Insert Patient callback</value>
+    </labels>
+    <labels>
+        <fullName>Config_WellSky_Update_Patient</fullName>
+        <categories>Data Sync Job Config</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Config -WellSky Update Patient</shortDescription>
+        <value>WellSky Update Patient</value>
+    </labels>
+    <labels>
+        <fullName>Contact_Business_RecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Business RecordType</shortDescription>
+        <value>IndustriesBusiness</value>
+    </labels>
+    <labels>
+        <fullName>Contact_Individual_RecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Individual RecordType</shortDescription>
+        <value>IndividualContact</value>
+    </labels>
+    <labels>
+        <fullName>Default_Organization_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Organization Account</shortDescription>
+        <value>No Organization</value>
+    </labels>
+    <labels>
+        <fullName>Hosp_Action_Cancel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cancel button label</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>Hosp_Action_Client_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Client field label</shortDescription>
+        <value>Client</value>
+    </labels>
+    <labels>
+        <fullName>Hosp_Action_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default error toast message when save fails</shortDescription>
+        <value>Something went wrong while saving.</value>
+    </labels>
+    <labels>
+        <fullName>Hosp_Action_Error_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error toast title</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>Hosp_Action_Save</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Save button label</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>Hosp_Action_Success_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Success toast message after saving hospitalization</shortDescription>
+        <value>Hospitalization details saved successfully.</value>
+    </labels>
+    <labels>
+        <fullName>Hosp_Action_Success_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Success toast title</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
+        <fullName>Hosp_Action_Validation_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Validation message when discharge date is not after admission date</shortDescription>
+        <value>Discharge Date must be greater than Admission Date for Closed-Discharged status.</value>
+    </labels>
+    <labels>
+        <fullName>Hosp_Action_Validation_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Validation error toast title</shortDescription>
+        <value>Validation Error</value>
+    </labels>
+    <labels>
+        <fullName>Household_Record_TypeID</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Household Record TypeID</shortDescription>
+        <value>012WQ00000AIiPqYAL</value>
+    </labels>
+    <labels>
+        <fullName>OutboundReferralEmailTemplate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OutboundReferralEmailTemplate</shortDescription>
+        <value>Outbound_Referral_Template</value>
+    </labels>
+    <labels>
+        <fullName>Prospect_RT_DeveloperName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Prospect RT Id For Account</shortDescription>
+        <value>012dz000000dy5xAAA</value>
+    </labels>
+    <labels>
+        <fullName>QB_Cincinnati_ClientBillable_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Cincinnati Client Billable Id</shortDescription>
+        <value>2</value>
+    </labels>
+    <labels>
+        <fullName>QB_Cincinnati_ExpenseCredit_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Cincinnati Expense Credit Id</shortDescription>
+        <value>3</value>
+    </labels>
+    <labels>
+        <fullName>QB_Cincinnati_Mileage_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Cincinnati Mileage Id</shortDescription>
+        <value>4</value>
+    </labels>
+    <labels>
+        <fullName>QB_Detroit_ClientBillable_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Detroit Client Billable Id</shortDescription>
+        <value>2</value>
+    </labels>
+    <labels>
+        <fullName>QB_Detroit_ExpenseCredit_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Detroit Expense Credit Id</shortDescription>
+        <value>3</value>
+    </labels>
+    <labels>
+        <fullName>QB_Detroit_Mileage_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Detroit Mileage Id</shortDescription>
+        <value>4</value>
+    </labels>
+    <labels>
+        <fullName>QB_Milwaukee_ClientBillable_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Milwaukee Client Billable Id</shortDescription>
+        <value>5</value>
+    </labels>
+    <labels>
+        <fullName>QB_Milwaukee_ExpenseCredit_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Milwaukee Expense Credit Id</shortDescription>
+        <value>4</value>
+    </labels>
+    <labels>
+        <fullName>QB_Milwaukee_Mileage_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QB Milwaukee Mileage Id</shortDescription>
+        <value>3</value>
+    </labels>
+    <labels>
+        <fullName>QuickBooks_Cincinnati_ID</fullName>
+        <categories>Integration</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuickBooks Cincinnati ID</shortDescription>
+        <value>9341456354867532</value>
+    </labels>
+    <labels>
+        <fullName>QuickBooks_Detroit_ID</fullName>
+        <categories>Integration</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuickBooks Detroit ID</shortDescription>
+        <value>9341455956346568</value>
+    </labels>
+    <labels>
+        <fullName>QuickBooks_Milwaukee_ID</fullName>
+        <categories>Integration</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuickBooks Milwaukee ID</shortDescription>
+        <value>9341456354758476</value>
+    </labels>
+    <labels>
+        <fullName>Referral_Automation_Task_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Referral Automation Task Subject</shortDescription>
+        <value>Follow up on outbound referral</value>
+    </labels>
+</CustomLabels>

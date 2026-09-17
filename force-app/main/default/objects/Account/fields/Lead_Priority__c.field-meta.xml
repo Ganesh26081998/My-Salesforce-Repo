@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Priority__c</fullName>
+    <label>Lead Priority</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>High — clear fit, high urgency</fullName>
+                <default>false</default>
+                <label>High — clear fit, high urgency</label>
+            </value>
+            <value>
+                <fullName>Medium — fit but early stage</fullName>
+                <default>false</default>
+                <label>Medium — fit but early stage</label>
+            </value>
+            <value>
+                <fullName>Low — unclear fit or long timeline</fullName>
+                <default>false</default>
+                <label>Low — unclear fit or long timeline</label>
+            </value>
+            <value>
+                <fullName>High — clear fit, high urgency, ready to buy</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>High — clear fit, high urgency, ready to buy</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

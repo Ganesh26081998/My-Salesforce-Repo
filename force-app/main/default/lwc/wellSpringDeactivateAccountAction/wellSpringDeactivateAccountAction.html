@@ -1,0 +1,165 @@
+<template>
+    <!-- Initial load spinner -->
+    <template if:true={isLoading}>
+        <div class="slds-spinner_container spinner-fixed">
+            <lightning-spinner alternative-text="Loading..." size="large"></lightning-spinner>
+        </div>
+    </template>
+
+    <!-- Panel shown once data is resolved -->
+    <template if:true={isReady}>
+        <lightning-quick-action-panel header={modalTitle}>
+            <div class="slds-var-p-bottom_x-small" onkeydown={handleKeyDown}>
+
+                <!-- Save-in-progress spinner -->
+                <template if:true={saving}>
+                    <div class="slds-grid slds-grid_align-center slds-grid_vertical-align-center save-spinner-body">
+                        <lightning-spinner alternative-text="Saving..." size="medium"></lightning-spinner>
+                    </div>
+                </template>
+
+                <!-- Static message: account is already deactivated -->
+               <!-- <template if:true={showDeactivatedBanner}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_small"
+                         role="status">
+                        <div class="slds-media__figure slds-scoped-notification__figure">
+                            <lightning-icon
+                                icon-name="utility:ban"
+                                variant="error"
+                                size="small">
+                            </lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-heading_small slds-m-bottom_xx-small">
+                                Account Already Deactivated
+                            </p>
+                            <p class="slds-text-body_regular">
+                                This account is deactivated. You cannot edit it. Take the backup first.
+                            </p>
+                        </div>
+                    </div>
+                </template>!-->
+
+                <!-- Confirmation view: shown after clicking Save -->
+                <template if:true={showConfirmView}>
+                    <div class="slds-grid slds-grid_vertical slds-grid_align-center slds-text-align_center slds-var-p-top_large slds-var-p-horizontal_medium slds-var-p-bottom_small">
+                        <div class="slds-grid slds-grid_align-center slds-var-m-bottom_small">
+                            <lightning-icon
+                                icon-name="utility:warning"
+                                variant="warning"
+                                size="medium">
+                            </lightning-icon>
+                        </div>
+                        <p class="slds-text-heading_small slds-var-m-bottom_x-small">Confirm Deactivation</p>
+                        <p class="slds-text-body_regular">
+                            You are about to permanently deactivate
+                            <span><strong>{accountName}</strong></span>.
+                            This action cannot be undone
+                        </p>
+                    </div>
+                </template>
+
+                <!-- Form fields -->
+                <template if:true={showFormFields}>
+                    <lightning-input
+                        label="Account Name"
+                        value={formName}
+                        required
+                        disabled
+                        type="text">
+                    </lightning-input>
+
+                    <lightning-input
+                        type="date"
+                        label="Deactivation Date"
+                        value={formDate}
+                        class="slds-m-top_small"
+                        disabled>
+                    </lightning-input>
+
+                    <lightning-combobox
+                        label="Deactivation Reason"
+                        value={formReason}
+                        options={reasonOptions}
+                        placeholder="-- Select --"
+                        required
+                        class="slds-m-top_small"
+                        onchange={handleReasonChange}>
+                    </lightning-combobox>
+
+                    <template if:true={showOtherReasonField}>
+                        <lightning-input
+                            type="text"
+                            label="Other Reason"
+                            value={formOtherReason}
+                            required
+                            class="slds-m-top_small"
+                            onchange={handleOtherReasonChange}>
+                        </lightning-input>
+                    </template>
+
+                    <lightning-textarea
+                        label="Comments"
+                        value={formComments}
+                        max-length="32768"
+                        class="slds-m-top_small"
+                        onchange={handleCommentsChange}>
+                    </lightning-textarea>
+                </template>
+
+            </div>
+
+            <div slot="footer" class="slds-grid slds-grid_align-end">
+
+                <!-- Footer: account already deactivated - close only -->
+                <template if:true={showDeactivatedFooter}>
+                    <lightning-button
+                        label="Close"
+                        type="button"
+                        variant="neutral"
+                        onclick={closeModal}>
+                    </lightning-button>
+                </template>
+
+                <!-- Footer: confirmation step - Back + Confirm Deactivation -->
+                <template if:true={showConfirmFooter}>
+                    <lightning-button
+                        label="Back"
+                        type="button"
+                        variant="neutral"
+                        disabled={saving}
+                        onclick={handleCancelConfirm}>
+                    </lightning-button>
+                    <lightning-button
+                        label="Confirm Deactivation"
+                        type="button"
+                        variant="destructive"
+                        class="slds-var-m-left_x-small"
+                        disabled={saving}
+                        onclick={handleConfirm}>
+                    </lightning-button>
+                </template>
+
+                <!-- Footer: normal form - Cancel + Save -->
+                <template if:true={showNormalFooter}>
+                    <lightning-button
+                        label="Cancel"
+                        type="button"
+                        variant="neutral"
+                        disabled={saving}
+                        onclick={closeModal}>
+                    </lightning-button>
+                    <lightning-button
+                        label="Save"
+                        type="button"
+                        variant="brand"
+                        class="slds-var-m-left_x-small"
+                        disabled={saving}
+                        onclick={handleSave}>
+                    </lightning-button>
+                </template>
+
+            </div>
+        </lightning-quick-action-panel>
+    </template>
+</template>

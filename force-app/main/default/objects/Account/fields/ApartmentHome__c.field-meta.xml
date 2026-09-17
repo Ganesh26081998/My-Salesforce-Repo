@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ApartmentHome__c</fullName>
+    <label>Apartment/home</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>WhereDoesTheClientLive__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Lives alone</fullName>
+                <default>false</default>
+                <label>Lives alone</label>
+            </value>
+            <value>
+                <fullName>Lives with spouse/family</fullName>
+                <default>false</default>
+                <label>Lives with spouse/family</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Apartment/home</controllingFieldValue>
+            <valueName>Lives alone</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Apartment/home</controllingFieldValue>
+            <valueName>Lives with spouse/family</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pet_Care__c</fullName>
+    <label>Pet Care</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Cat</fullName>
+                <default>false</default>
+                <label>Cat</label>
+            </value>
+            <value>
+                <fullName>Cat Litter Box</fullName>
+                <default>false</default>
+                <label>Cat Litter Box</label>
+            </value>
+            <value>
+                <fullName>Dog</fullName>
+                <default>false</default>
+                <label>Dog</label>
+            </value>
+            <value>
+                <fullName>Feeding</fullName>
+                <default>false</default>
+                <label>Feeding</label>
+            </value>
+            <value>
+                <fullName>Walk Dog</fullName>
+                <default>false</default>
+                <label>Walk Dog</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

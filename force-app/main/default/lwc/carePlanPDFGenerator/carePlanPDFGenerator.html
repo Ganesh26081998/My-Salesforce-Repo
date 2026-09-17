@@ -1,0 +1,598 @@
+<template>
+    <lightning-card>
+        <template lwc:if={isLoading}>
+        <lightning-spinner alternative-text="Saving..." size="medium"></lightning-spinner>
+        </template>
+        <template lwc:if={isAddActionInProgress}>
+            <lightning-spinner alternative-text="Adding..." size="small"></lightning-spinner>
+        </template>
+
+    
+<div slot="title" class="slds-m-bottom_medium">
+    <div class="slds-grid slds-grid_vertical-align-center slds-wrap">
+        <div class="slds-col title-prefix">
+            <span class="slds-text-heading_medium">{carePlanPrefix}</span>
+        </div>
+        <div class="slds-col slds-p-left_x-small suffix-container">
+            <template lwc:if={isSuffixEditing}>
+                <lightning-input
+                    class="suffix-inline-input"
+                    type="text"
+                    variant="label-hidden"
+                    label="Custom Plan Name"
+                    value={carePlanTitleSuffix}
+                    placeholder="Enter suffix..."
+                    max-length={suffixMaxLength}
+                    field-level-help={suffixHelpText}
+                    onchange={handleTitleSuffixChange}
+                    onblur={handleSuffixBlur}
+                ></lightning-input>
+            </template>
+            <template lwc:else>
+                <span class="suffix-display-text">{carePlanTitleSuffix}</span>
+                <lightning-button-icon
+                    icon-name="utility:edit"
+                    variant="bare"
+                    size="small"
+                    alternative-text="Edit suffix"
+                    title="Edit suffix"
+                    onclick={handleSuffixEditClick}
+                    class="suffix-pencil-btn"
+                ></lightning-button-icon>
+            </template>
+        </div>
+    </div>
+</div>
+
+    <p class="helper-text">
+            Select problems, goals, and interventions to build a structured care plan.
+        </p>
+
+        <lightning-accordion allow-multiple-sections-open
+        active-section-name={activeSections}>
+
+            <!-- ================= PROBLEMS ================= -->
+<lightning-accordion-section label="Care Plan Problems" class="colored-accordion problem" name="problems">
+    <div class="slds-grid slds-gutters_x-small slds-m-bottom_small">
+        <div class="slds-col">
+            <div class={addButtonClass} onclick={addProblem}>➕ Add Problem</div>
+        </div>
+        <div class="slds-col">
+            <div class={addCustomButtonClass} onclick={addCustomProblem}>➕ Add Custom Problem</div>
+        </div>
+    </div>
+
+    <template if:true={showProblemTemplateSearch}>
+        <div class="slds-m-bottom_small">
+            <lightning-input
+                type="search"
+                label="Search Existing Problems"
+                placeholder="Type problem name..."
+                value={problemSearchKey}
+                onchange={handleProblemSearch}>
+            </lightning-input>
+        </div>
+    </template>
+
+
+    <div class="problem-card-container problems-full-width">
+        <template for:each={problemBlocks} for:item="pb">
+            <div key={pb.id} class="problem-card">
+                <template if:false={pb.isSelected}>
+                    <div class="slds-grid slds-grid_align-end slds-m-bottom_x-small">
+                        <lightning-button-icon
+                            icon-name="utility:delete"
+                            variant="bare"
+                            alternative-text="Delete"
+                            data-id={pb.id}
+                            onclick={deleteProblem}>
+                        </lightning-button-icon>
+                    </div>
+                    <lightning-dual-listbox
+                        label="Select Problem"
+                        options={filteredAvailableProblemOptions}
+                        value={pb.selectedIds}
+                        data-id={pb.id}
+                        onchange={handleProblemChange}>
+                    </lightning-dual-listbox>
+                </template>
+
+                <template if:true={pb.isSelected}>
+                    <div class="selected-item-card">
+                        <div class="card-header">
+                            <template if:true={pb.isCustom}>
+                                <lightning-input
+                                    label="Care Plan – Problem"
+                                    value={pb.selectedName}
+                                    data-id={pb.id}
+                                    placeholder="Enter custom problem name"
+                                    required
+                                    onchange={handleCustomProblemName}
+                                    class="custom-name-input">
+                                </lightning-input>
+                            </template>
+                            <template if:false={pb.isCustom}>
+                                <h3 class="card-title">{pb.selectedName}</h3>
+                            </template>
+                            <lightning-button-icon
+                                icon-name="utility:delete"
+                                variant="bare"
+                                class="delete-button"
+                                alternative-text="Delete"
+                                data-id={pb.id}
+                                onclick={deleteProblem}>
+                            </lightning-button-icon>
+                        </div>
+                        
+                        <lightning-combobox
+                            label="Priority"
+                            required
+                            options={severityOptions}
+                            value={pb.severity}
+                            data-id={pb.id}
+                            onchange={handleProblemSeverity}>
+                        </lightning-combobox>
+
+                        <lightning-textarea
+                            label="Problem Description"
+                            value={pb.description}
+                            data-id={pb.id}
+                            onchange={handleProblemDescription}>
+                        </lightning-textarea>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </div>
+</lightning-accordion-section>
+
+  
+            <!-- ================= LONG TERM GOALS ================= -->
+<lightning-accordion-section
+    label="Client and Family Goals – Long Term Goals"
+    class="colored-accordion goal" name="longTermGoals">
+
+    <div class="slds-grid slds-gutters_x-small slds-m-bottom_small">
+        <div class="slds-col">
+            <div class={addButtonClass} onclick={addLongTermGoal}>➕ Add Long Term Goal</div>
+        </div>
+        <div class="slds-col">
+            <div class={addCustomButtonClass} onclick={addCustomLongTermGoal}>➕ Add Custom Long Term Goal</div>
+        </div>
+    </div>
+
+<template if:true={showLongTermTemplateSearch}>
+    <div class="slds-m-bottom_small">
+        <lightning-input
+            type="search"
+            label="Search Existing Long Term Goals"
+            placeholder="Type goal name..."
+            value={longTermGoalSearchKey}
+            onchange={handleLongTermGoalSearch}>
+        </lightning-input>
+    </div>
+</template>
+
+
+    <template for:each={longTermGoalBlocks} for:item="gb">
+        <div key={gb.id} class="problem-card">
+            <template if:false={gb.isSelected}>
+                <div class="slds-grid slds-grid_align-end slds-m-bottom_x-small">
+                    <lightning-button-icon
+                        icon-name="utility:delete"
+                        variant="bare"
+                        alternative-text="Delete"
+                        data-id={gb.id}
+                        onclick={deleteLongTermGoal}>
+                    </lightning-button-icon>
+                </div>
+                <lightning-dual-listbox
+                    label="Select Long Term Goal"
+                    options={filteredAvailableLongTermGoalOptions}
+                    value={gb.selectedIds}
+                    data-id={gb.id}
+                    onchange={handleLongTermGoalChange}>
+                </lightning-dual-listbox>
+            </template>
+
+            <template if:true={gb.isSelected}>
+                <div class="selected-item-card">
+                    <div class="card-header">
+                        <template if:true={gb.isCustom}>
+                            <lightning-input
+                                label="Custom Long Term Goal"
+                                value={gb.selectedName}
+                                data-id={gb.id}
+                                required
+                                placeholder="Enter custom long term goal name"
+                                onchange={handleCustomLongTermGoalName}
+                                class="custom-name-input">
+                            </lightning-input>
+                        </template>
+                        <template if:false={gb.isCustom}>
+                            <h3 class="card-title">{gb.selectedName}</h3>
+                        </template>
+                        <lightning-button-icon
+                            icon-name="utility:delete"
+                            variant="bare"
+                            alternative-text="Delete"
+                            data-id={gb.id}
+                            onclick={deleteLongTermGoal}>
+                        </lightning-button-icon>
+                    </div>
+
+                    <lightning-textarea
+                        label="Goal Description"
+                        value={gb.description}
+                        data-id={gb.id}
+                        onchange={handleLongTermGoalDescription}>
+                    </lightning-textarea>
+
+                    <lightning-textarea
+                        label="Success Criteria"
+                        value={gb.successCriteria}
+                        data-id={gb.id}
+                        onchange={handleLongTermGoalSuccessCriteria}>
+                    </lightning-textarea>
+                </div>
+            </template>
+        </div>
+    </template>
+</lightning-accordion-section>
+
+        
+
+            <!-- ================= QUARTERLY GOALS ================= -->
+<lightning-accordion-section
+    label="Client and Family Goals – Quarterly Goals & Interventions"
+    class="colored-accordion goal" name="quarterlyGoals">
+
+    <div class="slds-grid slds-gutters_x-small slds-m-bottom_small">
+        <div class="slds-col">
+            <div class={addButtonClass} onclick={addQuarterlyGoal}>➕ Add Quarterly Goal</div>
+        </div>
+        <div class="slds-col">
+            <div class={addCustomButtonClass} onclick={addCustomQuarterlyGoal}>➕ Add Custom Quarterly Goal</div>
+        </div>
+    </div>
+
+    <template if:true={showQuarterlyGoalTemplateSearch}>
+    <div class="slds-m-bottom_small">
+        <lightning-input
+            type="search"
+            label="Search Existing Quarterly Goals"
+            placeholder="Type quarterly goal name..."
+            value={querterlyGoalSearchKey}
+            onchange={handleQuarterlyGoalSearch}>
+        </lightning-input>
+    </div>
+</template>
+
+
+    <template for:each={quarterlyGoalBlocks} for:item="qg">
+        <div key={qg.id} class="problem-card">
+
+            <template if:false={qg.isSelected}>
+                <div class="slds-grid slds-grid_align-end slds-m-bottom_x-small">
+                    <lightning-button-icon
+                        icon-name="utility:delete"
+                        variant="bare"
+                        alternative-text="Delete"
+                        data-id={qg.id}
+                        onclick={deleteQuarterlyGoal}>
+                    </lightning-button-icon>
+                </div>
+
+                <lightning-dual-listbox
+                    label="Select Quarterly Goal"
+                    options={filteredAvailableQuarterlyGoalOptions}
+                    value={qg.selectedIds}
+                    data-id={qg.id}
+                    onchange={handleQuarterlyGoalChange}>
+                </lightning-dual-listbox>
+            </template>
+
+            <template if:true={qg.isSelected}>
+                <div class="selected-item-card">
+                    <div class="card-header">
+                        <template if:true={qg.isCustom}>
+                            <lightning-input
+                                label="Custom Quarterly Goal"
+                                value={qg.selectedName}
+                                data-id={qg.id}
+                                required
+                                placeholder="Enter custom quarterly goal name"
+                                
+                                onchange={handleCustomQuarterlyGoalName}
+                                class="custom-name-input">
+                            </lightning-input>
+                        </template>
+                        <template if:false={qg.isCustom}>
+                            <h3 class="card-title">{qg.selectedName}</h3>
+                        </template>
+                        <lightning-button-icon
+                            icon-name="utility:delete"
+                            variant="bare"
+                            alternative-text="Delete"
+                            data-id={qg.id}
+                            onclick={deleteQuarterlyGoal}>
+                        </lightning-button-icon>
+                    </div>
+
+                    <lightning-textarea
+                        label="Goal Description"
+                        value={qg.description}
+                        data-id={qg.id}
+                        onchange={handleQuarterlyGoalDescription}>
+                    </lightning-textarea>
+
+                    <lightning-textarea
+                        label="Success Criteria"
+                        value={qg.successCriteria}
+                        data-id={qg.id}
+                        onchange={handleQuarterlyGoalSuccessCriteria}>
+                    </lightning-textarea>
+
+                    <div class="slds-grid slds-gutters_x-small slds-m-top_small slds-m-bottom_small">
+                        <div class="slds-col">
+                            <div class={addButtonClass} data-id={qg.id} onclick={addIntervention}>
+                                ➕ Add Intervention
+                            </div>
+                        </div>
+                        <div class="slds-col">
+                            <div class={addCustomButtonClass} data-id={qg.id} onclick={addCustomIntervention}>
+                                 ➕ Add Custom Intervention
+                            </div>
+                        </div>
+                    </div>
+
+                    <template if:true={showInterventionTemplateSearch}>
+                        <div class="slds-m-bottom_small">
+                            <lightning-input
+                                type="search"
+                                label="Search Existing Interventions"
+                                placeholder="Type intervention name..."
+                                value={interventionSearchKey}
+                                onchange={handleInterventionSearch}>
+                            </lightning-input>
+                        </div>
+                    </template>
+
+                    <template for:each={qg.interventions} for:item="intv">
+                        <div key={intv.id} class="problem-card slds-theme_shade">
+                            <template if:false={intv.isSelected}>
+                                <div class="slds-grid slds-grid_align-end slds-m-bottom_x-small">
+                                                <lightning-button-icon
+                                                    icon-name="utility:delete"
+                                                    variant="bare"
+                                                    alternative-text="Delete"
+                                                     data-goal={qg.id}
+                                                    data-id={intv.id}
+                                                    onclick={deleteIntervention}>
+                                                </lightning-button-icon>
+                                </div>
+                                <lightning-dual-listbox
+                                    label="Select Intervention (Task)"
+                                    options={filteredAvailableInterventionOptions}
+                                    value={intv.selectedIds}
+                                    data-goal={qg.id}
+                                    data-id={intv.id}  
+                                    onchange={handleInterventionChange}>
+                                </lightning-dual-listbox>
+                            </template>
+
+                            <template if:true={intv.isSelected}>
+                                <div class="selected-item-card">
+                                    <div class="card-header">
+                                        <template if:true={intv.isCustom}>
+                                            <lightning-input
+                                                label="Care Plan – Intervention"
+                                                value={intv.selectedName}
+                                                data-goal={qg.id}
+                                                data-id={intv.id}
+                                                placeholder="Enter custom intervention name"
+                                                onchange={handleCustomInterventionName}
+                                                class="custom-name-input">
+                                            </lightning-input>
+                                        </template>
+                                        <template if:false={intv.isCustom}>
+                                            <h3 class="card-title intervention-title">{intv.selectedName}</h3>
+                                        </template>
+                                        <lightning-button-icon
+                                            icon-name="utility:delete"
+                                            variant="bare"
+                                            alternative-text="Delete"
+                                            data-goal={qg.id}
+                                            data-id={intv.id}
+                                            onclick={deleteIntervention}>
+                                        </lightning-button-icon>
+                                    </div>
+
+                                    <lightning-combobox
+                                        label="Frequency"
+                                        value={intv.frequency}
+                                        options={interventionFrequencyOptions}
+                                        data-goal={qg.id}
+                                        data-id={intv.id}
+                                        placeholder="Select frequency"
+                                        onchange={handleInterventionFrequency}>
+                                    </lightning-combobox>
+
+                                    <lightning-input
+                                        label="Duration (Optional)"
+                                        value={intv.duration}
+                                        data-goal={qg.id}
+                                        data-id={intv.id}
+                                        onchange={handleInterventionDuration}>
+                                    </lightning-input>
+
+                                    <lightning-textarea
+                                        label="Intervention Details"
+                                        value={intv.details}
+                                        data-goal={qg.id}
+                                        data-id={intv.id}
+                                        onchange={handleInterventionDetails}>
+                                    </lightning-textarea>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </template>
+</lightning-accordion-section>
+
+            <!-- ================= STAKEHOLDERS ================= -->
+            <lightning-accordion-section label="Stakeholders to Engage" class="colored-accordion stakeholder" name="stakeholders">
+                <div class={addButtonClass} onclick={addStakeholder}>➕ Add Stakeholder</div>
+
+                <div class="problem-card-container">
+                    <template for:each={stakeholderBlocks} for:item="sh">
+                        <div key={sh.id} class="problem-card">
+                            <div class="selected-item-card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Stakeholder</h3>
+                                    <lightning-button-icon
+                                        icon-name="utility:delete"
+                                        variant="bare"
+                                        alternative-text="Delete"
+                                        data-id={sh.id}
+                                        onclick={deleteStakeholder}>
+                                    </lightning-button-icon>
+                                </div>
+
+                                <lightning-combobox
+                                    label="Stakeholder Type"
+                                    options={stakeholderTypeOptions}
+                                    value={sh.stakeholderType}
+                                    data-id={sh.id}
+                                    placeholder="Select type"
+                                    onchange={handleStakeholderType}>
+                                </lightning-combobox>
+
+                              
+                                    <lightning-combobox
+                                        label="Stakeholder Contact"
+                                        value={sh.contactId}
+                                        options={stakeholderContactOptions}
+                                        data-id={sh.id}
+                                        onchange={handleStakeholderContactChange}
+                                        placeholder="Select related contact"
+                                        >
+                                    </lightning-combobox>
+
+                                <!-- </template> -->
+
+                                <lightning-input
+                                    label="Role in Care (Optional)"
+                                    value={sh.roleInCare}
+                                    data-id={sh.id}
+                                    onchange={handleStakeholderRole}>
+                                </lightning-input>
+
+                               
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </lightning-accordion-section>
+
+            <!-- ================= SCHEDULE ================= -->
+            <lightning-accordion-section label="Schedule" class="colored-accordion schedule" name="schedule">
+                <div class="schedule-fields">
+                    <lightning-input type="date" label="Start Date" value={scheduleStartDate} onchange={handleScheduleStartDate}>
+                    </lightning-input>
+                    
+                    <lightning-input type="date" label="Review Date" value={scheduleReviewDate} onchange={handleScheduleReviewDate}>
+                    </lightning-input>
+
+                    
+                    <lightning-combobox
+                        label="How Often We’re Seeing the Client"
+                        value={scheduleFrequency}
+                        options={frequencyOptions}
+                        placeholder="Select frequency" 
+                        onchange={handleScheduleFrequency}>
+                    </lightning-combobox>
+
+                    <lightning-input
+                        label="Anticipated Duration"
+                        type="text"
+                        min="0"
+                        value={scheduleDuration}
+                        onchange={handleScheduleDuration}>
+                    </lightning-input>
+
+                    <lightning-input
+                        label="Anticipated Hours per Week"
+                        type="number"
+                        min="0"
+                        value={scheduleHoursPerWeek}
+                        onchange={handleScheduleHoursPerWeek}>
+                    </lightning-input>
+                </div>
+            </lightning-accordion-section>
+
+            <!-- ================= CLIENT IMPACT REVIEW ================= -->
+            <lightning-accordion-section label="Client Impact Review" class="colored-accordion schedule" name="clientImpact">
+                <div class="schedule-fields">
+                    <lightning-combobox
+                        label="Quarterly Goal Status"
+                        options={quarterlyGoalStatusOptions}
+                        value={quarterlyGoalStatus}
+                        placeholder="Select status"
+                        onchange={handleQuarterlyGoalStatus}>
+                    </lightning-combobox>
+
+                    <lightning-combobox
+                        label="Overall Client Stability This Quarter"
+                        options={clientStabilityOptions}
+                        value={clientStability}
+                        placeholder="Select stability level"
+                        onchange={handleClientStability}>
+                    </lightning-combobox>
+
+                    <lightning-combobox
+                        label="Plan Adjustment"
+                        options={planAdjustmentOptions}
+                        value={planAdjustment}
+                        placeholder="Select adjustment needed"
+                        
+                        onchange={handlePlanAdjustment}>
+                    </lightning-combobox>
+
+                    <lightning-textarea
+                        label="Outcome Summary"
+                        value={outcomeSummary}
+                        placeholder="Describe outcomes and progress..."
+                        
+                        max-length="32000"
+                        onchange={handleOutcomeSummary}>
+                    </lightning-textarea>
+
+                    
+                </div>
+            </lightning-accordion-section>
+
+        </lightning-accordion>
+
+        <!-- ================= ACTION BUTTONS ================= -->
+        <div class="slds-card__footer action-buttons">
+            <lightning-button
+                variant="neutral"
+                label="Preview PDF"
+                icon-name="utility:preview"
+                onclick={handlePreviewPDF}
+                class="slds-m-right_small">
+            </lightning-button>
+            
+            <lightning-button
+                variant="brand"
+                label="Save Care Plan"
+                icon-name="utility:save"
+                onclick={handleSaveCarePlan}>
+            </lightning-button>
+        </div>
+    </lightning-card>
+</template>

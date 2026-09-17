@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Difficulty_returning_to_sleep__c</fullName>
+    <defaultValue>false</defaultValue>
+    <label>Difficulty returning to sleep</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

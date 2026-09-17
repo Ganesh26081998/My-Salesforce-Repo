@@ -1,0 +1,120 @@
+<template>
+    <lightning-card>
+        <div slot="title" class="card-title">
+            <lightning-icon icon-name="standard:medication" size="small" class="title-icon"></lightning-icon>
+            <span class="title-text">Current Medications</span>
+        </div>
+
+        <!-- ADD THIS -->
+        <div slot="actions">
+            <lightning-button-icon
+                icon-name="utility:refresh"
+                alternative-text="Refresh"
+                title="Refresh"
+                onclick={handleRefresh}
+                class="slds-m-right_small">
+            </lightning-button-icon>
+            <lightning-button
+                label="Select Fields To Display"
+                icon-name="utility:settings"
+                onclick={openFieldModal}
+                class="slds-m-right_small">
+            </lightning-button>
+
+            <lightning-button
+                label="Printable View"
+                icon-name="utility:print"
+                onclick={handlePrint}>
+            </lightning-button>
+        </div>
+
+       
+
+        <!-- ADD THIS anywhere inside the card, outside the table -->
+        <iframe style="display:none;"></iframe>
+
+        <div class="slds-p-around_medium">            
+
+            <!-- Loading -->
+            <template if:true={isLoading}>
+                <div class="loading-container">
+                    <lightning-spinner alternative-text="Loading medications..." size="small"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Error -->
+            <template if:true={hasError}>
+                <div class="error-state">
+                    <lightning-icon icon-name="utility:error" size="small"></lightning-icon>
+                    <span class="slds-m-left_x-small">{errorMessage}</span>
+                </div>
+            </template>
+
+            <!-- Table -->
+            <template if:true={showTable}>
+                <div class="table-container">
+                    <lightning-datatable
+                        key-field="id"
+                        data={medications}
+                        columns={columns} 
+                        sorted-by={sortedBy}
+                        sorted-direction={sortDirection}
+                        onsort={handleSort}                       
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                </div>
+            </template>
+
+            <template if:true={showNoData}>
+    <div class="slds-align_absolute-center slds-p-vertical_large slds-text-color_weak">
+        No medications found.
+    </div>
+</template>
+
+<template if:true={showFieldModal}>
+                <section role="dialog" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container custom-modal">
+                        <header class="slds-modal__header">
+                            <button
+                                class="slds-button slds-button_icon slds-modal__close"
+                                title="Close"
+                                onclick={closeFieldModal}>
+                                <lightning-icon
+                                    icon-name="utility:close"
+                                    alternative-text="close"
+                                    size="small">
+                                </lightning-icon>
+                            </button>
+                            <h2 class="custom-modal-heading">Select Fields To Display</h2>
+                        </header>
+
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <lightning-dual-listbox
+                                name="fields"
+                                source-label="Available Fields"
+                                selected-label="Visible Fields (Max Fields: 6)"
+                                options={fieldOptions}
+                                value={selectedFields}
+                                onchange={handleFieldChange}>
+                            </lightning-dual-listbox>
+                        </div>
+
+                        <footer class="slds-modal__footer">
+                            <lightning-button
+                                label="Cancel"
+                                onclick={closeFieldModal}
+                                class="slds-m-right_small">
+                            </lightning-button>
+                            <lightning-button
+                                variant="brand"
+                                label="Save"
+                                onclick={saveFields}>
+                            </lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

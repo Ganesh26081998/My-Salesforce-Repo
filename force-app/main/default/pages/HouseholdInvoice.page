@@ -1,0 +1,404 @@
+<apex:page renderAs="pdf"
+           controller="SuperBillPDFController"
+           applyHtmlTag="false"
+           showHeader="false">
+
+<html>
+<head>
+<style>
+    @page {
+        margin: 1.2cm 1.2cm 1.5cm 1.2cm;
+    }
+
+    body {
+        font-family: Arial;
+        font-size: 12px;
+    }
+
+    .title {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* ── Each patient block: header + table + subtotal stay together ── */
+    .patient-block {
+        page-break-inside: avoid;
+        display: block;
+    }
+
+    /*
+     * When a patient block MUST break, never let the break happen
+     * right after the header (orphan header problem).
+     * We wrap header + first few rows in .block-start.
+     */
+    .block-start {
+        page-break-inside: avoid;
+        display: block;
+    }
+
+    .section-header {
+        font-size: 14px;
+        margin-top: 20px;
+        margin-bottom: 6px;
+        border-bottom: 1px solid #000;
+        padding-bottom: 4px;
+        /* Push entire section to next page rather than orphan the header */
+        page-break-after: avoid;
+    }
+
+    /* ── Main data table ── */
+    table.data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 4px;
+    }
+
+    table.data-table th {
+        background-color: #f2f2f2;
+        border: 1px solid #999;
+        padding: 6px;
+        text-align: left;
+        /* Header row must not be the last thing on a page */
+        page-break-after: avoid;
+    }
+
+    table.data-table td {
+        border: 1px solid #999;
+        padding: 6px;
+        vertical-align: top;
+    }
+
+    
+    table.data-table tr {
+        page-break-inside: avoid;
+    }
+
+    /* ── Subtotal line sits with the table above it ── */
+    .subtotal {
+        text-align: right;
+        margin-top: 4px;
+        margin-bottom: 16px;
+        page-break-before: avoid;   /* don't orphan the subtotal */
+    }
+
+    /* ── Grand total always on same page as last subtotal ── */
+    .grand-total {
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: right;
+        border-top: 2px solid #000;
+        padding-top: 10px;
+        page-break-before: avoid;
+    }
+
+    .no-data {
+        margin-top: 15px;
+        font-style: italic;
+        color: gray;
+    }
+</style>
+</head>
+
+<body>
+    
+
+    <!-- ── Company Header ── -->
+    <table style="width:100%; margin-bottom:20px; border:none; border-collapse:collapse;">
+        <tr>
+            <td style="width:60%; vertical-align:top; border:none; padding-top:40px;">
+                <b>{!companyName}</b><br/>
+                <apex:outputText value="{!companyStreet}" escape="false"/>
+                <br/>
+                {!companyCity}, {!companyState} {!companyPostalCode}<br/>
+                {!companyPhone}
+            </td>
+            <td style="width:40%; text-align:right;">
+                <!-- <img src="{!URLFOR($Resource.WellspringLogo)}"
+					style="width:180px; height:auto;" />-->
+                <apex:image value="{!URLFOR($Resource.WellSpringLogo)}"  style="width:180px; height:auto;"/> 
+            </td>
+        </tr>
+    </table>
+
+   <!--<div style="text-align:left; margin-bottom:14px;">
+        <b>Invoice No:</b> {!invoiceNo}
+    </div>-->
+     <!-- ================= CLIENT / INVOICE ================= -->
+            <table style="width:100%; margin-bottom:20px;">
+                <tr>
+                    <td style="width:50%;">
+                        <b>{!clientName}</b><br/>
+                        <apex:repeat value="{!addressLines}" var="line">
+                            <apex:outputText value="{!line}" />
+                            <br/>
+                        </apex:repeat>
+                    </td>
+                    
+                    <td style="width:50%;">
+                        <table style="width:100%; border-collapse:collapse;">
+                            <tr><td style="padding-left:130px;"><b>Client</b></td><td><b>{!clientName}</b></td></tr>
+                            <tr><td style="padding-left:130px;"><b>Invoice No</b></td><td>{!invoiceNo}</td></tr>
+                            <tr><td style="padding-left:130px;"><b>Invoice Date</b></td><td>{!invoiceDate}</td></tr>
+                            <tr>
+                                <td colspan="2" style="padding-left:130px;"><b>From &nbsp;</b>   {!fromDateStr} &nbsp; <b>  to &nbsp;&nbsp; </b>{!toDateStr} </td>
+                            </tr>
+                        </table>
+                        
+                        <p style="margin-top:6px;padding-left:130px;">
+                            <b>ALL PAYMENTS AUTOMATICALLY DEBITED THROUGH ACH EVERY OTHER MONDAY.</b>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+    <!-- ══════════════════════════════════════════
+         PATIENT SECTIONS
+         Each section = header + table + subtotal.
+         We wrap the header + thead in .block-start
+         so the header is never orphaned at page bottom.
+    ══════════════════════════════════════════ -->
+
+
+<apex:repeat value="{!patientSections}" var="section">
+
+        <!--
+            .patient-block tries to keep the whole section together.
+            For large sections that don't fit on one page, Flying Saucer
+            will break at the tr boundary (page-break-inside:avoid on tr).
+        -->
+        <div class="patient-block">
+
+            <!-- Header + column headings glued together -->
+            <div class="block-start">
+                <div class="section-header">
+                    <b>{!section.patientLabel}:</b> {!section.patientName}
+                    <apex:outputPanel rendered="{!NOT(ISBLANK(section.roleName))}">
+                        <br/>
+                        <span style="font-size:11px;">
+                            <b>Relationship:</b> {!section.roleName}
+                        </span>
+                    </apex:outputPanel>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr style="font-weight:bold; background:#f2f2f2;">
+                            <th>Billable No</th>
+                            <th>Subject</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <apex:repeat value="{!section.rows}" var="cd">
+                            <tr>
+                                <!-- Billable No (rowspan) -->
+                                <apex:outputPanel rendered="{!cd.showBillingName}" layout="none">
+                                    <td rowspan="{!cd.billingRowSpan}"
+                                        style="vertical-align:middle; border:1px solid #999;">
+                                        {!cd.billingName}
+                                    </td>
+                                </apex:outputPanel>
+
+                                <!-- <td>{!cd.billingLineItemName}</td> -->
+                                <apex:outputPanel rendered="{!cd.showBliName}" layout="none">
+                                    <td rowspan="{!cd.bliRowSpan}"
+                                        style="vertical-align:middle; border:1px solid #999;">
+                                        {!cd.billingLineItemName}
+                                    </td>
+                                </apex:outputPanel>
+
+                                <td>
+                                    <apex:outputText value="{0,date,MM/dd/yy}">
+                                        <apex:param value="{!cd.serviceDate}" />
+                                    </apex:outputText>
+                                    &nbsp;{!cd.description}
+                                </td>
+
+                                <td align="right">{!cd.quantity}</td>
+                                <td align="right">{!cd.rate}</td>
+                                <td align="right">{!cd.amount}</td>
+                            </tr>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+            </div><!-- /.block-start -->
+
+            <!-- Patient subtotal glued to bottom of table -->
+            <div class="subtotal">
+    <b>Client Total:</b>
+    $<apex:outputText value="{0,number,#,##0.00}">
+        <apex:param value="{!section.patientTotal}" />
+    </apex:outputText>
+</div>
+
+        </div><!-- /.patient-block -->
+
+    </apex:repeat>
+
+    <!-- ── Grand Total ── -->
+    <div class="grand-total">
+    <b>GRAND TOTAL:</b>
+    $<apex:outputText value="{0,number,#,##0.00}">
+        <apex:param value="{!grandTotal}" />
+    </apex:outputText>
+</div>
+    
+	 <!-- ================= SUMMARY TABLE ================= -->
+<table style="width:100%; border-collapse:collapse; margin-top:20px;">
+    
+    <tr>
+        <td colspan="2"
+            style="border:1px solid #999; padding:8px; background:#f2f2f2; font-weight:bold;">
+            CARE FROM {!fromDateStr} TO {!toDateStr}
+        </td>
+    </tr>
+
+    <!-- Hourly -->
+    <apex:repeat value="{!hourlySummaryRows}" var="hourly">
+        <tr>
+            <!--<td style="border:1px solid #999; padding:8px; width:75%;">
+                Hourly - &nbsp;
+                <apex:outputText value="{0,number,0.00}">
+                    <apex:param value="{!hourly.totalHours}" />
+                </apex:outputText>
+                hours @ &nbsp;
+                <apex:outputText value="{0,number,0.00}">
+                    <apex:param value="{!hourly.rate}" />
+                </apex:outputText>/hour
+            </td>-->
+            <td style="border:1px solid #999; padding:8px; width:75%;">
+
+    <apex:outputPanel rendered="{!NOT(hourly.isFlatAmount)}" layout="none">
+        Hourly - &nbsp;
+        <apex:outputText value="{0,number,0.00}">
+            <apex:param value="{!hourly.totalHours}" />
+        </apex:outputText>
+        hours @
+        <apex:outputText value="{0,number,0.00}">
+            <apex:param value="{!hourly.rate}" />
+        </apex:outputText>/hour
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!hourly.isFlatAmount}" layout="none">
+        Flat Amount
+    </apex:outputPanel>
+
+</td>
+
+            <td style="border:1px solid #999; padding:8px; text-align:right; width:25%;">
+                <apex:outputText value="{0,number,#,##0.00}">
+                    <apex:param value="{!hourly.totalAmount}" />
+                </apex:outputText>
+            </td>
+        </tr>
+    </apex:repeat>
+
+    <!-- Mileage -->
+    <apex:outputPanel rendered="{!totalMileageCharges > 0}" layout="none">
+        <tr>
+            <td style="border:1px solid #999; padding:8px;">
+                Mileage reimbursement
+            </td>
+
+            <td style="border:1px solid #999; padding:8px; text-align:right;">
+                <apex:outputText value="{0,number,#,##0.00}">
+                    <apex:param value="{!totalMileageCharges}" />
+                </apex:outputText>
+            </td>
+        </tr>
+    </apex:outputPanel>
+
+    <!-- Expense -->
+    <apex:outputPanel rendered="{!totalExpenseCharges > 0}" layout="none">
+        <tr>
+            <td style="border:1px solid #999; padding:8px;">
+                Expenses reimbursement
+            </td>
+
+            <td style="border:1px solid #999; padding:8px; text-align:right;">
+                <apex:outputText value="{0,number,#,##0.00}">
+                    <apex:param value="{!totalExpenseCharges}" />
+                </apex:outputText>
+            </td>
+        </tr>
+    </apex:outputPanel>
+
+    <!-- Payments Header -->
+    <!--<tr>
+        <td colspan="2"
+            style="border:1px solid #999; padding:8px; background:#f2f2f2; font-weight:bold;">
+            PAYMENTS
+        </td>
+    </tr>
+
+   
+    <tr>
+        <td style="border:1px solid #999; padding:8px;">
+            {!paymentDesc}{!invoiceDate}
+        </td>
+
+        <td style="border:1px solid #999; padding:8px; text-align:right; color:green;">
+            (
+            <apex:outputText value="{0,number,#,##0.00}">
+                <apex:param value="{!totalCharges}" />
+            </apex:outputText>
+            )
+        </td>
+    </tr>-->
+
+</table>
+
+
+<!-- ================= TOTALS ================= -->
+<table style="width:100%; margin-top:25px; border-collapse:collapse;">
+
+    <tr>
+        <td style="text-align:right; padding:4px 10px;">
+            <b>Total Charges</b>
+        </td>
+
+        <td style="text-align:right; width:180px;font-weight:bold; padding:4px 0;">
+            $<apex:outputText value="{0,number,#,##0.00}">
+                <b><apex:param value="{!totalCharges}" /></b>
+            </apex:outputText>
+        </td>
+    </tr>
+
+    <!--<tr>
+        <td style="text-align:right; padding:4px 10px;">
+            Payments and Credits
+        </td>
+
+        <td style="text-align:right; padding:4px 0;">
+            -$<apex:outputText value="{0,number,#,##0.00}">
+                <apex:param value="{!totalCharges}" />
+            </apex:outputText>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="text-align:right; padding:6px 10px; font-weight:bold; font-size:14px;">
+            Amount Due - Please Pay this Amount 
+        </td>
+
+        <td style="text-align:right; padding:6px 0; font-weight:bold; font-size:14px;">
+            $<apex:outputText value="{0,number,#,##0.00}">
+                <apex:param value="{!amountDue}" />
+            </apex:outputText>
+        </td>
+    </tr>-->
+
+</table>
+    
+
+</body>
+</html>
+
+</apex:page>

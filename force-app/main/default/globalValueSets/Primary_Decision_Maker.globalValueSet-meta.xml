@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Client</fullName>
+        <default>false</default>
+        <label>Client</label>
+    </customValue>
+    <customValue>
+        <fullName>Adult child (son)</fullName>
+        <default>false</default>
+        <label>Adult child (son)</label>
+    </customValue>
+    <customValue>
+        <fullName>Adult child (daughter)</fullName>
+        <default>false</default>
+        <label>Adult child (daughter)</label>
+    </customValue>
+    <customValue>
+        <fullName>Other family member</fullName>
+        <default>false</default>
+        <label>Other family member</label>
+    </customValue>
+    <customValue>
+        <fullName>Advisor (concierge MD, elder law attorney, etc.)</fullName>
+        <default>false</default>
+        <label>Advisor (concierge MD, elder law attorney, etc.)</label>
+    </customValue>
+    <customValue>
+        <fullName>Shared decision</fullName>
+        <default>false</default>
+        <label>Shared decision</label>
+    </customValue>
+    <customValue>
+        <fullName>Unknown</fullName>
+        <default>false</default>
+        <label>Unknown</label>
+    </customValue>
+    <masterLabel>Primary Decision Maker</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

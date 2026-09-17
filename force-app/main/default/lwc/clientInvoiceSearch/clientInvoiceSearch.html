@@ -1,0 +1,486 @@
+<template>
+    <lightning-card>
+
+        <div class="slds-m-around_medium">
+
+            <!-- Single Filter Row: all controls inline, bottom-aligned -->
+            <div class="slds-grid slds-grid_vertical-align-end" style="gap: 0.75rem; flex-wrap: wrap;">
+
+                <!-- ===== SERVICE PERIOD DATES DROPDOWN ===== -->
+                <div style="min-width: 220px; flex: 1 1 220px;">
+                    <div class="slds-form-element__label slds-grid slds-grid_vertical-align-center">
+                        <span>Service Period Dates</span>
+                        <lightning-helptext
+                            class="slds-m-left_x-small slds-m-bottom_xx-small"
+                            content="Select a 2-week service period (Sunday–Saturday). Choose Custom to enter a specific date range.">
+                        </lightning-helptext>
+                    </div>
+
+                    <lightning-combobox
+                        name="servicePeriod"
+                        value={selectedPeriod}
+                        placeholder="Select Period"
+                        options={periodOptions}
+                        onchange={handlePeriodChange}
+                        variant="label-hidden">
+                    </lightning-combobox>
+                </div>
+
+                <!-- ===== CUSTOM DATE INPUTS (shown only when Custom is selected) ===== -->
+                <template if:true={isCustomPeriod}>
+
+                    <div style="min-width: 130px; flex: 1 1 130px;">
+                        <div class="slds-form-element__label slds-grid slds-grid_vertical-align-center">
+                            <span>Service Period Start</span>
+                            <lightning-helptext
+                                class="slds-m-left_x-small slds-m-bottom_xx-small"
+                                content="Only billables with service dates on or after this date will be included in invoice.">
+                            </lightning-helptext>
+                        </div>
+                        <lightning-input
+                            type="date"
+                            name="fromDate"
+                            value={fromDate}
+                            max={today}
+                            onchange={handleFromDateChange}
+                            required
+                            variant="label-hidden">
+                        </lightning-input>
+                    </div>
+
+                    <div style="min-width: 130px; flex: 1 1 130px;">
+                        <div class="slds-form-element__label slds-grid slds-grid_vertical-align-center">
+                            <span>Service Period End</span>
+                            <lightning-helptext
+                                class="slds-m-left_x-small slds-m-bottom_xx-small"
+                                content="Only billables with service dates on or before this date will be included in invoice.">
+                            </lightning-helptext>
+                        </div>
+                        <lightning-input
+                            type="date"
+                            name="toDate"
+                            value={toDate}
+                            max={maxServicePeriodEndDate}
+                            onchange={handleToDateChange}
+                            required
+                            variant="label-hidden">
+                        </lightning-input>
+                    </div>
+
+                </template>
+
+                <!-- ===== LOCATION ===== -->
+                <div style="min-width: 140px; flex: 1 1 140px;">
+                    <div class="slds-form-element__label slds-grid slds-grid_vertical-align-center">
+                        <span>Location</span>
+                        <lightning-helptext
+                            class="slds-m-left_x-small slds-m-bottom_xx-small"
+                            content="Filters Clients based on assigned service location. Only invoices for selected location will be generated.">
+                        </lightning-helptext>
+                    </div>
+                    <lightning-combobox
+                        name="location"
+                        value={selectedLocation}
+                        placeholder="Select Location"
+                        options={locationOptions}
+                        onchange={handleLocationChange}
+                        variant="label-hidden">
+                    </lightning-combobox>
+                </div>
+
+                <!-- ===== COUPLE HOUSEHOLD ===== -->
+                <div style="min-width: 150px; flex: 1 1 150px;">
+                    <div class="slds-form-element__label slds-grid slds-grid_vertical-align-center">
+                        <span>Couple Household Account?</span>
+                        <lightning-helptext
+                            class="slds-m-left_x-small slds-m-bottom_xx-small"
+                            content="Primary accounts represent household heads eligible for Household Invoice generation. Non-primary accounts generate standard invoices only.">
+                        </lightning-helptext>
+                    </div>
+                    <lightning-combobox
+                        name="isPrimaryFilter"
+                        value={selectedPrimaryFilter}
+                        placeholder="All"
+                        options={primaryOptions}
+                        onchange={handlePrimaryFilterChange}
+                        variant="label-hidden">
+                    </lightning-combobox>
+                </div>
+
+                <!-- ===== SEND INVOICE TO CLIENT FILTER ===== -->
+                <div style="min-width: 150px; flex: 1 1 150px;">
+                    <div class="slds-form-element__label slds-grid slds-grid_vertical-align-center">
+                        <span>Send Invoice To Client?</span>
+                        <lightning-helptext
+                            class="slds-m-left_x-small slds-m-bottom_xx-small"
+                            content="Filter clients by whether they are marked to receive invoices directly.">
+                        </lightning-helptext>
+                    </div>
+                    <lightning-combobox
+                        name="sendInvoiceFilter"
+                        value={selectedSendInvoiceFilter}
+                        placeholder="All"
+                        options={sendInvoiceOptions}
+                        onchange={handleSendInvoiceFilterChange}
+                        variant="label-hidden">
+                    </lightning-combobox>
+                </div>
+
+                <!-- ===== CLIENT NAME ===== -->
+                <div style="min-width: 140px; flex: 1 1 140px;">
+                    <lightning-input
+                        type="text"
+                        name="clientName"
+                        label="Client Name"
+                        value={clientName}
+                        placeholder="Enter Client Name"
+                        onchange={handleClientNameChange}>
+                    </lightning-input>
+                </div>
+
+                <!-- ===== BUTTONS ===== -->
+                <div class="slds-grid slds-grid_vertical-align-center" style="gap: 0.5rem; flex-shrink: 0; padding-bottom: 2px;">
+                    <lightning-button
+                        variant="brand"
+                        label="Search"
+                        title="Search"
+                        onclick={handleSearch}
+                        >
+                    </lightning-button>
+
+                    <lightning-button
+                        variant="neutral"
+                        label="Reset"
+                        title="Reset Filters"
+                        onclick={handleReset}
+                        disabled={isResetDisabled}>
+                    </lightning-button>
+
+                    <lightning-helptext
+                        content="Client search results may include primary clients who belong to a household. For such clients, users can either generate a standard invoice or create a Household Invoice that combines billables for multiple family members.">
+                    </lightning-helptext>
+                </div>
+
+            </div>
+
+            <!-- ===== BULK ACTION ROW ===== -->
+            <template if:true={showInvoiceLinks}>
+                <div class="slds-m-top_small slds-grid slds-grid_align-end slds-gutters_small">
+                    <!-- Download Standard -->
+                    <div class="slds-col">
+                        <lightning-button
+                            variant="brand-outline"
+                            label="Download Standard Invoice"
+                            onclick={handleDownloadStandard}
+                            disabled={isDownloadDisabled}>
+                        </lightning-button>
+                    </div>
+
+                    <!-- Download Household -->
+                    <div class="slds-col">
+                        <lightning-button
+                            variant="brand-outline"
+                            label="Download Household Invoice"
+                            onclick={handleDownloadSuperBill}
+                            disabled={isHouseholdDisabled}>
+                        </lightning-button>
+                    </div>
+
+                    <div class="slds-col">
+                        <lightning-button
+                            variant="brand"
+                            label="Email Standard Invoice"
+                            onclick={handleBulkStandard}
+                            disabled={isEmailDisabled}>
+                        </lightning-button>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-button
+                            variant="brand"
+                            label="Email Household Invoice"
+                            onclick={handleBulkSuperBill}
+                            disabled={isEmailHouseholdDisabled}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+       
+
+        <!-- ===== SPINNER ===== -->
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+
+        <!-- ===== RESULTS TABLE ===== -->
+        <template if:true={showResults}>
+            <div class="slds-m-around_medium">
+                <div class="slds-m-bottom_x-small slds-text-body_small slds-text-color_weak">
+                    {totalRecords} record(s) found
+                </div>
+                <lightning-datatable
+                    class="clientData-table"
+                    key-field="Id"
+                    data={clientData}
+                    columns={columns}
+                    sorted-by={sortedBy}
+                    sorted-direction={sortedDirection}
+                    onsort={handleSort}
+                    onrowselection={handleRowSelection}
+                    onrowaction={handleRowAction}>
+                </lightning-datatable>
+            </div>
+        </template>
+
+        <!-- ===== NO RESULTS ===== -->
+        <template if:true={showNoResults}>
+            <div class="slds-m-around_medium slds-text-align_center">
+                <p class="slds-text-color_weak">No clients found matching the selected criteria.</p>
+            </div>
+        </template>
+
+        <c-pdf-generate></c-pdf-generate>
+
+    </lightning-card>
+
+    <!-- ===== INVOICE PREVIEW MODAL ===== -->
+    <template if:true={showPreviewModal}>
+        <section
+            role="dialog"
+            tabindex="-1"
+            aria-modal="true"
+            aria-labelledby="modal-heading"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container" style="max-width: 680px;">
+
+                <!-- Header -->
+                <header class="slds-modal__header">
+                    <button
+                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close"
+                        onclick={closePreviewModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="Close" size="small"></lightning-icon>
+                    </button>
+                    <h2 id="modal-heading" class="slds-modal__title slds-hyphenate">
+                        Invoice Preview — {previewClientName}
+                    </h2>
+                </header>
+
+                <!-- Body -->
+                <div class="slds-modal__content slds-p-around_medium" style="max-height: 60vh; overflow-y: auto;">
+
+                    <template if:true={isLoadingInvoices}>
+                        <div class="slds-align_absolute-center slds-p-around_large">
+                            <lightning-spinner alternative-text="Loading invoices" size="small"></lightning-spinner>
+                        </div>
+                    </template>
+
+                    <template if:false={isLoadingInvoices}>
+
+                        <!-- No invoices found -->
+                        <template if:true={noPreviewInvoices}>
+                            <p class="slds-text-color_weak slds-text-align_center">
+                                No invoices found for this client in the selected date range.
+                            </p>
+                        </template>
+
+                        <!-- Invoice list grouped by client -->
+                        <template if:false={noPreviewInvoices}>
+                            <template for:each={previewInvoiceGroups} for:item="group">
+                                <div key={group.clientId} class="slds-m-bottom_medium">
+                                    <!-- Client heading -->
+                                    <div class="slds-text-heading_small slds-m-bottom_x-small"
+                                         style="border-bottom: 1px solid #dddbda; padding-bottom: 4px;">
+                                        {group.clientName}
+                                    </div>
+
+                                    <!-- Invoices for this client -->
+                                    <template for:each={group.invoices} for:item="inv">
+                                        <div key={inv.id}
+                                             class="slds-grid slds-grid_vertical-align-center slds-p-vertical_xx-small"
+                                             style="gap: 0.5rem;">
+
+                                            <!-- Invoice label -->
+                                            <div class="slds-col slds-grow">
+                                                <span class="slds-text-body_regular">
+                                                    {inv.name}
+                                                </span>
+                                                <span class="slds-text-color_weak slds-m-left_x-small slds-text-body_small">
+                                                    ({inv.fromDate} – {inv.toDate})
+                                                </span>
+                                            </div>
+
+                                            <!-- Preview icon button -->
+                                            <div class="slds-col slds-shrink">
+                                                <lightning-button-icon
+                                                    icon-name="utility:preview"
+                                                    variant="border-filled"
+                                                    size="small"
+                                                    alternative-text="Preview Invoice"
+                                                    title="Preview Invoice"
+                                                    data-inv-id={inv.id}
+                                                    data-account-id={inv.accountId}
+                                                    data-from-date={inv.rawFromDate}
+                                                    data-to-date={inv.rawToDate}
+                                                    data-inv-name={inv.name}
+                                                    data-inv-type={inv.type}
+                                                    onclick={handlePreviewInvoice}>
+                                                </lightning-button-icon>
+                                            </div>
+
+                                        </div>
+                                    </template>
+
+                                </div>
+                            </template>
+                        </template>
+
+                    </template>
+                </div>
+
+                <!-- Footer -->
+                <footer class="slds-modal__footer">
+                    <lightning-button
+                        variant="neutral"
+                        label="Close"
+                        onclick={closePreviewModal}>
+                    </lightning-button>
+                </footer>
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- ===== DOWNLOAD ACTION MODAL ===== -->
+<template if:true={showDownloadModal}>
+    <section role="dialog" tabindex="-1" aria-modal="true"
+             aria-labelledby="download-modal-heading"
+             class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container" style="max-width: 680px;">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeDownloadModal}>
+                    <lightning-icon icon-name="utility:close" alternative-text="Close" size="small"></lightning-icon>
+                </button>
+                <h2 id="download-modal-heading" class="slds-modal__title slds-hyphenate">
+                    {downloadModalTitle}
+                </h2>
+            </header>
+
+            <div class="slds-modal__content slds-p-around_medium" style="max-height:60vh;overflow-y:auto;">
+                <template if:true={isLoadingDownloadModal}>
+                    <div class="slds-align_absolute-center slds-p-around_large">
+                        <lightning-spinner alternative-text="Preparing" size="small"></lightning-spinner>
+                    </div>
+                </template>
+
+                <template if:false={isLoadingDownloadModal}>
+                    <!-- Couple Household: choose invoice type first -->
+                    <template if:true={downloadModalShowHouseholdChoice}>
+                        <p class="slds-m-bottom_small">
+                            This client is a Couple Household. Choose which invoice type to download:
+                        </p>
+                        <div class="slds-grid" style="gap:0.75rem;">
+                            <lightning-button variant="brand-outline" label="Standard Invoice"
+                                             onclick={handleDownloadModalStandard}></lightning-button>
+                            <lightning-button variant="brand" label="Household Invoice"
+                                             onclick={handleDownloadModalHousehold}></lightning-button>
+                        </div>
+                    </template>
+
+                    <!-- Period list -->
+                    <template if:false={downloadModalShowHouseholdChoice}>
+                        <template if:true={noDownloadPeriods}>
+                            <p class="slds-text-color_weak slds-text-align_center">No download periods available.</p>
+                        </template>
+                        <template if:false={noDownloadPeriods}>
+                            <!-- <template for:each={downloadPeriods} for:item="dp">
+                                <div key={dp.key}
+                                     class="slds-grid slds-grid_vertical-align-center slds-p-vertical_xx-small"
+                                     style="gap:0.5rem;">
+                                    <div class="slds-col slds-grow">
+                                        <span class="slds-text-title_bold">{dp.label}</span>
+                                        <span class="slds-text-color_weak slds-m-left_x-small slds-text-body_small">
+                                            ({dp.fromDate} – {dp.toDate})
+                                        </span>
+                                    </div>
+                                    <div class="slds-col slds-shrink">
+                                        <lightning-button-icon
+                                            icon-name="utility:download"
+                                            variant="border-filled" size="small"
+                                            alternative-text="Download" title="Download Invoice"
+                                            data-from-date={dp.rawFrom}
+                                            data-to-date={dp.rawTo}
+                                            data-inv-type={downloadModalInvoiceType}
+                                            onclick={handleDownloadPeriodClick}>
+                                        </lightning-button-icon>
+                                    </div>
+                                </div>
+                            </template> -->
+                            <!-- Select All row -->
+<div class="slds-grid slds-grid_vertical-align-center slds-p-bottom_x-small slds-m-bottom_x-small"
+     style="border-bottom: 1px solid #dddbda; gap: 0.5rem;">
+    <div class="slds-col slds-grow">
+        <lightning-input
+            type="checkbox"
+            label="Select All"
+            checked={allPeriodsSelected}
+            onchange={handleSelectAllPeriods}>
+        </lightning-input>
+    </div>
+    <div class="slds-col slds-shrink">
+        <lightning-button
+            variant="brand-outline"
+            label="Download Selected"
+            disabled={noPeriodsSelected}
+            onclick={handleDownloadSelectedPeriods}>
+        </lightning-button>
+    </div>
+</div>
+
+<!-- Individual period rows -->
+<template for:each={downloadPeriods} for:item="dp">
+    <div key={dp.key}
+         class="slds-grid slds-grid_vertical-align-center slds-p-vertical_xx-small"
+         style="gap:0.5rem;">
+        <div class="slds-col slds-grow">
+            <lightning-input
+                type="checkbox"
+                label={dp.label}
+                checked={dp.selected}
+                data-key={dp.key}
+                onchange={handlePeriodCheckboxChange}>
+            </lightning-input>
+            <span class="slds-text-color_weak slds-text-body_small slds-m-left_large">
+                ({dp.fromDate} – {dp.toDate})
+            </span>
+        </div>
+        <div class="slds-col slds-shrink">
+            <lightning-button-icon
+                icon-name="utility:download"
+                variant="border-filled" size="small"
+                alternative-text="Download" title="Download this period"
+                data-from-date={dp.rawFrom}
+                data-to-date={dp.rawTo}
+                data-inv-type={downloadModalInvoiceType}
+                onclick={handleDownloadPeriodClick}>
+            </lightning-button-icon>
+        </div>
+    </div>
+</template>
+                        </template>
+                    </template>
+                </template>
+            </div>
+
+            <footer class="slds-modal__footer">
+                <lightning-button variant="neutral" label="Close" onclick={closeDownloadModal}></lightning-button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+
+</template>

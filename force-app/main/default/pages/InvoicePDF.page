@@ -1,0 +1,249 @@
+<apex:page controller="InvoicePDFController"
+           renderAs="pdf"
+           showHeader="false"
+           applyHtmlTag="false"
+           applyBodyTag="false"
+           lightningStylesheets="false">
+    
+    <html>
+        <body style="font-family:Arial; font-size:12px; color:#000;">
+            
+            <!-- ================= HEADER ================= -->
+            <table style="width:100%; margin-bottom:20px;">
+                <tr>
+                    <td style="width:60%; vertical-align:top; padding-top:40px;">
+                        <b>{!companyName}</b><br/>
+                        <div>
+                            <apex:outputText value="{!companyStreet}" escape="false"/>
+                        </div>                                                
+
+                        <div>
+                           {!companyCity}, {!companyState} {!companyPostalCode}<br/>
+                        </div>
+                
+                        <div>{!companyPhone}</div>
+                    </td>
+                    <td style="width:40%; text-align:right;">
+                       <!-- <img src="{!URLFOR($Resource.WellspringLogo)}"
+                             style="width:180px; height:auto;" />-->
+                        <apex:image value="{!URLFOR($Resource.WellSpringLogo)}"  style="width:180px; height:auto;"/> 
+                    </td>
+                </tr>
+            </table>
+            
+            <!-- ================= CLIENT / INVOICE ================= -->
+            <table style="width:100%; margin-bottom:20px;">
+                <tr>
+                    <td style="width:50%;">
+                        <b>{!clientName}</b><br/>
+                        <apex:repeat value="{!addressLines}" var="line">
+                            <apex:outputText value="{!line}" />
+                            <br/>
+                        </apex:repeat>
+                    </td>
+                    
+                    <td style="width:50%;">
+                        <table style="width:100%; border-collapse:collapse;">
+                            <tr><td style="padding-left:130px;"><b>Client</b></td><td><b>{!clientName}</b></td></tr>
+                            <tr><td style="padding-left:130px;"><b>Invoice No</b></td><td>{!invoiceNo}</td></tr>
+                            <tr><td style="padding-left:130px;"><b>Invoice Date</b></td><td>{!invoiceDate}</td></tr>
+                            <tr>
+                                <td colspan="2" style="padding-left:130px;"><b>From &nbsp;</b>   {!fromDate} &nbsp; <b>  to &nbsp;&nbsp; </b>{!toDate} </td>
+                            </tr>
+                        </table>
+                        
+                        <p style="margin-top:6px;padding-left:130px;">
+                            
+                            
+                            <b>ALL PAYMENTS AUTOMATICALLY DEBITED THROUGH ACH EVERY OTHER MONDAY.</b>
+
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            
+            <!-- ================= CARE DETAILS ================= -->
+            <h3>Care Details</h3>
+            
+            <table width="100%" cellspacing="0" cellpadding="6" style="width:100%; margin-bottom:40px; border-collapse:collapse;">
+                <tr style="font-weight:bold; background:#f2f2f2;">
+                    <td style="border:1px solid #999;">Billable No</td>
+                    <td style="border:1px solid #999;">Subject</td>    
+                    <td style="border:1px solid #999;">Description</td>
+                    <td style="border:1px solid #999;">Quantity</td>
+                    <td style="border:1px solid #999;">Rate</td>
+                    <td style="border:1px solid #999;">Amount</td>
+                </tr>
+                
+                <apex:repeat value="{!careDetails}" var="cd">
+                    <tr>
+                        <apex:outputPanel rendered="{!cd.showBillingName}" layout="none">
+                            <td rowspan="{!cd.billingRowSpan}" style="vertical-align:middle; border:1px solid #999;">
+                                {!cd.billingName}
+                            </td>
+                        </apex:outputPanel>
+                        
+                        
+                        <apex:outputPanel rendered="{!cd.showBliName}" layout="none">
+                            <td rowspan="{!cd.bliRowSpan}" style="vertical-align:middle; border:1px solid #999;">
+                                {!cd.billingLineItemName}
+                            </td>
+                        </apex:outputPanel>
+                        
+                        
+                        <td style="border:1px solid #999;">
+                            <apex:outputText value="{0,date,MM/dd/yy}">
+                                <apex:param value="{!cd.serviceDate}" />
+                            </apex:outputText>
+                            &nbsp;
+                            
+                            <apex:outputPanel layout="none">
+                                {!cd.description}
+                            </apex:outputPanel>
+                        </td>
+                        
+                        <td align="right" style="border:1px solid #999;">
+                            <apex:outputPanel layout="none">
+                                {!cd.quantity}
+                            </apex:outputPanel>
+                        </td>
+                        
+                        <td align="right" style="border:1px solid #999;">
+                            <apex:outputPanel layout="none">
+                                {!cd.rate}
+                            </apex:outputPanel>
+                        </td>
+                        
+                        <td align="right" style="border:1px solid #999;">
+                            <apex:outputPanel layout="none">
+                                {!cd.amount}
+                            </apex:outputPanel>
+                        </td>
+                    </tr>
+                </apex:repeat>
+            </table>
+            
+            <!-- ================= SUMMARY TABLE ================= -->
+            <table style="width:100%; border-collapse:collapse; margin-bottom:12px;">
+                <tr>
+                    <td colspan="2" style="border:1px solid #999; padding:6px; background:#f2f2f2;">
+                        <b>CARE FROM {!fromDate} TO {!toDate}</b>
+                    </td>
+                </tr>
+                
+                <!-- Hourly charges grouped by rate -->
+                <apex:repeat value="{!hourlySummaryRows}" var="hourly">
+                    <tr>
+                        <!--<td style="border:1px solid #999; padding:6px;">
+                            Hourly - &nbsp; <apex:outputText value="{0,number,0.00}">
+                                <apex:param value="{!hourly.totalHours}" />
+                            </apex:outputText> hours @  &nbsp;<apex:outputText value="{0,number,0.00}">
+                                <apex:param value="{!hourly.rate}" />
+                            </apex:outputText>/hour
+                        </td>-->
+                        <td style="border:1px solid #999; padding:6px;">
+
+        <apex:outputPanel rendered="{!NOT(hourly.isFlatAmount)}" layout="none">
+            Hourly - &nbsp;
+            <apex:outputText value="{0,number,0.00}">
+                <apex:param value="{!hourly.totalHours}" />
+            </apex:outputText>
+            hours @
+            <apex:outputText value="{0,number,0.00}">
+                <apex:param value="{!hourly.rate}" />
+            </apex:outputText>/hour
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!hourly.isFlatAmount}" layout="none">
+            Flat Amount
+        </apex:outputPanel>
+
+    </td>
+                        <td style="border:1px solid #999; padding:6px; text-align:right;">
+                            <apex:outputText value="{0,number,#,##0.00}">
+                                <apex:param value="{!hourly.totalAmount}" />
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                </apex:repeat>
+                
+                <!-- Mileage reimbursement -->
+                <apex:outputPanel rendered="{!totalMileageCharges > 0}" layout="none">
+                    <tr>
+                        <td style="border:1px solid #999; padding:6px;">
+                            Mileage reimbursement
+                        </td>
+                        <td style="border:1px solid #999; padding:6px; text-align:right;">
+                            <apex:outputText value="{0,number,#,##0.00}">
+                                <apex:param value="{!totalMileageCharges}" />
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                </apex:outputPanel>
+                
+                <!-- Expenses reimbursement -->
+                <apex:outputPanel rendered="{!totalExpenseCharges > 0}" layout="none">
+                    <tr>
+                        <td style="border:1px solid #999; padding:6px;">
+                            Expenses reimbursement
+                        </td>
+                        <td style="border:1px solid #999; padding:6px; text-align:right;">
+                            <apex:outputText value="{0,number,#,##0.00}">
+                                <apex:param value="{!totalExpenseCharges}" />
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                </apex:outputPanel>
+                
+                <!-- PAYMENTS -->
+                <!--<tr>
+                    <td colspan="2" style="border:1px solid #999; padding:6px; background:#f2f2f2;">
+                        <b>PAYMENTS</b>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="border:1px solid #999; padding:6px;">
+                        {!paymentDesc}{!invoiceDate}
+                    </td>
+                    <td style="border:1px solid #999; padding:6px; text-align:right;color:green;">
+                        (<apex:outputText value="{0,number,#,##0.00}">
+                            <apex:param value="{!totalCharges}" />
+                        </apex:outputText>)
+                    </td>
+                </tr>-->
+            </table>
+            
+            <!-- ================= TOTALS ================= -->
+            <table style="width:100%;">
+                <tr>
+                    <td style="text-align:right; padding:4px;"><b>Total Charges</b></td>
+                    <td style="text-align:right; width:150px;font-weight:bold; padding:4px;">
+                        $<apex:outputText value="{0,number,#,##0.00}">
+                            <apex:param value="{!totalCharges}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <!--<tr>
+                    <td style="text-align:right; padding:4px;">Payments and Credits</td>
+                    <td style="text-align:right; padding:4px;">
+                        -$<apex:outputText value="{0,number,#,##0.00}">
+                            <apex:param value="{!totalCharges}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:right; font-weight:bold; padding:4px;">
+                        Amount Due - Please Pay this Amount
+                    </td>
+                    <td style="text-align:right; font-weight:bold; padding:4px;">
+                        $<apex:outputText value="{0,number,#,##0.00}">
+                            <apex:param value="{!amountDue}" />
+                        </apex:outputText>
+                    </td>
+                </tr>-->
+            </table>
+            
+        </body>
+    </html>
+</apex:page>

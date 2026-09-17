@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expense_Credit</fullName>
+    <active>false</active>
+    <label>Expense/Credit</label>
+    <picklistValues>
+        <picklist>Caregiver_Hourly__c</picklist>
+        <values>
+            <fullName>Admin - %240%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CM Evening%2FWeekends - %2470%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CM Holidays - %24120%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CM Standard - %2460%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Custom</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Caregiver_PerVisit__c</picklist>
+        <values>
+            <fullName>Custom</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Caregiver_Rate__c</picklist>
+        <values>
+            <fullName>Hourly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Payable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Client_Hourly__c</picklist>
+        <values>
+            <fullName>Admin - %240%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CM Evening%2FWeekends - %24175%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CM Holidays - %24300%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CMStandard-%24150%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Custom</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Client_PerVisit__c</picklist>
+        <values>
+            <fullName>Custom</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Client_Rate__c</picklist>
+        <values>
+            <fullName>Hourly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Payable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Caregiver Billable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Billable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expense%2FCredit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mileage</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

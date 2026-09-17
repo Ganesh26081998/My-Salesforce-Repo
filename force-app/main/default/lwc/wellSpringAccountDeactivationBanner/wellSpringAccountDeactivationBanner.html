@@ -1,0 +1,35 @@
+<template>
+    <!-- Renders nothing for active accounts â€” zero footprint in App Builder -->
+    <template if:true={isDeactivated}>
+        <div class="slds-notify slds-notify_alert slds-alert_error" role="alert" aria-live="assertive">
+
+            <span class="slds-assistive-text">Error</span>
+
+            <!-- Centre: text -->
+            <div class="slds-notify__content">
+                <div class="deactivation-title-row">
+                    <lightning-icon
+                        icon-name="utility:ban"
+                        variant="inverse"
+                        size="x-small"
+                        class="deactivation-title-icon">
+                    </lightning-icon>
+                    <p class="slds-text-heading_small slds-m-bottom_none">Account Deactivated</p>
+                </div>
+                <p class="slds-text-body_small">
+                    This account is Deactivated.
+                </p>
+            </div>
+
+            <!-- Right: lock icon -->
+            <div class="slds-notify__close">
+                <lightning-icon
+                    icon-name="utility:lock"
+                    variant="inverse"
+                    size="x-small">
+                </lightning-icon>
+            </div>
+
+        </div>
+    </template>
+</template>

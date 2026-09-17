@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Early Awareness – Something is wrong; info-gathering only</fullName>
+        <default>false</default>
+        <label>Early Awareness – Something is wrong; info-gathering only</label>
+    </customValue>
+    <customValue>
+        <fullName>Problem Recognition – Problem identified; exploring options</fullName>
+        <default>false</default>
+        <label>Problem Recognition – Problem identified; exploring options</label>
+    </customValue>
+    <customValue>
+        <fullName>Education Stage – Wants to understand WellSpring services, scope, pricing</fullName>
+        <default>false</default>
+        <label>Education Stage – Wants to understand WellSpring services, scope, pricing</label>
+    </customValue>
+    <customValue>
+        <fullName>Evaluating Fit – Comparing options or determining whether WellSpring is the right solution</fullName>
+        <default>false</default>
+        <label>Evaluating Fit – Comparing options or determining whether WellSpring is the right solution</label>
+    </customValue>
+    <customValue>
+        <fullName>Decision Stage – Ready to move forward; needs scheduling/contract/next steps</fullName>
+        <default>false</default>
+        <label>Decision Stage – Ready to move forward; needs scheduling/contract/next steps</label>
+    </customValue>
+    <customValue>
+        <fullName>Crisis Activation – Immediate need; decision must happen quickly</fullName>
+        <default>false</default>
+        <label>Crisis Activation – Immediate need; decision must happen quickly</label>
+    </customValue>
+    <masterLabel>Readiness Stage</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

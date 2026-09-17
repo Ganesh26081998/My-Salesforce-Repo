@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Qualified_Prospect_fits_WellSpring__c</fullName>
+    <label>Qualified Prospect — fits WellSpring</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Intake_Disposition__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Schedule assessment</fullName>
+                <default>false</default>
+                <label>Schedule assessment</label>
+            </value>
+            <value>
+                <fullName>Needs follow-up</fullName>
+                <default>false</default>
+                <label>Needs follow-up</label>
+            </value>
+            <value>
+                <fullName>On Hold List - Not a fit right now but could be in the future</fullName>
+                <default>false</default>
+                <label>On Hold List - Not a fit right now but could be in the future</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Qualified Prospect — fits WellSpring services</controllingFieldValue>
+            <valueName>Schedule assessment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualified Prospect — fits WellSpring services</controllingFieldValue>
+            <valueName>Needs follow-up</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualified Prospect — fits WellSpring services</controllingFieldValue>
+            <valueName>On Hold List - Not a fit right now but could be in the future</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

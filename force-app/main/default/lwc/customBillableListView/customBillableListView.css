@@ -1,0 +1,21 @@
+.custom-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(3px);
+    z-index: 9998;
+}
+
+.spinner-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    text-align: center;
+}
+
+.spinner-message {
+    margin-top: 12px;
+    font-weight: 600;
+}

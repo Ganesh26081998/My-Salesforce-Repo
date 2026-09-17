@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Auto_Clock_in__c</fullName>
+    <defaultValue>false</defaultValue>
+    <inlineHelpText>If Auto Clock-In is enabled, WellSky Personal Care will automatically clock the caregiver in at the scheduled start time. During the shift, the care giver will be able to update tasks, complete forms, report mileage and record general comments.</inlineHelpText>
+    <label>Auto Clock-in</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

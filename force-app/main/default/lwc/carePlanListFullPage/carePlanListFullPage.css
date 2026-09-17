@@ -1,0 +1,21 @@
+.slds-cell-fixed .slds-truncate{
+    color: black !important;
+}
+.custom-datatable{
+    
+    --slds-s-table-header-color:#000000;
+}
+.slds-modal__footer{
+    gap: 10px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px;
+}
+.delete-Button{
+    --slds-c-button-brand-color-background: #066afe;
+    border:none;
+}
+.close-modal-button {
+    --slds-c-icon-color-foreground-default: #032d60;
+    border-radius: 50%;
+}

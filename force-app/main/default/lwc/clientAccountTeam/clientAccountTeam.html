@@ -1,0 +1,82 @@
+<template>
+    <lightning-card title="Client Team">
+        
+        <lightning-button
+            slot="actions"
+            label="Manage"
+            variant="neutral"
+            onclick={handleManage}>
+        </lightning-button>
+        
+        
+        <div class="slds-p-around_medium">
+        <template if:true={isRefreshing}>
+                <div class="slds-align_absolute-center slds-p-vertical_medium">
+                    <lightning-spinner
+                        alternative-text="Refreshing team"
+                        size="small">
+                    </lightning-spinner>
+                </div>
+            </template>
+        <template if:false={isRefreshing}>
+            <template if:true={hasUsers}>
+                <div class="slds-scrollable_y slds-p-right_x-small" style="max-height:220px;" tabindex="0">
+                <ul class="slds-has-dividers_bottom-space">
+                    <template for:each={internalUsers} for:item="user">
+                        <li key={user.Id} class="slds-item slds-p-vertical_x-small">
+                            
+
+
+                            <div class="slds-truncate">
+                                <lightning-icon icon-name="standard:user" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                
+                                <span class="slds-m-right_x-small">
+                                    {user.External_User_Name__c}
+                                </span>
+
+                                <template if:true={user.Role__c}>
+                                    <lightning-badge label={user.Role__c}></lightning-badge>
+                                </template>
+                            </div>
+                        </li>
+                    </template>
+                    <template for:each={externalUsers} for:item="user">
+                        <li key={user.Id} class="slds-item slds-p-vertical_x-small">
+                            <div class="slds-truncate">
+                                <lightning-icon icon-name="utility:user" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                <span class="slds-m-right_x-small">
+                                {user.External_User_Name__c}
+                                </span>
+                                <template if:true={user.Role__c}>
+                                    <lightning-badge label={user.Role__c}></lightning-badge>
+                                </template>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+                </div>
+            </template>
+            
+            <template if:false={hasUsers}>
+                <div class="slds-align_absolute-center slds-m-vertical_medium">
+                    <div class="slds-text-align_center">
+                        <lightning-icon
+                            icon-name="standard:user"
+                            size="small"
+                            class="slds-m-bottom_small">
+                        </lightning-icon>
+
+                        <p class="slds-text-heading_small">
+                            No users associated
+                        </p>
+
+                        <p class="slds-text-body_small slds-text-color_weak">
+                            Click <strong>Manage</strong> to add internal or external users
+                        </p>
+                    </div>
+                </div>
+            </template>
+        </template>
+        </div> 
+    </lightning-card>
+</template>

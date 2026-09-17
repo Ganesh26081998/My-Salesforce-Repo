@@ -1,0 +1,133 @@
+<template>
+    <lightning-card >
+
+        <!-- HEADER: Title (Left) + New Button (Right) -->
+        <div class="slds-m-around_medium slds-grid slds-grid_align-spread slds-align-middle">
+            
+            <!-- LEFT: Heading -->
+            <div class="slds-text-heading_small">
+                Care Plans
+            </div>
+
+            <!-- RIGHT: New Button -->
+            <div class="slds-grid slds-gutters_small slds-align-middle" style="gap:10px">
+             <template if:true={showNewButton}>
+                <lightning-button
+                    label="New"
+                    variant="neutral"
+                    class="manage-style"
+                    onclick={handleNewCarePlan}>
+                </lightning-button>
+            </template>
+
+            <template if:true={hasCarePlans}>
+                <lightning-button
+                    label="View Current Careplan"
+                    variant="neutral"
+                    class="manage-style"
+                    onclick={handlePreviewLatestCarePlan}>
+                </lightning-button>
+            </template>
+        </div>
+        </div>
+
+        <!-- DATA TABLE -->
+         <template if:true={hasCarePlans}>
+        <lightning-datatable
+            class="careplan-table"
+            key-field="Id"
+            data={displayedCarePlans}
+            columns={columns}
+            hide-checkbox-column
+            onrowaction={handleRowAction}>
+        </lightning-datatable>
+        </template>
+        <!-- EMPTY STATE MESSAGE -->
+        <template if:false={hasCarePlans}>
+            <div class="empty-state-message">
+                No care plans yet, create one!
+            </div>
+        </template>
+        <template if:true={showDeleteModal}>
+    <section role="dialog" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <h2 class="slds-text-heading_medium">
+                    Delete Care Plan
+                </h2>
+            </header>
+
+            <div class="slds-modal__content slds-p-around_medium">
+                Are you sure you want to delete this Care Plan?
+            </div>
+
+            <footer class="slds-modal__footer">
+                <lightning-button
+                    label="Cancel"
+                    onclick={closeModal}>
+                </lightning-button>
+
+                <lightning-button
+                    label="Yes"
+                    variant="brand"
+                    class="destructive-btn"
+                    onclick={confirmDelete}>
+                </lightning-button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+
+<template if:true={showNewModal}>
+    <div class="slds-modal slds-fade-in-open" role="dialog" aria-modal="true">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <h2 class="slds-text-heading_medium">{carePlanTitle}</h2>
+                 
+                <button class="slds-button slds-button_icon slds-modal__close" onclick={closeNewModal} title="Close">
+                    <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                </button>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium">
+                <c-care-plan-p-d-f-generator record-id={recordId} onclose={closeNewModal}></c-care-plan-p-d-f-generator>
+            </div>
+        </div>
+    </div>
+    <div class="slds-backdrop slds-backdrop_open" onclick={closeNewModal}></div>
+</template>
+
+<template if:true={showEditModal}>
+    <div class="slds-modal slds-fade-in-open" role="dialog" aria-modal="true">
+        <div class="slds-modal__container edit-modal">
+            <div class="slds-modal__header">
+                
+                <h3 class="slds-text-heading_medium">{carePlanTitle}</h3>
+                <button class="slds-button slds-button_icon slds-modal__close" onclick={closeEditModal} title="Close">
+                    <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                </button>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium">
+                <c-care-plan-edit record-id={selectedRecordId} onclose={closeEditModal}></c-care-plan-edit>
+            </div>
+        </div>
+    </div>
+    <div class="slds-backdrop slds-backdrop_open" onclick={closeEditModal}></div>
+</template>
+
+
+
+
+
+        <!-- VIEW ALL BUTTON -->
+         <template if:true={hasCarePlans}>
+        <div class="view-all-container">
+            <lightning-button
+                label="View All"
+                variant="base"
+                onclick={handleViewAll}>
+            </lightning-button>
+        </div>
+        </template>
+    </lightning-card>
+</template>

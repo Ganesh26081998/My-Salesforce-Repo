@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Billing__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Billing</label>
+    <referenceTo>Billing__c</referenceTo>
+    <relationshipLabel>Event Billables</relationshipLabel>
+    <relationshipName>Event_Billables</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

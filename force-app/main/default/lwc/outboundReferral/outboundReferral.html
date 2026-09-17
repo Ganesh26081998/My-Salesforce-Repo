@@ -1,0 +1,95 @@
+<template>
+    <lightning-card>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+
+        <div class="slds-p-around_medium">
+            <h1 class="slds-text-heading_large"><b>Outbound Referral</b></h1>
+            <hr class="slds-m-vertical_small"/>
+
+            
+            <lightning-record-picker
+                label="TO"
+                object-api-name="Account"
+                value={businessId}
+                filter={businessFilter}
+                onchange={handleBusinessChange}
+                required>
+            </lightning-record-picker>
+
+            <lightning-input type="date" label="Date" value={todayDate} read-only></lightning-input>
+
+            
+            <lightning-input
+                data-id="businessEmail"
+                type="email"
+                label="Business Email"
+                placeholder="example1@email.com"
+                value={businessEmail}
+                onchange={handleEmailChange}
+                required>
+            </lightning-input>
+
+            <lightning-combobox
+                data-id="referralType"
+                label="Referral Type"
+                value={referralType}
+                options={referralTypeOptions}
+                onchange={handleReferralTypeChange}
+                required>
+            </lightning-combobox>
+
+            
+            <lightning-input
+                data-id="additionalEmails"
+                label="Additional Email Addresses"
+                value={additionalEmails}
+                placeholder="example1@email.com, example2@email.com"
+                field-level-help="You can enter up to 3 email addresses, separated by commas."
+                onchange={handleAdditionalEmailChange}>
+            </lightning-input>
+
+            <hr/>
+
+            <h3 class="slds-text-heading_medium"><b>Client Representative</b></h3>
+
+
+            <lightning-combobox
+                label="Contact"
+                placeholder="Select Contact"
+                value={selectedContactId}
+                options={contactOptions}
+                onchange={handleContactChange}>
+            </lightning-combobox>
+
+            <lightning-input label="Role" value={role} read-only></lightning-input>
+            <lightning-input label="Mobile Phone" value={selectedContactPhone} read-only></lightning-input>
+            <lightning-input label="Email" value={selectedContactEmail} read-only></lightning-input>
+
+            <hr/>
+
+            <h3 class="slds-text-heading_medium"><b>Senior Name</b></h3>
+            <lightning-input label="Name" value={patientName} read-only></lightning-input>
+            <lightning-input type="date" label="Date of Birth" value={patientDob} read-only></lightning-input>
+
+            <hr/>
+            <h3 class="slds-text-heading_medium"><b>Reason for Referral</b></h3>
+            <lightning-input-rich-text
+                label="Reason for Referral"
+                value={referralReason}
+                onchange={handleReasonChange}>
+            </lightning-input-rich-text>
+        </div>
+
+        <div class="slds-m-around_medium slds-text-align_right">
+            <lightning-button
+                variant="brand"
+                label="Save"
+                class="slds-m-around_medium"
+                onclick={handleSave}
+                >
+            </lightning-button>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,172 @@
+<template>
+    <lightning-card title="Billables Custom List View">
+        <!-- <lightning-button
+            label="Selected Sync"
+            variant="brand"
+            onclick={handleSelectedSync}>
+        </lightning-button>
+
+        <lightning-button
+            label="Bulk Sync"
+            variant="neutral"
+            class="slds-m-left_small"
+            onclick={handleBulkSync}>
+        </lightning-button> -->
+        <div class="slds-p-horizontal_medium slds-m-bottom_medium">
+
+            <div class="slds-grid slds-grid_align-end">
+
+                <lightning-button
+                    label="Selected Sync"
+                    variant="brand"
+                    onclick={handleSelectedSync}
+                     disabled={isJobRunning}>
+                </lightning-button>
+
+                <lightning-button
+                    label="Bulk Sync"
+                    variant="neutral"
+                    class="slds-m-left_small"
+                    onclick={handleBulkSync}
+                     disabled={isJobRunning}>
+                </lightning-button>
+                <lightning-button
+                    label="Refresh"
+                    icon-name="utility:refresh"
+                    variant="neutral"
+                    class="slds-m-left_small"
+                    onclick={handleRefresh}>
+                </lightning-button>
+
+            </div>
+
+        </div>
+
+        <!-- <div class="slds-p-around_medium">
+
+            <lightning-input
+                type="search"
+                label="Search"
+                onchange={handleSearch}>
+            </lightning-input>
+
+        </div> -->
+        <!-- <div class="slds-grid slds-gutters slds-p-around_medium">
+
+            <div class="slds-col slds-size_8-of-12">
+                <lightning-input
+                    type="search"
+                    label="Search"
+                    onchange={handleSearch}>
+                </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_4-of-12">
+                <lightning-combobox
+                    label="Location"
+                    value={selectedLocation}
+                    options={locationOptions}
+                    onchange={handleLocationChange}>
+                </lightning-combobox>
+            </div>
+
+        </div> -->
+        <div class="slds-p-around_medium">
+
+    <!-- Search Row -->
+    <div class="slds-m-bottom_medium">
+        <lightning-input
+            type="search"
+            label="Search"
+            onchange={handleSearch}>
+        </lightning-input>
+    </div>
+
+    <!-- Filters Row -->
+    <div class="slds-grid slds-gutters">
+
+        <div class="slds-col">
+            <lightning-combobox
+                label="Location"
+                value={selectedLocation}
+                options={locationOptions}
+                onchange={handleLocationChange}>
+            </lightning-combobox>
+        </div>
+
+        <div class="slds-col">
+            <lightning-input
+                type="date"
+                 max={today}
+                label="Event Start Date"
+                value={selectedStartDate}
+                onchange={handleStartDateChange}>
+            </lightning-input>
+        </div>
+
+        <div class="slds-col">
+            <lightning-input
+                type="date"
+                 max={today}
+                label="Event End Date"
+                value={selectedEndDate}
+                onchange={handleEndDateChange}>
+            </lightning-input>
+        </div>
+
+    </div>
+
+</div>
+
+<template if:true={selectedCount}>
+    <div class="slds-p-horizontal_medium slds-p-bottom_small">
+        <strong>
+            {selectedCount}
+            <template lwc:if={isSingleSelection} >
+                item selected
+            </template>
+            <template lwc:else>
+                 items selected
+            </template>
+        </strong>
+    </div>
+</template>
+
+        <template if:true={billables}>
+            <lightning-datatable
+                key-field="Id"
+                data={filteredData}
+                columns={columns}
+                onrowselection={handleRowSelection}>
+            </lightning-datatable>
+            <!-- <lightning-datatable
+                key-field="Id"
+                data={filteredData}
+                columns={columns}
+                hide-checkbox-column>
+            </lightning-datatable> -->
+        </template>
+
+                    <template if:true={error}>
+                        <div class="slds-text-color_error slds-p-around_medium">
+                            {error}
+                        </div>
+                    </template>
+                    <template if:true={isLoading}>
+                <div class="custom-backdrop"></div>
+
+                <div class="spinner-wrapper">
+                    <lightning-spinner
+                        alternative-text="Loading"
+                        size="large"
+                        variant="brand">
+                    </lightning-spinner>
+
+                    <div class="spinner-message">
+                        Please wait...
+                    </div>
+                </div>
+            </template>
+
+    </lightning-card>
+</template>

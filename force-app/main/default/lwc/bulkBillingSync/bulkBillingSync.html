@@ -1,0 +1,74 @@
+<template>
+    <lightning-card title="Billing Sync Filters">
+        <div class="slds-p-around_medium">
+            <div class="slds-grid slds-gutters">
+
+                <!-- Start Date -->
+                <div class="slds-col slds-size_1-of-5">
+                    <lightning-input
+                        data-id="startDate"
+                        type="date"
+                        label="Start Date"
+                        value={startDate}
+                        max={today}
+                        onchange={handleStartDate}>
+                    </lightning-input>
+                </div>
+
+                <!-- End Date (Auto-filled) -->
+                <div class="slds-col slds-size_1-of-5">
+                    <lightning-input
+                        data-id="endDate"
+                        type="date"
+                        label="End Date"
+                        value={endDate}
+                        min={startDate}
+                        max={today}
+                        disabled>
+                    </lightning-input>
+                </div>
+
+            </div>
+
+            <!-- Locations -->
+            <div class="slds-m-top_medium">
+                <lightning-dual-listbox
+                    name="locations"
+                    label="Select Locations"
+                    source-label="Available"
+                    selected-label="Selected"
+                    options={locationOptions}
+                    value={selectedLocations}
+                    onchange={handleLocationChange}>
+                </lightning-dual-listbox>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="slds-m-top_medium slds-align_absolute-center">
+
+                <lightning-button
+                    label="Cancel"
+                    onclick={handleClose}
+                    class="slds-m-right_small">
+                </lightning-button>
+
+                <lightning-button
+                    label="Show Report"
+                    variant="neutral"
+                    onclick={handleShowReport}
+                    disabled={isActionDisabled}
+                    class="slds-m-right_small">
+                </lightning-button>
+
+                <lightning-button
+                    label="Start Bulk Sync"
+                    variant="brand"
+                    onclick={handleStartSync}
+                    disabled={isActionDisabled}>
+                </lightning-button>
+
+            </div>
+
+        </div>
+    </lightning-card>
+</template>

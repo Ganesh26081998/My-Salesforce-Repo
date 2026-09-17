@@ -1,0 +1,42 @@
+/* intentionally minimal — SLDS utility classes handle layout */
+
+/* Red border on field wrapper when validation fails */
+.fielderr lightning-input-field {
+    --sds-c-input-color-border: #c23934;
+    --sds-c-input-color-border-focus: #c23934;
+    --sds-c-combobox-color-border-container: #c23934;
+    --sds-c-datepicker-input-color-border: #c23934;
+}
+
+/* Red error message text below the field */
+.errtext {
+    color: #c23934;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    margin-top: 0.25rem;
+    display: block;
+    margin-left: 7px;
+    margin-bottom: 7px;
+}
+.slds-text-align_right{
+    display: block;
+    margin-top: -30px;
+    margin-bottom: 35px;
+}
+
+.stage-message {
+    color: #3e3e3c;
+    font-size: 0.875rem;
+    text-align: center;
+    width: 100%;
+    margin-top: 38px;
+}
+
+.hospital-empty {
+    text-align: center;
+}
+
+.slds-modal__container_small {
+    max-width: 440px;
+    width: 90%;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Guarantor</fullName>
+        <default>false</default>
+        <label>Guarantor</label>
+    </customValue>
+    <customValue>
+        <fullName>Family</fullName>
+        <default>false</default>
+        <label>Family</label>
+    </customValue>
+    <customValue>
+        <fullName>Friend/Neighbor</fullName>
+        <default>false</default>
+        <label>Friend/Neighbor</label>
+    </customValue>
+    <customValue>
+        <fullName>Family Caregiver</fullName>
+        <default>false</default>
+        <label>Family Caregiver</label>
+    </customValue>
+    <customValue>
+        <fullName>Medical provider</fullName>
+        <default>false</default>
+        <label>Medical provider</label>
+    </customValue>
+    <customValue>
+        <fullName>Referral source</fullName>
+        <default>false</default>
+        <label>Referral source</label>
+    </customValue>
+    <customValue>
+        <fullName>Physician</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Physician</label>
+    </customValue>
+    <customValue>
+        <fullName>Referral</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Referral</label>
+    </customValue>
+    <masterLabel>Contact Type Role</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

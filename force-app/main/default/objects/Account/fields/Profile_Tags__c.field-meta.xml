@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Profile_Tags__c</fullName>
+    <label>Profile_Tags</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Milwaukee</fullName>
+                <default>false</default>
+                <label>Milwaukee</label>
+            </value>
+            <value>
+                <fullName>Assisted Living Community</fullName>
+                <default>false</default>
+                <label>Assisted Living Community</label>
+            </value>
+            <value>
+                <fullName>In-Home Hired Caregiving</fullName>
+                <default>false</default>
+                <label>In-Home Hired Caregiving</label>
+            </value>
+            <value>
+                <fullName>Independent Living Community</fullName>
+                <default>false</default>
+                <label>Independent Living Community</label>
+            </value>
+            <value>
+                <fullName>Lives in Own Home/Apartment</fullName>
+                <default>false</default>
+                <label>Lives in Own Home/Apartment</label>
+            </value>
+            <value>
+                <fullName>Long Term Care Insurance</fullName>
+                <default>false</default>
+                <label>Long Term Care Insurance</label>
+            </value>
+            <value>
+                <fullName>Memory Care Facility</fullName>
+                <default>false</default>
+                <label>Memory Care Facility</label>
+            </value>
+            <value>
+                <fullName>POA Activated</fullName>
+                <default>false</default>
+                <label>POA Activated</label>
+            </value>
+            <value>
+                <fullName>Cincinnati</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cincinnati</label>
+            </value>
+            <value>
+                <fullName>Detroit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Detroit</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

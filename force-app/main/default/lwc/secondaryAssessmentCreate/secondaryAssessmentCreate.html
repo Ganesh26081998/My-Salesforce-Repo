@@ -1,0 +1,1525 @@
+<template>
+
+    <lightning-card title={formTitle}>
+        <div slot="actions">
+
+            <lightning-button
+                label="Cancel"
+                onclick={handleCancel}>
+            </lightning-button>
+
+            <lightning-button
+                variant="brand"
+                label="Save"
+                class="slds-m-left_small"
+                onclick={handleSave}
+                disabled={isSaveDisabled}>
+            </lightning-button>
+
+        </div>
+
+        <div class="slds-p-around_medium">
+            <!-- Assessment Type -->
+            <lightning-combobox
+                label="Assessment Type"
+                value={selectedAssessmentType}
+                options={assessmentOptions}
+                onchange={handleAssessmentTypeChange}
+                required>
+            </lightning-combobox>
+
+            <template if:true={questions.length}>
+
+                <div class="slds-grid slds-wrap slds-gutters slds-m-top_large">
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <strong>Client's Name:</strong>
+                        <span class="slds-m-left_x-small">
+                            {clientName}
+                        </span>
+                    </div>
+
+                    <!-- <div class="slds-col slds-size_1-of-2 slds-text-align_right">
+                        <strong>Created Date:</strong>
+                        <span class="slds-m-left_x-small">
+                            {assessmentDate}
+                        </span>
+                    </div> -->
+
+                </div>
+
+                <template if:true={isGeriatricDepressionScale}>
+                    <div class="slds-m-top_medium slds-m-bottom_medium">
+                        <p>
+                            Please select the best answer for how you've felt over the past week.
+                        </p>
+                    </div>
+                </template>
+
+                <template if:true={isHomeFromHospitalAssessment}>
+                    <div class="slds-m-top_medium slds-m-bottom_medium">
+                        <p>
+                            Please score 1-5 (1 = excellent, 2 = good, 3 = fair, 4 = average, 5 = poor)
+                        </p>
+                    </div>
+                </template>
+
+                <template if:true={isKatzADLAssessment}>
+                    <div class="slds-m-top_medium slds-m-bottom_medium">
+                        <p>
+                            For each area of functioning listed below, check which
+                            description applies (note: the word "assistance" means
+                            supervision, direction or personal assistance).
+                        </p>
+                    </div>
+                </template>
+
+                <template if:true={isFamilyCaregiverAssessment}>
+                    <div class="slds-m-top_medium slds-p-bottom_medium">
+                        <strong>
+                            Please indicate on a scale of 1–5
+                            (1 = Excellent, 2 = Good, 3 = Fair, 4 = Average, 5 = Poor)
+                        </strong>
+                    </div>
+                </template>
+
+                <template if:true={isMiniMentalStateExamination}>
+                    <div class="slds-m-top_medium slds-p-bottom_medium">
+                        <strong>
+                            Instructions: Score one point for each correct response within each question or activity
+                        </strong>
+                    </div>
+                </template>
+
+                <template if:true={isQualityOfLifeTPA}>
+                    <div class="slds-m-top_medium slds-p-bottom_medium">
+                        <strong>
+                            Personal Interest Inventory
+                        </strong>
+                    </div>
+                </template>
+
+                <template if:true={isMedicationManagementAssessment}>
+                    <div class="slds-m-top_medium slds-p-bottom_medium">
+                        <strong>
+                            Use this tool at intake, quarterly care plan updates, or with any change in condition. Your role is to identify risks, educate the client/family, and flag issues. You are not expected to solve medication problems directly. If issues are identified, ask the client/family whether they want the care manager to reach out to the prescribing provider or pharmacy.
+                        </strong>
+                    </div>
+                </template>
+
+            </template>
+
+
+            <!-- Spinner -->
+            <template if:true={isLoading}>
+                <div class="slds-m-top_medium">
+                    <lightning-spinner
+                        alternative-text="Loading Questions"
+                        size="medium">
+                    </lightning-spinner>
+                </div>
+            </template>
+
+            <!-- No Questions -->
+            <template if:true={showNoQuestions}>
+                <div class="slds-text-align_center slds-m-top_large">
+                    <p>No questions found for the selected Assessment Type.</p>
+                </div>
+            </template>
+
+            <!-- Questions -->
+            <template if:true={questions.length}>
+
+                <div class="slds-m-top_large">
+
+                    <!-- ===================================== -->
+                    <!-- SECTION-BASED ASSESSMENTS             -->
+                    <!-- Example: Home Safety Assessment       -->
+                    <!-- ===================================== -->
+
+                    <template if:true={caregiverTriggerQuestion}>
+
+                        <div class="slds-box slds-theme_default slds-m-bottom_large">
+
+                            <div class="slds-text-heading_small slds-m-bottom_small">
+                                <strong>
+                                    {caregiverTriggerQuestion.questionText}
+                                </strong>
+                            </div>
+
+                            <lightning-textarea
+                                data-id={caregiverTriggerQuestion.id}
+                                value={caregiverTriggerQuestion.answer}
+                                onchange={handleAnswerChange}>
+                            </lightning-textarea>
+
+                        </div>
+
+                    </template>
+
+                    <template if:true={hasSections}>
+
+                        <lightning-accordion
+                            allow-multiple-sections-open
+                            active-section-name={activeSections}>
+                            <template
+                                for:each={sections}
+                                for:item="section">
+
+                                <lightning-accordion-section
+                                    key={section.name}
+                                    name={section.name}
+                                    label={section.name}>
+
+                                    <div
+                                        key={section.name}
+                                        class="slds-m-bottom_large">
+
+                                        <template if:true={section.isBalanceSection}>
+                                            <div class="slds-text-body_medium slds-m-bottom_medium">
+                                                <b>To perform this assessment, seat the patient in a hard, armless chair.</b>
+                                            </div>
+                                        </template>
+
+                                        <template if:true={section.isGaitSection}>
+                                            <div class="slds-text-body_small slds-m-bottom_medium">
+                                                <b>Stand with the patient. Walk across the room (+/- aids) at a usual pace, then rapidly.</b>
+                                            </div>
+                                        </template>
+
+                                        <!-- Section Header -->
+                                        <!-- <div
+                                            class="slds-text-heading_medium
+                                                slds-p-vertical_small
+                                                slds-m-bottom_small">
+
+                                            <strong>
+                                                {section.name}
+                                            </strong>
+
+                                        </div> -->
+                                        <!-- <template if:false={section.isGrouped}> -->
+                                        <!-- <template if:true={section.hasQuestions}> -->
+                                        <template if:true={section.hasItems}>
+
+                                            <template
+                                                for:each={section.items}
+                                                for:item="item">
+                                                <!-- Questions in Section -->
+                                                <!-- <template
+                                                    for:each={section.questions}
+                                                    for:item="question"> -->
+                                                <template if:true={item.question}>
+                                                    <template if:false={item.question.isCaregiverHourQuestion}>
+                                                        <template if:false={item.question.isCaregiverMonthsQuestion}>
+                                                            <template if:true={item.question.showQuestion}>
+                                                                <div
+                                                                    key={item.question.id}
+                                                                    class="slds-box
+                                                                        slds-theme_default
+                                                                        slds-m-bottom_small">
+
+                                                                    <!-- Question -->
+                                                                    <div class="slds-text-heading_small
+                                                                                slds-m-bottom_small">
+
+                                                                        <strong>
+                                                                            <template if:false={item.question.hideSequence}>
+                                                                                {item.question.displaySequence}.&nbsp;
+                                                                            </template>
+                                                                            <template if:true={item.question.isCaregiverYearsQuestion}>
+                                                                                How long has caregiver been caring for care receiver
+                                                                            </template>
+
+                                                                            <template if:false={item.question.isCaregiverYearsQuestion}>
+                                                                                {item.question.questionText}
+                                                                            </template>
+                                                                        </strong>
+
+                                                                    </div>
+
+                                                                    <template if:true={item.question.helpText}>
+                                                                        <div class="slds-text-body_regular slds-text-color_weak slds-m-bottom_small">
+                                                                            ({item.question.helpText})
+                                                                        </div>
+                                                                    </template>
+
+                                                                    <!-- Single Select -->
+                                                                    <template if:true={item.question.isSingleSelect}>
+
+                                                                        <lightning-radio-group
+                                                                            data-id={item.question.id}
+                                                                            options={item.question.options}
+                                                                            value={item.question.answer}
+                                                                            type="radio"
+                                                                            onchange={handleAnswerChange}>
+                                                                        </lightning-radio-group>
+
+                                                                    </template>
+
+                                                                    <template if:true={item.question.isBoolean}>
+
+                                                                        <lightning-radio-group
+                                                                            data-id={item.question.id}
+                                                                            options={item.question.options}
+                                                                            value={item.question.answer}
+                                                                            type="radio"
+                                                                            onchange={handleAnswerChange}>
+                                                                        </lightning-radio-group>
+
+                                                                    </template>
+
+                                                                    <!-- Number -->
+                                                                    <template if:true={item.question.isNumber}>
+
+                                                                        <!-- Caregiver Years + Months -->
+                                                                        <template if:true={item.question.isCaregiverYearsQuestion}>
+
+                                                                            <div class="slds-grid slds-gutters">
+
+                                                                                <div class="slds-col slds-size_1-of-2">
+                                                                                    <lightning-input
+                                                                                        label="Years"
+                                                                                        data-id={item.question.id}
+                                                                                        type="number"
+                                                                                        value={item.question.answer}
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-input>
+                                                                                </div>
+
+                                                                                <div class="slds-col slds-size_1-of-2">
+                                                                                    <lightning-input
+                                                                                        label="Months"
+                                                                                        data-id={caregiverMonthsQuestion.id}
+                                                                                        type="number"
+                                                                                        value={caregiverMonthsQuestion.answer}
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-input>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </template>
+
+                                                                        <!-- All other Number questions -->
+                                                                        <template if:false={item.question.isCaregiverYearsQuestion}>
+
+                                                                            <lightning-input
+                                                                                data-id={item.question.id}
+                                                                                type="number"
+                                                                                value={item.question.answer}
+                                                                                onchange={handleAnswerChange}>
+                                                                            </lightning-input>
+
+                                                                        </template>
+
+                                                                    </template>
+
+                                                                    <template if:true={item.question.isPhone}>
+                                                                        <lightning-input
+                                                                            class="phone-question"
+                                                                            data-id={item.question.id}
+                                                                            type="tel"
+                                                                            value={item.question.answer}
+                                                                            onchange={handleAnswerChange}>
+                                                                        </lightning-input>
+                                                                    </template>
+
+                                                                    <template if:true={item.question.isEmail}>
+                                                                        <lightning-input
+                                                                            class="email-question"
+                                                                            data-id={item.question.id}
+                                                                            type="email"
+                                                                            value={item.question.answer}
+                                                                            onchange={handleAnswerChange}>
+                                                                        </lightning-input>
+                                                                    </template>
+
+                                                                    <template if:true={item.question.isDate}>
+
+                                                                        <lightning-input
+                                                                            data-id={item.question.id}
+                                                                            type="date"
+                                                                            value={item.question.answer}
+                                                                            onchange={handleAnswerChange}>
+                                                                        </lightning-input>
+
+                                                                    </template>
+
+                                                                    <template if:true={item.question.isMultiSelect}>
+
+                                                                        <!-- Caregiver Days -->
+                                                                        <template if:true={item.question.isCaregiverDaysQuestion}>
+
+                                                                            <div class="slds-grid slds-gutters">
+
+                                                                                <!-- Left -->
+                                                                                <div class="slds-col slds-size_3-of-12">
+
+                                                                                    <lightning-checkbox-group
+                                                                                        data-id={item.question.id}
+                                                                                        label="Those which apply:"
+                                                                                        options={item.question.options}
+                                                                                        value={item.question.answer}
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-checkbox-group>
+
+                                                                                </div>
+
+                                                                                <!-- Right -->
+                                                                                <!-- Hours Column 1 -->
+                                                                                <div class="slds-col slds-size_4-of-12">
+
+                                                                                    <template
+                                                                                        for:each={caregiverHourQuestionsLeft}
+                                                                                        for:item="item">
+
+                                                                                        <div key={item.question.id} class="slds-m-bottom_small">
+
+                                                                                            <lightning-input
+                                                                                                type="number"
+                                                                                                label={item.label}
+                                                                                                value={item.question.answer}
+                                                                                                data-id={item.question.id}
+                                                                                                class="caregiver-hours"
+                                                                                                min="0"
+                                                                                                max="24"
+                                                                                                step="any"
+                                                                                                message-when-range-overflow="Hours cannot be greater than 24."
+                                                                                                message-when-range-underflow="Hours cannot be less than 0."
+                                                                                                onchange={handleAnswerChange}>
+                                                                                            </lightning-input>
+
+                                                                                        </div>
+
+                                                                                    </template>
+
+                                                                                </div>
+
+                                                                                <!-- Hours Column 2 -->
+                                                                                <div class="slds-col slds-size_5-of-12">
+
+                                                                                    <template
+                                                                                        for:each={caregiverHourQuestionsRight}
+                                                                                        for:item="item">
+
+                                                                                        <div key={item.question.id} class="slds-m-bottom_small">
+
+                                                                                            <lightning-input
+                                                                                                type="number"
+                                                                                                label={item.label}
+                                                                                                value={item.question.answer}
+                                                                                                data-id={item.question.id}
+                                                                                                class="caregiver-hours"
+                                                                                                min="0"
+                                                                                                max="24"
+                                                                                                step="any"
+                                                                                                message-when-range-overflow="Hours cannot be greater than 24."
+                                                                                                message-when-range-underflow="Hours cannot be less than 0."
+                                                                                                onchange={handleAnswerChange}>
+                                                                                            </lightning-input>
+
+                                                                                        </div>
+
+                                                                                    </template>
+
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </template>
+
+                                                                        <!-- All other Multi-Select questions -->
+                                                                        <template if:false={item.question.isCaregiverDaysQuestion}>
+
+                                                                            <!-- <lightning-checkbox-group
+                                                                                data-id={item.question.id}
+                                                                                label="Those which apply:"
+                                                                                options={item.question.options}
+                                                                                value={item.question.answer}
+                                                                                onchange={handleAnswerChange}>
+                                                                            </lightning-checkbox-group> -->
+                                                                            <!-- Multi-Select -->
+
+        <div class="slds-form-element">
+
+            <label class="slds-form-element__label">
+                Those which apply:
+            </label>
+
+            <template
+                for:each={item.question.options}
+                for:item="option">
+
+                <div key={option.value} class="slds-m-bottom_x-small">
+
+                    <lightning-input
+                        type="checkbox"
+                        label={option.label}
+                        data-id={item.question.id}
+                        data-value={option.value}
+                        checked={option.checked}
+                        onchange={handleCheckboxChange}>
+                    </lightning-input>
+
+                    <template if:true={option.checked}>
+
+                        <template
+                            for:each={option.children}
+                            for:item="child">
+
+                            <div
+                                key={child.id}
+                                class="slds-m-top_x-small slds-m-bottom_small slds-p-left_large">
+
+                                <template if:true={child.isText}>
+                                    <lightning-input
+                                        type="text"
+                                        class="text-question"
+                                        label={child.questionText}
+                                        data-id={child.id}
+                                        value={child.answer}
+                                        onchange={handleAnswerChange}>
+                                    </lightning-input>
+                                </template>
+
+                                <template if:true={child.isTextArea}>
+                                    <lightning-textarea
+                                        label={child.questionText}
+                                        data-id={child.id}
+                                        value={child.answer}
+                                        onchange={handleAnswerChange}>
+                                    </lightning-textarea>
+                                </template>
+
+                                <template if:true={child.isNumber}>
+                                    <lightning-input
+                                        type="number"
+                                        step="0.01"
+                                        class="amount-question"
+                                        message-when-step-mismatch="Please enter an amount with up to 2 decimal places only."
+                                        label={child.questionText}
+                                        data-id={child.id}
+                                        value={child.answer}
+                                        onchange={handleAnswerChange}>
+                                    </lightning-input>
+                                </template>
+
+                                <template if:true={child.isDate}>
+                                    <lightning-input
+                                        type="date"
+                                        label={child.questionText}
+                                        data-id={child.id}
+                                        value={child.answer}
+                                        onchange={handleAnswerChange}>
+                                    </lightning-input>
+                                </template>
+
+                                <template if:true={child.isBoolean}>
+                                    <lightning-radio-group
+                                        data-id={child.id}
+                                        label={child.questionText}
+                                        options={child.options}
+                                        value={child.answer}
+                                        type="radio"
+                                        onchange={handleAnswerChange}>
+                                    </lightning-radio-group>
+                                </template>
+
+                                <template if:true={child.isSingleSelect}>
+                                    <lightning-radio-group
+                                        data-id={child.id}
+                                        label={child.questionText}
+                                        options={child.options}
+                                        value={child.answer}
+                                        type="radio"
+                                        onchange={handleAnswerChange}>
+                                    </lightning-radio-group>
+                                </template>
+
+                                <template if:true={child.isMultiSelect}>
+                                    <lightning-checkbox-group
+                                        data-id={child.id}
+                                        label="Those which apply:"
+                                        options={child.options}
+                                        value={child.answer}
+                                        onchange={handleAnswerChange}>
+                                    </lightning-checkbox-group>
+                                </template>
+
+                                <template if:true={child.isEmail}>
+                                    <lightning-input
+                                        type="email"
+                                        class="email-question"
+                                        label={child.questionText}
+                                        data-id={child.id}
+                                        value={child.answer}
+                                        onchange={handleAnswerChange}>
+                                    </lightning-input>
+                                </template>
+
+                                <template if:true={child.isPhone}>
+                                    <lightning-input
+                                        type="tel"
+                                        class="phone-question"
+                                        label={child.questionText}
+                                        data-id={child.id}
+                                        value={child.answer}
+                                        onchange={handleAnswerChange}>
+                                    </lightning-input>
+                                </template>
+
+                            </div>
+
+                        </template>
+
+                    </template>
+
+                </div>
+
+            </template>
+
+        </div>
+
+                                                                        </template>
+
+                                                                    </template>
+
+                                                                    <!-- Text / Long Response -->
+                                                                    <!-- <template if:true={item.question.isText}>
+
+                                                                        <lightning-input
+                                                                            type="text"
+                                                                            class="text-question"
+                                                                            data-id={item.question.id}
+                                                                            value={item.question.answer}
+                                                                            onchange={handleAnswerChange}>
+                                                                        </lightning-input>
+
+                                                                    </template> -->
+
+                                                                    <template if:true={item.question.isContactPicker}>
+
+                                                                        <lightning-combobox
+                                                                            data-id={item.question.id}
+                                                                            value={item.question.answer}
+                                                                            options={contactOptions}
+                                                                            onchange={handleAnswerChange}>
+                                                                        </lightning-combobox>
+
+                                                                    </template>
+
+                                                                    <template if:true={item.question.isText}>
+
+                                                                        <lightning-input
+                                                                            type="text"
+                                                                            class="text-question"
+                                                                            data-id={item.question.id}
+                                                                            value={item.question.answer}
+                                                                            onchange={handleAnswerChange}>
+                                                                        </lightning-input>
+
+                                                                    </template>
+
+                                                                    <template if:true={item.question.isTextArea}>
+                                                                        <lightning-textarea
+                                                                            data-id={item.question.id}
+                                                                            value={item.question.answer}
+                                                                            onchange={handleAnswerChange}>
+                                                                        </lightning-textarea>
+                                                                    </template>
+                                                                    
+                                                                    <template if:false={item.question.isMultiSelect}>
+                                                                    <template
+                                                                        for:each={item.question.inlineChildren}
+                                                                        for:item="child">
+
+                                                                        <template if:true={child.showQuestion}>
+
+                                                                            <div
+                                                                                key={child.id}
+                                                                                class="slds-m-top_small slds-p-left_large">
+
+                                                                                <template if:true={child.isText}>
+                                                                                    <lightning-input
+                                                                                        type="text"
+                                                                                        class="text-question"
+                                                                                        label={child.questionText}
+                                                                                        data-id={child.id}
+                                                                                        value={child.answer}
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-input>
+                                                                                </template>
+
+                                                                                <template if:true={child.isTextArea}>
+                                                                                    <lightning-textarea
+                                                                                        data-id={child.id}
+                                                                                        value={child.answer}
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-textarea>
+                                                                                </template>
+
+                                                                                <template if:true={child.isNumber}>
+                                                                                    <lightning-input
+                                                                                        type="number"
+                                                                                        step="0.01"
+                                        class="amount-question"
+                                        message-when-step-mismatch="Please enter an amount with up to 2 decimal places only."
+                                                                                        label={child.questionText}
+                                                                                        data-id={child.id}
+                                                                                        value={child.answer}
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-input>
+                                                                                </template>
+
+                                                                                <template if:true={child.isDate}>
+                                                                                    <lightning-input
+                                                                                        type="date"
+                                                                                        label={child.questionText}
+                                                                                        data-id={child.id}
+                                                                                        value={child.answer}
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-input>
+                                                                                </template>
+
+                                                                                <template if:true={child.isEmail}>
+                                                                                    <lightning-input
+                                                                                        type="email"
+                                                                                        class="email-question"
+                                                                                        label={child.questionText}
+                                                                                        data-id={child.id}
+                                                                                        value={child.answer}
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-input>
+                                                                                </template>
+
+                                                                                <template if:true={child.isPhone}>
+                                                                                    <lightning-input
+                                                                                        type="tel"
+                                                                                        class="phone-question"
+                                                                                        label={child.questionText}
+                                                                                        data-id={child.id}
+                                                                                        value={child.answer}
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-input>
+                                                                                </template>
+
+                                                                                <template if:true={child.isBoolean}>
+                                                                                    <lightning-radio-group
+                                                                                        data-id={child.id}
+                                                                                        options={child.options}
+                                                                                        value={child.answer}
+                                                                                        type="radio"
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-radio-group>
+                                                                                </template>
+
+                                                                                <template if:true={child.isSingleSelect}>
+                                                                                    <lightning-radio-group
+                                                                                        data-id={child.id}
+                                                                                        options={child.options}
+                                                                                        value={child.answer}
+                                                                                        type="radio"
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-radio-group>
+                                                                                </template>
+
+                                                                                <template if:true={child.isMultiSelect}>
+                                                                                    <lightning-checkbox-group
+                                                                                        data-id={child.id}
+                                                                                        label="Those which apply:"
+                                                                                        options={child.options}
+                                                                                        value={child.answer}
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-checkbox-group>
+                                                                                </template>
+
+                                                                            </div>
+
+                                                                        </template>
+
+                                                                    </template>
+                                                                    </template>
+
+                                                                    <!-- Notes -->
+                                                                    <template if:true={item.question.showNotes}>
+
+                                                                        <div class="slds-m-top_small">
+
+                                                                            <lightning-textarea
+                                                                                data-id={item.question.id}
+                                                                                label={item.question.notesLabel}
+                                                                                value={item.question.notes}
+                                                                                onchange={handleNotesChange}>
+                                                                            </lightning-textarea>
+
+                                                                        </div>
+                                                                    </template>
+                                                                </div>
+                                                            </template>
+                                                        </template>
+                                                    </template>
+                                                </template>
+                                            
+
+                                                <!-- <template if:true={section.isGrouped}> -->
+                                                <!-- <template if:true={section.hasGroups}> -->
+                                                <template if:true={item.group}>
+
+                                                    <!-- <template
+                                                        for:each={section.groups}
+                                                        for:item="group"> -->
+
+                                                        <div
+                                                            key={item.group.name}
+                                                            class="slds-box slds-theme_shade slds-m-bottom_medium">
+
+                                                            <div class="slds-text-heading_small slds-m-bottom_medium">
+                                                                <strong>{item.group.name}</strong>
+                                                            </div>
+
+                                                            <template for:each={item.group.rows} for:item="row">
+
+                                                                <div
+                                                                    key={row.parent.id}
+                                                                    class="slds-m-bottom_medium">
+
+                                                                    <div class="slds-m-bottom_x-small">
+                                                                        <!-- <strong>
+                                                                            <template if:false={question.hideSequence}>
+                                                                                {question.displaySequence}.&nbsp;
+                                                                            </template>
+                                                                            {question.questionText}
+                                                                        </strong> -->
+                                                                        <strong>
+                                                                            <template if:false={row.parent.hideSequence}>
+                                                                                {row.parent.displaySequence}.&nbsp;
+                                                                            </template>
+
+                                                                            {row.parent.questionText}
+                                                                        </strong>
+                                                                        <template if:true={row.parent.isText}>
+                                                                            <lightning-input
+                                                                                type="text"
+                                                                                class="text-question"
+                                                                                data-id={row.parent.id}
+                                                                                value={row.parent.answer}
+                                                                                onchange={handleAnswerChange}>
+                                                                            </lightning-input>
+                                                                        </template>
+
+                                                                        <template if:true={row.parent.isTextArea}>
+                                                                            <lightning-textarea
+                                                                                data-id={row.parent.id}
+                                                                                value={row.parent.answer}
+                                                                                onchange={handleAnswerChange}>
+                                                                            </lightning-textarea>
+                                                                        </template>
+
+                                                                        <template if:true={row.parent.isPhone}>
+                                                                            <lightning-input
+                                                                                type="tel"
+                                                                                class="phone-question"
+                                                                                data-id={row.parent.id}
+                                                                                value={row.parent.answer}
+                                                                                onchange={handleAnswerChange}>
+                                                                            </lightning-input>
+                                                                        </template>
+
+                                                                        <template if:true={row.parent.isNumber}>
+                                                                            <lightning-input
+                                                                                type="number"
+                                                                                data-id={row.parent.id}
+                                                                                value={row.parent.answer}
+                                                                                onchange={handleAnswerChange}>
+                                                                            </lightning-input>
+                                                                        </template>
+
+                                                                        <template if:true={row.parent.isBoolean}>
+            <lightning-radio-group
+                data-id={row.parent.id}
+                options={row.parent.options}
+                value={row.parent.answer}
+                type="radio"
+                onchange={handleAnswerChange}>
+            </lightning-radio-group>
+        </template>
+
+        <template if:true={row.parent.isSingleSelect}>
+            <lightning-radio-group
+                data-id={row.parent.id}
+                options={row.parent.options}
+                value={row.parent.answer}
+                type="radio"
+                onchange={handleAnswerChange}>
+            </lightning-radio-group>
+        </template>
+
+        <template if:true={row.parent.isDate}>
+            <lightning-input
+                type="date"
+                data-id={row.parent.id}
+                value={row.parent.answer}
+                onchange={handleAnswerChange}>
+            </lightning-input>
+        </template>
+
+        <template if:true={row.parent.isEmail}>
+            <lightning-input
+                type="email"
+                class="email-question"
+                data-id={row.parent.id}
+                value={row.parent.answer}
+                onchange={handleAnswerChange}>
+            </lightning-input>
+        </template>
+
+        <template if:true={row.parent.isMultiSelect}>
+
+            <div class="slds-form-element">
+
+                <label class="slds-form-element__label">
+                    Those which apply:
+                </label>
+
+                <template
+                    for:each={row.parent.options}
+                    for:item="option">
+
+                    <div key={option.value}>
+
+                        <lightning-input
+                            type="checkbox"
+                            label={option.label}
+                            data-id={row.parent.id}
+                            data-value={option.value}
+                            checked={option.checked}
+                            onchange={handleCheckboxChange}>
+                        </lightning-input>
+
+                    </div>
+
+                </template>
+
+            </div>
+
+        </template>
+                                                                    </div>
+                                                                    <div class="slds-grid slds-gutters">
+
+                                                                        <template for:each={row.children} for:item="child">
+
+                                                                            <div
+                                                                                key={child.id}
+                                                                                class="slds-col">
+
+                                                                                <template if:true={child.isText}>
+                                                                                    <lightning-input
+                                                                                        class="text-question"
+                                                                                        label={child.questionText}
+                                                                                        data-id={child.id}
+                                                                                        value={child.answer}
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-input>
+                                                                                </template>
+
+                                                                                <template if:true={child.isTextArea}>
+                                                                                        <lightning-textarea
+                                                                                            data-id={child.id}
+                                                                                            value={child.answer}
+                                                                                            onchange={handleAnswerChange}>
+                                                                                        </lightning-textarea>
+                                                                                    </template>
+
+                                                                                <template if:true={child.isPhone}>
+                                                                                    <lightning-input
+                                                                                        type="tel"
+                                                                                        class="phone-question"
+                                                                                        label={child.questionText}
+                                                                                        data-id={child.id}
+                                                                                        value={child.answer}
+                                                                                        onchange={handleAnswerChange}>
+                                                                                    </lightning-input>
+                                                                                </template>
+
+                                                                                <template if:true={child.isNumber}>
+            <lightning-input
+                type="number"
+                step="0.01"
+                                        class="amount-question"
+                                        message-when-step-mismatch="Please enter an amount with up to 2 decimal places only."
+                label={child.questionText}
+                data-id={child.id}
+                value={child.answer}
+                onchange={handleAnswerChange}>
+            </lightning-input>
+        </template>
+
+        <template if:true={child.isBoolean}>
+            <lightning-radio-group
+                label={child.questionText}
+                data-id={child.id}
+                options={child.options}
+                value={child.answer}
+                type="radio"
+                onchange={handleAnswerChange}>
+            </lightning-radio-group>
+        </template>
+
+        <template if:true={child.isSingleSelect}>
+            <lightning-radio-group
+                label={child.questionText}
+                data-id={child.id}
+                options={child.options}
+                value={child.answer}
+                type="radio"
+                onchange={handleAnswerChange}>
+            </lightning-radio-group>
+        </template>
+
+        <template if:true={child.isDate}>
+            <lightning-input
+                type="date"
+                label={child.questionText}
+                data-id={child.id}
+                value={child.answer}
+                onchange={handleAnswerChange}>
+            </lightning-input>
+        </template>
+
+        <template if:true={child.isEmail}>
+            <lightning-input
+                type="email"
+                class="email-question"
+                label={child.questionText}
+                data-id={child.id}
+                value={child.answer}
+                onchange={handleAnswerChange}>
+            </lightning-input>
+        </template>
+
+        <template if:true={child.isMultiSelect}>
+            <lightning-checkbox-group
+                data-id={child.id}
+                label="Those which apply:"
+                options={child.options}
+                value={child.answer}
+                onchange={handleAnswerChange}>
+            </lightning-checkbox-group>
+        </template>
+
+                                                                            </div>
+
+                                                                        </template>
+
+                                                                    </div>
+                                                                    <!-- <template if:true={question.isText}>
+                                                                    <lightning-textarea
+                                                                        data-id={question.id}
+                                                                        value={question.answer}
+                                                                        onchange={handleAnswerChange}>
+                                                                    </lightning-textarea>
+                                                                    </template>
+
+                                                                    <template if:true={question.isPhone}>
+                                                                        <lightning-input
+                                                                            class="phone-question"
+                                                                            data-id={question.id}
+                                                                            type="tel"
+                                                                            value={question.answer}
+                                                                            disabled={isReadOnly}
+                                                                            onchange={handleAnswerChange}>
+                                                                        </lightning-input>
+                                                                    </template> -->
+
+
+                                                                </div>
+
+                                                            </template>
+
+                                                        </div>
+
+                                                    <!-- </template> -->
+
+                                                </template>
+
+                                            </template>
+
+                                        </template>
+
+                                    </div>
+
+                                </lightning-accordion-section>
+                            </template>
+                        </lightning-accordion>
+
+                    </template>
+
+
+                    <!-- Caregiver Footer -->
+                    <template if:true={isCaregiverAssessment}>
+
+                        <div class="slds-m-top_large slds-text-body_regular">
+                            <strong>
+                                ** Use details collected here to create care management plan for Caregiver
+                            </strong>
+                        </div>
+
+                    </template>
+
+                    <template if:true={assessmentFooter}>
+                        <div class="slds-m-top_large slds-text-align_center">
+                            <b>{assessmentFooter}</b>
+                        </div>
+                    </template>
+
+
+                    <!-- ===================================== -->
+                    <!-- EXISTING ASSESSMENTS                  -->
+                    <!-- Geriatric / Emergency                 -->
+                    <!-- ===================================== -->
+
+                    <template if:false={hasSections}>
+
+                        <template
+                            for:each={questions}
+                            for:item="question">
+
+                            <template if:true={question.showQuestion}>
+                                <template if:false={question.dependentQuestionId}>
+
+                                    <!-- <template if:false={question.isCaregiverHourQuestion}> -->
+                                    <div
+                                        key={question.id}
+                                        class="slds-box
+                                               slds-theme_default
+                                               slds-m-bottom_medium">
+
+                                        <!-- Question -->
+                                        <div
+                                            class="slds-text-heading_small
+                                                   slds-m-bottom_small">
+
+                                            <strong>
+                                                {question.sequence}. {question.questionText}
+                                            </strong>
+
+                                        </div>
+
+                                        <template if:true={question.helpText}>
+                                            <div class="slds-text-body_regular slds-text-color_weak slds-m-bottom_small">
+                                                ({question.helpText})
+                                            </div>
+                                        </template>
+
+                                        <template if:true={question.showPentagonImage}>
+                                            <img
+                                                src={pentagonImage}
+                                                alt="Pentagon"
+                                                class="mmse-image"/>
+                                        </template>
+
+                                        <!-- Boolean -->
+                                        <template if:true={question.isBoolean}>
+
+                                            <lightning-radio-group
+                                                data-id={question.id}
+                                                options={question.options}
+                                                value={question.answer}
+                                                type="radio"
+                                                onchange={handleAnswerChange}>
+                                            </lightning-radio-group>
+
+                                        </template>
+
+                                        <!-- Multi-Select -->
+                                        <!-- <template if:true={question.isMultiSelect}>
+
+                                            <lightning-checkbox-group
+                                                data-id={question.id}
+                                                label="Those which apply:"
+                                                options={question.options}
+                                                value={question.answer}
+                                                onchange={handleAnswerChange}>
+                                            </lightning-checkbox-group>
+
+                                        </template> -->
+                                        <!-- Multi-Select -->
+<template if:true={question.isMultiSelect}>
+
+    <div class="slds-form-element">
+
+        <label class="slds-form-element__label">
+            Those which apply:
+        </label>
+
+        <template
+            for:each={question.options}
+            for:item="option">
+
+            <div key={option.value} class="slds-m-bottom_x-small">
+
+                <lightning-input
+                    type="checkbox"
+                    label={option.label}
+                    data-id={question.id}
+                    data-value={option.value}
+                    checked={option.checked}
+                    onchange={handleCheckboxChange}>
+                </lightning-input>
+
+                <template if:true={option.checked}>
+
+                    <template
+                        for:each={option.children}
+                        for:item="child">
+
+                        <div
+                            key={child.id}
+                            class="slds-m-top_x-small slds-m-bottom_small slds-p-left_large">
+
+                            <template if:true={child.isText}>
+                                <lightning-input
+                                    type="text"
+                                    class="text-question"
+                                    label={child.questionText}
+                                    data-id={child.id}
+                                    value={child.answer}
+                                    onchange={handleAnswerChange}>
+                                </lightning-input>
+                            </template>
+
+                            <template if:true={child.isTextArea}>
+                                <lightning-textarea
+                                    label={child.questionText}
+                                    data-id={child.id}
+                                    value={child.answer}
+                                    onchange={handleAnswerChange}>
+                                </lightning-textarea>
+                            </template>
+
+                            <template if:true={child.isNumber}>
+                                <lightning-input
+                                    type="number"
+                                    step="0.01"
+                                        class="amount-question"
+                                        message-when-step-mismatch="Please enter an amount with up to 2 decimal places only."
+                                    label={child.questionText}
+                                    data-id={child.id}
+                                    value={child.answer}
+                                    onchange={handleAnswerChange}>
+                                </lightning-input>
+                            </template>
+
+                            <template if:true={child.isDate}>
+                                <lightning-input
+                                    type="date"
+                                    label={child.questionText}
+                                    data-id={child.id}
+                                    value={child.answer}
+                                    onchange={handleAnswerChange}>
+                                </lightning-input>
+                            </template>
+
+                            <template if:true={child.isBoolean}>
+                                <lightning-radio-group
+                                    data-id={child.id}
+                                    label={child.questionText}
+                                    options={child.options}
+                                    value={child.answer}
+                                    type="radio"
+                                    onchange={handleAnswerChange}>
+                                </lightning-radio-group>
+                            </template>
+
+                            <template if:true={child.isSingleSelect}>
+                                <lightning-radio-group
+                                    data-id={child.id}
+                                    label={child.questionText}
+                                    options={child.options}
+                                    value={child.answer}
+                                    type="radio"
+                                    onchange={handleAnswerChange}>
+                                </lightning-radio-group>
+                            </template>
+
+                            <template if:true={child.isMultiSelect}>
+                                <lightning-checkbox-group
+                                    data-id={child.id}
+                                    label="Those which apply:"
+                                    options={child.options}
+                                    value={child.answer}
+                                    onchange={handleAnswerChange}>
+                                </lightning-checkbox-group>
+                            </template>
+
+                        </div>
+
+                    </template>
+
+                </template>
+
+            </div>
+
+        </template>
+
+    </div>
+
+</template>
+
+                                        <!-- Text -->
+                                        <template if:true={question.isText}>
+
+                                            <lightning-input
+                                                class="text-question"
+                                                data-id={question.id}
+                                                type="text"
+                                                value={question.answer}
+                                                onchange={handleAnswerChange}>
+                                            </lightning-input>
+
+                                        </template>
+
+                                        <template if:true={question.isTextArea}>
+                                            <lightning-textarea
+                                                data-id={question.id}
+                                                value={question.answer}
+                                                onchange={handleAnswerChange}>
+                                            </lightning-textarea>
+                                        </template>
+
+                                        <!-- Number -->
+                                        <template if:true={question.isNumber}>
+
+                                            <lightning-input
+                                                data-id={question.id}
+                                                type="number"
+                                                value={question.answer}
+                                                onchange={handleAnswerChange}>
+                                            </lightning-input>
+
+                                        </template>
+
+                                        <!-- Date -->
+                                        <template if:true={question.isDate}>
+
+                                            <lightning-input
+                                                data-id={question.id}
+                                                type="date"
+                                                value={question.answer}
+                                                onchange={handleAnswerChange}>
+                                            </lightning-input>
+
+                                        </template>
+
+
+                                        <!-- Single Select -->
+                                        <template if:true={question.isSingleSelect}>
+
+                                            <lightning-radio-group
+                                                data-id={question.id}
+                                                options={question.options}
+                                                value={question.answer}
+                                                type="radio"
+                                                onchange={handleAnswerChange}>
+                                            </lightning-radio-group>
+
+                                        </template>
+
+                                        <template if:false={question.isMultiSelect}>
+                                        <template
+                                            for:each={question.inlineChildren}
+                                            for:item="child">
+
+                                            <template if:true={child.showQuestion}>
+
+                                                <div
+                                                    key={child.id}
+                                                    class="slds-m-top_small slds-p-left_large">
+
+                                                    <template if:true={child.isText}>
+                                                        <lightning-input
+                                                            type="text"
+                                                            class="text-question"
+                                                            label={child.questionText}
+                                                            data-id={child.id}
+                                                            value={child.answer}
+                                                            onchange={handleAnswerChange}>
+                                                        </lightning-input>
+                                                    </template>
+
+                                                    <template if:true={child.isTextArea}>
+                                                                                <lightning-textarea
+                                                                                    data-id={child.id}
+                                                                                    value={child.answer}
+                                                                                    onchange={handleAnswerChange}>
+                                                                                </lightning-textarea>
+                                                                            </template>
+
+                                                    <template if:true={child.isNumber}>
+                                                        <lightning-input
+                                                            type="number"
+                                                            step="0.01"
+                                        class="amount-question"
+                                        message-when-step-mismatch="Please enter an amount with up to 2 decimal places only."
+                                                            label={child.questionText}
+                                                            data-id={child.id}
+                                                            value={child.answer}
+                                                            onchange={handleAnswerChange}>
+                                                        </lightning-input>
+                                                    </template>
+
+                                                    <template if:true={child.isDate}>
+                                                        <lightning-input
+                                                            type="date"
+                                                            label={child.questionText}
+                                                            data-id={child.id}
+                                                            value={child.answer}
+                                                            onchange={handleAnswerChange}>
+                                                        </lightning-input>
+                                                    </template>
+
+                                                     <template if:true={child.isEmail}>
+                                                                                <lightning-input
+                                                                                    type="email"
+                                                                                    class="email-question"
+                                                                                    label={child.questionText}
+                                                                                    data-id={child.id}
+                                                                                    value={child.answer}
+                                                                                    onchange={handleAnswerChange}>
+                                                                                </lightning-input>
+                                                                            </template>
+
+                                                                            <template if:true={child.isPhone}>
+                                                                                <lightning-input
+                                                                                    type="tel"
+                                                                                    class="phone-question"
+                                                                                    label={child.questionText}
+                                                                                    data-id={child.id}
+                                                                                    value={child.answer}
+                                                                                    onchange={handleAnswerChange}>
+                                                                                </lightning-input>
+                                                                            </template>
+
+                                                    <template if:true={child.isBoolean}>
+                                                        <lightning-radio-group
+                                                            data-id={child.id}
+                                                            options={child.options}
+                                                            value={child.answer}
+                                                            type="radio"
+                                                            onchange={handleAnswerChange}>
+                                                        </lightning-radio-group>
+                                                    </template>
+
+                                                    <template if:true={child.isSingleSelect}>
+                                                        <lightning-radio-group
+                                                            data-id={child.id}
+                                                            options={child.options}
+                                                            value={child.answer}
+                                                            type="radio"
+                                                            onchange={handleAnswerChange}>
+                                                        </lightning-radio-group>
+                                                    </template>
+
+                                                    <template if:true={child.isMultiSelect}>
+                                                        <lightning-checkbox-group
+                                                            data-id={child.id}
+                                                            label="Those which apply:"
+                                                            options={child.options}
+                                                            value={child.answer}
+                                                            onchange={handleAnswerChange}>
+                                                        </lightning-checkbox-group>
+                                                    </template>
+
+                                                </div>
+
+                                            </template>
+
+                                        </template>
+                                        </template>
+
+                                    </div>
+                                    <!-- </template> -->
+                                </template>
+                            </template>
+
+                        </template>
+
+                    </template>
+
+                </div>
+
+            </template>
+
+            <template if:true={isGeriatricDepressionScale}>
+
+    <div class="slds-box slds-theme_shade slds-m-top_large">
+
+        <div class="slds-text-heading_small">
+            <strong>
+                Score: {score} / 15
+            </strong>
+        </div>
+
+        
+
+        <div class="slds-m-top_medium">            
+
+            <div class="slds-m-top_x-small">
+                Assign one point for each match between your answer to a particular question and the answer listed for that question below:
+            </div>
+
+            <div class="slds-grid slds-wrap slds-m-top_medium">
+
+                <div class="slds-col slds-size_1-of-2">
+                    <template for:each={geriatricLeftColumn} for:item="item">
+                        <div key={item.question}>
+                            <strong>{item.question}:</strong> {item.answer}
+                        </div>
+                    </template>
+                </div>
+
+                <div class="slds-col slds-size_1-of-2">
+                    <template for:each={geriatricRightColumn} for:item="item">
+                        <div key={item.question}>
+                            <strong>{item.question}:</strong> {item.answer}
+                        </div>
+                    </template>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="slds-m-top_x-small">
+            {geriatricDepressionscoreResult}
+        </div>
+
+    </div>
+
+</template>
+
+
+        </div>
+
+        <!-- Footer Buttons -->
+        <div slot="footer" class="slds-m-top_large slds-align_absolute-center">
+
+            <lightning-button
+                label="Cancel"
+                onclick={handleCancel}>
+            </lightning-button>
+
+            <lightning-button
+                variant="brand"
+                label="Save"
+                class="slds-m-left_small"
+                onclick={handleSave}
+                disabled={isSaveDisabled}>
+            </lightning-button>
+
+        </div>
+
+    </lightning-card>
+
+</template>

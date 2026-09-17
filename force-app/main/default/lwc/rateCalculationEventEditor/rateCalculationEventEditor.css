@@ -1,0 +1,19 @@
+.custom-card {
+    background-color: #f9f9f9;
+}
+
+.slds-box.slds-theme_default {
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.lightweight-padding {
+    padding: 0.5rem;
+}
+
+/* Previously: .slds-m-left_xx-small — SLDS utility classes can't be overridden in LWC Shadow DOM */
+.slds-m-left_xx-small {
+    margin-left: -3px !important;
+    margin-top: 27px !important;
+}

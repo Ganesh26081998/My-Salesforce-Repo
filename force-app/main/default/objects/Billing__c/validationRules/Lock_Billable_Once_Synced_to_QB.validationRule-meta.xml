@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lock_Billable_Once_Synced_to_QB</fullName>
+    <active>false</active>
+    <errorConditionFormula>PRIORVALUE(Is_Synced__c)</errorConditionFormula>
+    <errorMessage>Billable cannot be edited once the record is synced to QuickBooks.</errorMessage>
+</ValidationRule>

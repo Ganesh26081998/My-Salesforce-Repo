@@ -1,0 +1,78 @@
+<template>
+    <lightning-record-edit-form
+        object-api-name="Account"
+        record-id={recordId}
+        onload={handleLoad}
+        onsubmit={handleSubmit}
+        onsuccess={handleSuccess}
+        onerror={handleError}>
+
+        <lightning-messages></lightning-messages>
+
+        <div class="slds-p-around_medium">
+            <div class="slds-grid slds-gutters slds-wrap">
+
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="Hospitalization_Status__c" onchange={handleStatusChange}></lightning-input-field>
+                </div>
+
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input label={labels.client} value={clientName} disabled></lightning-input>
+                </div>
+
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="Admission_Type__c"></lightning-input-field>
+                </div>
+
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="Admission_Date__c" disabled={isAdmissionDateDisabled} onchange={handleAdmissionDateChange}></lightning-input-field>
+                </div>
+
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="Hospital_Name__c"></lightning-input-field>
+                </div>
+
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="Primary_diagnosis__c"></lightning-input-field>
+                </div>
+
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="Discharge_Date__c" disabled={isDischargeDateDisabled} onchange={handleDischargeDateChange}></lightning-input-field>
+                </div>
+
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="Role_during_hospitalization__c" onchange={handleRoleChange}></lightning-input-field>
+                </div>
+
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="Medication_reconciliation_completed__c"></lightning-input-field>
+                </div>
+
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="Care_Plan_updated__c"></lightning-input-field>
+                </div>
+
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-input-field field-name="Reason_for_admission__c"></lightning-input-field>
+                </div>
+
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-input-field field-name="Description"></lightning-input-field>
+                </div>
+
+                <template lwc:if={showNotes}>
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-input-field field-name="Notes__c"></lightning-input-field>
+                    </div>
+                </template>
+
+            </div>
+        </div>
+
+        <footer class="slds-modal__footer">
+            <lightning-button label={labels.cancel} onclick={handleCancel}></lightning-button>
+            <lightning-button variant="brand" type="submit" label={labels.save}></lightning-button>
+        </footer>
+
+    </lightning-record-edit-form>
+</template>

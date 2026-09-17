@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Response_Paged_Array_Path__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Put location Of attribute where we do pagination</inlineHelpText>
+    <label>Response Paged Array Path</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

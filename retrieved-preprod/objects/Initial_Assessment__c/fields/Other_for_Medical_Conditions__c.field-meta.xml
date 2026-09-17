@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Other_for_Medical_Conditions__c</fullName>
+    <label>Other</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Smoker</fullName>
+                <default>false</default>
+                <label>Smoker</label>
+            </value>
+            <value>
+                <fullName>Sensitive to Smell</fullName>
+                <default>false</default>
+                <label>Sensitive to Smell</label>
+            </value>
+            <value>
+                <fullName>On Oxygen</fullName>
+                <default>false</default>
+                <label>On Oxygen</label>
+            </value>
+            <value>
+                <fullName>Colostomy Bag</fullName>
+                <default>false</default>
+                <label>Colostomy Bag</label>
+            </value>
+            <value>
+                <fullName>Feeding Tube</fullName>
+                <default>false</default>
+                <label>Feeding Tube</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

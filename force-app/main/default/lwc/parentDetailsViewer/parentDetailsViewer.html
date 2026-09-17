@@ -1,0 +1,47 @@
+<template>
+    <lightning-card title="Event & Billing Details" icon-name="standard:link">
+        
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+        </template>
+        <template if:true={eventBillable}>
+            <div class="slds-p-horizontal_medium">
+                
+                <div class="slds-box slds-box_small slds-theme_shade slds-m-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_x-small">
+                        <lightning-icon icon-name="custom:custom17" size="small" class="slds-m-right_small"></lightning-icon>
+                        Billing
+                    </h3>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" class="slds-m-bottom_xx-small">
+                            <p class="slds-text-title_caps slds-text-color_weak">Name</p>
+                            <p><a href={billingUrl} target="_blank">{billing.Name}</a></p>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" class="slds-m-bottom_xx-small">
+                            <p class="slds-text-title_caps slds-text-color_weak">Amount</p>
+                            <lightning-formatted-number value={billing.Amount__c} format-style="currency"></lightning-formatted-number>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <div class="slds-box slds-box_small slds-theme_shade">
+                    <h3 class="slds-text-heading_small slds-m-bottom_x-small">
+                        <lightning-icon icon-name="custom:custom23" size="small" class="slds-m-right_small"></lightning-icon>
+                        Event
+                    </h3>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" class="slds-m-bottom_xx-small">
+                            <p class="slds-text-title_caps slds-text-color_weak">Name</p>
+                            <p><a href={eventUrl} target="_blank">{eventWrapper.Name}</a></p>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </div>
+        </template>
+        <template if:true={error}>
+            <div class="slds-p-around_medium slds-text-color_error">
+                No parent details found or error loading data.
+            </div>
+        </template>
+        
+    </lightning-card>
+</template>

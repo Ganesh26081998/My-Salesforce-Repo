@@ -1,0 +1,15 @@
+/* Ensure the host element spans the full column width */
+:host {
+    display: block;
+}
+
+.deactivation-title-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 0.2rem;
+}
+
+.deactivation-title-icon {
+    line-height: 1;
+}

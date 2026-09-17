@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AbilityToPay__c</fullName>
+    <label>Ability to Pay</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Comfortable with private-pay services</fullName>
+                <default>false</default>
+                <label>Comfortable with private-pay services</label>
+            </value>
+            <value>
+                <fullName>Needs to check with family / unclear</fullName>
+                <default>false</default>
+                <label>Needs to check with family / unclear</label>
+            </value>
+            <value>
+                <fullName>Not currently able to pay private-pay</fullName>
+                <default>false</default>
+                <label>Not currently able to pay private-pay</label>
+            </value>
+            <value>
+                <fullName>Medicaid</fullName>
+                <default>false</default>
+                <label>Medicaid</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

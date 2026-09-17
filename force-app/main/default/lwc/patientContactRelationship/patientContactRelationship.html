@@ -1,0 +1,69 @@
+<template>
+    <lightning-card title="Contacts" icon-name="standard:contact" >
+        <div slot="actions">
+            
+            <lightning-button 
+                label="Add Relationship" 
+                variant="Neutral" 
+                icon-name="utility:add"
+                onclick={handleAddRelationship}>
+            </lightning-button>
+            
+        </div>
+
+        <div class="slds-p-horizontal_medium">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+            </template>
+            
+            <template if:true={hasContacts}>
+
+             <div class="slds-grid slds-m-bottom_small slds-align_absolute-center">
+                    <div class="slds-col slds-size_1-of-2">
+                        <span class="slds-text-body_small">
+                            Showing <b>{startRecord}</b>–<b>{endRecord}</b> of <b>{totalRecords}</b>
+                            &nbsp;|&nbsp; Page <b>{currentPage}</b> of <b>{totalPages}</b>
+                        </span>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2 slds-text-align_right">
+                        <lightning-button
+                            label="Previous"
+                            onclick={handlePrev}
+                            disabled={isPrevDisabled}
+                            class="slds-m-right_x-small">
+                        </lightning-button>
+
+                        <lightning-button
+                            label="Next"
+                            onclick={handleNext}
+                            disabled={isNextDisabled}>
+                        </lightning-button>
+                    </div>
+                </div>
+               
+            
+                <lightning-datatable
+                    key-field="Id"
+                    data={pagedContacts}
+                    columns={columns}
+                    hide-checkbox-column
+                    onrowaction={handleRowAction}
+                    sorted-by={sortedBy}
+                    sorted-direction={sortDirection}
+                    onsort={handleSort}>
+                </lightning-datatable>
+            </template>
+            
+            <template if:false={hasContacts}>
+                <template if:false={isLoading}>
+                    <div class="slds-text-align_center slds-p-vertical_large">
+                       
+                        <p class="slds-text-heading_small slds-m-bottom_small">No Related Contacts</p>
+                        <p class="slds-text-color_weak">Add relationships to connect contacts with this account</p>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </lightning-card>  
+</template>

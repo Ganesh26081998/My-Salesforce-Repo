@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Comfortable with private-pay services</fullName>
+        <default>false</default>
+        <label>Comfortable with private-pay services</label>
+    </customValue>
+    <customValue>
+        <fullName>Has LTC insurance</fullName>
+        <default>false</default>
+        <label>Has LTC insurance</label>
+    </customValue>
+    <customValue>
+        <fullName>Price-sensitive / exploring cost</fullName>
+        <default>false</default>
+        <label>Price-sensitive / exploring cost</label>
+    </customValue>
+    <customValue>
+        <fullName>Needs to check with family / unclear</fullName>
+        <default>false</default>
+        <label>Needs to check with family / unclear</label>
+    </customValue>
+    <customValue>
+        <fullName>Not currently able to pay private-pay</fullName>
+        <default>false</default>
+        <label>Not currently able to pay private-pay</label>
+    </customValue>
+    <masterLabel>Cost Comfort Level</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

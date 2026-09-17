@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sleep_Patterns__c</fullName>
+    <label>Sleep Patterns</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sleeps through night</fullName>
+                <default>false</default>
+                <label>Sleeps through night</label>
+            </value>
+            <value>
+                <fullName>Frequently awakens</fullName>
+                <default>false</default>
+                <label>Frequently awakens</label>
+            </value>
+            <value>
+                <fullName>Gets up for toileting</fullName>
+                <default>false</default>
+                <label>Gets up for toileting</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

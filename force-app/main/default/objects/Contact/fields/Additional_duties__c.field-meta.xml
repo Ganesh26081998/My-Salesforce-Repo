@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Additional_duties__c</fullName>
+    <label>Additional duties</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Primary Family Contact/Client Representative</fullName>
+                <default>false</default>
+                <label>Primary Family Contact/Client Representative</label>
+            </value>
+            <value>
+                <fullName>Emergency Contact</fullName>
+                <default>false</default>
+                <label>Emergency Contact</label>
+            </value>
+            <value>
+                <fullName>Power of Attorney</fullName>
+                <default>false</default>
+                <label>Power of Attorney</label>
+            </value>
+            <value>
+                <fullName>Receives invoices</fullName>
+                <default>false</default>
+                <label>Receives invoices</label>
+            </value>
+            <value>
+                <fullName>Pays invoices</fullName>
+                <default>false</default>
+                <label>Pays invoices</label>
+            </value>
+            <value>
+                <fullName>Completes Client Satisfaction Survey</fullName>
+                <default>false</default>
+                <label>Completes Client Satisfaction Survey</label>
+            </value>
+            <value>
+                <fullName>Initial Contact</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Initial Contact</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

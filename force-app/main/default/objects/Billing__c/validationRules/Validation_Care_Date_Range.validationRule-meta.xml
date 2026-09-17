@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_Care_Date_Range</fullName>
+    <active>false</active>
+    <description>Ensures Care To Date is after Care From Date.</description>
+    <errorConditionFormula>AND(
+    NOT(ISBLANK(Care_From_Date__c)),
+    NOT(ISBLANK(Care_To_Date__c)),
+    Care_To_Date__c &lt; Care_From_Date__c
+)</errorConditionFormula>
+    <errorDisplayField>Care_From_Date__c</errorDisplayField>
+    <errorMessage>Care To Date must be after Care From Date.</errorMessage>
+</ValidationRule>

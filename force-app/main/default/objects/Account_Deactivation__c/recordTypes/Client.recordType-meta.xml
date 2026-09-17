@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client</fullName>
+    <active>true</active>
+    <label>Client</label>
+    <picklistValues>
+        <picklist>Deactivation_Reason__c</picklist>
+        <values>
+            <fullName>Client resistance to in-home presence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deactivated by WellSpring %28safety %2F noncompliance %2F scope mismatch%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deceased</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dissatisfaction with services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Family feels situation stabilized %E2%80%93 no longer needs services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial %E2%80%93 Could not afford services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Goals achieved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Relocated %2F moved out of service area</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Short-term engagement completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switched to another provider</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transitioned to higher level of care %28AL %2F MC %2F SNF%2F Hospice%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

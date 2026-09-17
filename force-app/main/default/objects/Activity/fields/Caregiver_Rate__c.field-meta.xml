@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Caregiver_Rate__c</fullName>
+    <label>Caregiver Rate</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Hourly</fullName>
+                <default>true</default>
+                <label>Hourly</label>
+            </value>
+            <value>
+                <fullName>Not Payable</fullName>
+                <default>false</default>
+                <label>Not Payable</label>
+            </value>
+            <value>
+                <fullName>Flat Amount</fullName>
+                <default>false</default>
+                <label>Flat Amount</label>
+            </value>
+            <value>
+                <fullName>Live-in</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Live-in</label>
+            </value>
+            <value>
+                <fullName>Per Visit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Per Visit</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

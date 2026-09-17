@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Weight</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+    Weight__c &lt; 1,
+    Weight__c &gt; 1400
+)</errorConditionFormula>
+    <errorDisplayField>Weight__c</errorDisplayField>
+    <errorMessage>Weight must be between 1lb and 1400 lbs.</errorMessage>
+</ValidationRule>

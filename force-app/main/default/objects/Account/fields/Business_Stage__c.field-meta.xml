@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Stage__c</fullName>
+    <label>Business Stage</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Closed Won</fullName>
+                <default>false</default>
+                <label>Closed Won</label>
+            </value>
+            <value>
+                <fullName>Identify</fullName>
+                <default>false</default>
+                <label>Identify</label>
+            </value>
+            <value>
+                <fullName>Meet</fullName>
+                <default>false</default>
+                <label>Meet</label>
+            </value>
+            <value>
+                <fullName>Discovery</fullName>
+                <default>false</default>
+                <label>Discovery</label>
+            </value>
+            <value>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+                <label>Partnership</label>
+            </value>
+            <value>
+                <fullName>1st Referral</fullName>
+                <default>false</default>
+                <label>1st Referral</label>
+            </value>
+            <value>
+                <fullName>Referrals 2-3 within 30 days</fullName>
+                <default>false</default>
+                <label>Referrals 2-3 within 30 days</label>
+            </value>
+            <value>
+                <fullName>Referrals 4-8 within 90 days</fullName>
+                <default>false</default>
+                <label>Referrals 4-8 within 90 days</label>
+            </value>
+            <value>
+                <fullName>Active Referral Source</fullName>
+                <default>false</default>
+                <label>Active Referral Source</label>
+            </value>
+            <value>
+                <fullName>Dormant</fullName>
+                <default>false</default>
+                <label>Dormant</label>
+            </value>
+            <value>
+                <fullName>Closed Lost</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Closed Lost</label>
+            </value>
+            <value>
+                <fullName>Follow Up</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Follow Up</label>
+            </value>
+            <value>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>In Progress</label>
+            </value>
+            <value>
+                <fullName>Negotiation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Negotiation</label>
+            </value>
+            <value>
+                <fullName>New</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>New</label>
+            </value>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>None</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

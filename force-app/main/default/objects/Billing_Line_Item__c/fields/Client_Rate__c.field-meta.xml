@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_Rate__c</fullName>
+    <label>Client Rate</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Hourly</fullName>
+                <default>false</default>
+                <label>Hourly</label>
+            </value>
+            <value>
+                <fullName>Not Payable</fullName>
+                <default>false</default>
+                <label>Not Payable</label>
+            </value>
+            <value>
+                <fullName>Per Visit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Per Visit</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>In-home nursing</fullName>
+        <default>false</default>
+        <label>In-home nursing</label>
+    </customValue>
+    <customValue>
+        <fullName>In-home caregiving</fullName>
+        <default>false</default>
+        <label>In-home caregiving</label>
+    </customValue>
+    <customValue>
+        <fullName>Ongoing care management</fullName>
+        <default>false</default>
+        <label>Ongoing care management</label>
+    </customValue>
+    <customValue>
+        <fullName>Medication management</fullName>
+        <default>false</default>
+        <label>Medication management</label>
+    </customValue>
+    <customValue>
+        <fullName>Comprehensive assessment</fullName>
+        <default>false</default>
+        <label>Comprehensive assessment</label>
+    </customValue>
+    <customValue>
+        <fullName>Skilled nursing</fullName>
+        <default>false</default>
+        <label>Skilled nursing</label>
+    </customValue>
+    <customValue>
+        <fullName>Help after hospitalization or rehab</fullName>
+        <default>false</default>
+        <label>Help after hospitalization or rehab</label>
+    </customValue>
+    <customValue>
+        <fullName>Peace of Mind monitoring program</fullName>
+        <default>false</default>
+        <label>Peace of Mind monitoring program</label>
+    </customValue>
+    <customValue>
+        <fullName>Assisted living or memory care navigation</fullName>
+        <default>false</default>
+        <label>Assisted living or memory care navigation</label>
+    </customValue>
+    <customValue>
+        <fullName>Not sure / need guidance</fullName>
+        <default>false</default>
+        <label>Not sure / need guidance</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <masterLabel>Desired Support / Services Requested</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

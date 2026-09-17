@@ -1,0 +1,29 @@
+/* CSS custom properties cross shadow DOM — styles only the input element inside */
+.fielderr lightning-input-field {
+    --sds-c-input-color-border: #c23934;
+    --sds-c-input-color-border-focus: #c23934;
+    --sds-c-combobox-color-border-container: #c23934;
+    --sds-c-datepicker-input-color-border: #c23934;
+}
+
+/* Red error message text below the field */
+.errtext {
+    color: #c23934;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    margin-top: 0.25rem;
+    display: block;
+    margin-left: 7px;
+    margin-bottom: 7px;
+}
+
+.errtextNote{
+
+     color: #c23934;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    margin-top: 0.25rem;
+    display: block;
+    margin-left: 7px;
+    margin-bottom: 7px;
+}

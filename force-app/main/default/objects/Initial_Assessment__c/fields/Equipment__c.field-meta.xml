@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Equipment__c</fullName>
+    <label>Equipment</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Bedrails</fullName>
+                <default>false</default>
+                <label>Bedrails</label>
+            </value>
+            <value>
+                <fullName>Hospital Bed</fullName>
+                <default>false</default>
+                <label>Hospital Bed</label>
+            </value>
+            <value>
+                <fullName>Bed Commode</fullName>
+                <default>false</default>
+                <label>Bed Commode</label>
+            </value>
+            <value>
+                <fullName>Grab Bars</fullName>
+                <default>false</default>
+                <label>Grab Bars</label>
+            </value>
+            <value>
+                <fullName>Lift Chair</fullName>
+                <default>false</default>
+                <label>Lift Chair</label>
+            </value>
+            <value>
+                <fullName>Raised Toilet Seat</fullName>
+                <default>false</default>
+                <label>Raised Toilet Seat</label>
+            </value>
+            <value>
+                <fullName>Shower Bench</fullName>
+                <default>false</default>
+                <label>Shower Bench</label>
+            </value>
+            <value>
+                <fullName>Handheld Showerhead</fullName>
+                <default>false</default>
+                <label>Handheld Showerhead</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

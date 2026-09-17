@@ -1,0 +1,58 @@
+<template>
+    <lightning-card title="Referred Metrics" icon-name="standard:contact">
+
+        <!-- Data loaded -->
+        <template if:true={metrics}>
+            <div class="referral-card">
+
+                <div class="metrics-grid">
+                    <!-- Prospects Referred -->
+                    <div>
+                        <div class="label">Prospects Referred</div>
+                        <div class="value">
+                            {metrics.prospectsReferred}
+                        </div>
+                    </div>
+
+                    <!-- Clients Referred -->
+                    <div>
+                        <div class="label">Clients Referred</div>
+                        <div class="value">
+                            {metrics.clientsReferred}
+                        </div>
+                    </div>
+
+                    <!-- Lifetime Revenue -->
+                    <div class="revenue">
+                        <div class="label">Lifetime Revenue</div>
+                        <div class="value revenue-value">
+                            {formattedRevenue}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Refresh Action -->
+                <div class="action">
+                    <lightning-button
+                        variant="brand"
+                        label="Refresh Data"
+                        onclick={handleRefresh}
+                        disabled={loading}>
+                    </lightning-button>
+                </div>
+
+            </div>
+        </template>
+
+        <!-- Loader while data loads -->
+        <template if:false={metrics}>
+            <div class="slds-p-around_medium slds-align_absolute-center">
+                <lightning-spinner
+                    alternative-text="Loading"
+                    size="medium">
+                </lightning-spinner>
+            </div>
+        </template>
+
+    </lightning-card>
+</template>

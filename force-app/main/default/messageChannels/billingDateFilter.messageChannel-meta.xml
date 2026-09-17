@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Shares selected date filter between EventPendingBillingList and EventBillingJobUI.</description>
+    <isExposed>true</isExposed>
+    <lightningMessageFields>
+        <description>Selected start date</description>
+        <fieldName>startDate</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>Selected end date</description>
+        <fieldName>endDate</fieldName>
+    </lightningMessageFields>
+    <masterLabel>BillingDateFilter</masterLabel>
+</LightningMessageChannel>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Medication concerns</fullName>
+        <default>false</default>
+        <label>Medication concerns</label>
+    </customValue>
+    <customValue>
+        <fullName>Recent hospitalization</fullName>
+        <default>false</default>
+        <label>Recent hospitalization</label>
+    </customValue>
+    <customValue>
+        <fullName>Decline in functioning</fullName>
+        <default>false</default>
+        <label>Decline in functioning</label>
+    </customValue>
+    <customValue>
+        <fullName>Cognitive concerns / confusion</fullName>
+        <default>false</default>
+        <label>Cognitive concerns / confusion</label>
+    </customValue>
+    <customValue>
+        <fullName>Falls or mobility issues</fullName>
+        <default>false</default>
+        <label>Falls or mobility issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Safety concerns / wandering</fullName>
+        <default>false</default>
+        <label>Safety concerns / wandering</label>
+    </customValue>
+    <customValue>
+        <fullName>Family overwhelmed / caregiver burnout</fullName>
+        <default>false</default>
+        <label>Family overwhelmed / caregiver burnout</label>
+    </customValue>
+    <customValue>
+        <fullName>Need help coordinating care</fullName>
+        <default>false</default>
+        <label>Need help coordinating care</label>
+    </customValue>
+    <customValue>
+        <fullName>New diagnosis</fullName>
+        <default>false</default>
+        <label>New diagnosis</label>
+    </customValue>
+    <customValue>
+        <fullName>Home safety concerns</fullName>
+        <default>false</default>
+        <label>Home safety concerns</label>
+    </customValue>
+    <customValue>
+        <fullName>Need help evaluating senior living options</fullName>
+        <default>false</default>
+        <label>Need help evaluating senior living options</label>
+    </customValue>
+    <customValue>
+        <fullName>Looking for non-medical caregiving</fullName>
+        <default>false</default>
+        <label>Looking for non-medical caregiving</label>
+    </customValue>
+    <customValue>
+        <fullName>General information / not sure</fullName>
+        <default>false</default>
+        <label>General information / not sure</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <masterLabel>Reason for Inquiry</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

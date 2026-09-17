@@ -1,0 +1,42 @@
+<template>
+    <!-- Spinner Overlay -->
+    <template if:true={loading}>
+        <div class="spinner-overlay">
+            <lightning-spinner alternative-text="Processing..." size="large"></lightning-spinner>
+        </div>
+    </template>
+
+    <!-- Show modal only when not loading -->
+    <template if:true={showModal} if:false={loading}>
+        <div class="custom-backdrop"></div>
+
+        <div class="custom-modal">
+
+            <div class="custom-header">
+                <h2>Confirm Activation</h2>
+            </div>
+
+            <div class="custom-body">
+                <p>Are you sure you want to activate this patient? Activating this will remove the patient from the ‘Prospect’ list view and make the patient visible 
+                    only in the ‘Client’ list view. All medical and operational data will carry over without any data loss.</p>
+            </div>
+
+            <div class="custom-footer">
+                <lightning-button
+                    label="Cancel"
+                    onclick={closeModal}
+                    variant="neutral">
+                </lightning-button>
+
+                <lightning-button
+                    label="Activate"
+                    variant="brand"
+                    onclick={handleConfirm}
+                    class="confirm-btn"
+                    disabled={loading}>
+                </lightning-button>
+            </div>
+
+        </div>
+    </template>
+</template>

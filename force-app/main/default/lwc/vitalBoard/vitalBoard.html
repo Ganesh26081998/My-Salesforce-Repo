@@ -1,0 +1,414 @@
+<template>
+    <div class="board-wrapper">
+
+        <!-- Header Bar -->
+        <div class="header-bar">
+            <!-- View Toggle -->            
+            <div class="view-toggle-wrap">
+                <lightning-button-group>
+                    <lightning-button
+                        label="View"
+                        icon-name={currentViewIcon}
+                        icon-position="left"
+                        onclick={toggleViewMenu}>
+                    </lightning-button>
+                </lightning-button-group>
+
+                <template if:true={isViewMenuOpen}>
+                    <div class="view-dropdown">
+                        <div class={listViewOptionClass} onclick={selectListView}>
+                            <lightning-icon icon-name="utility:list" size="xx-small" class="view-opt-icon"></lightning-icon>
+                            <span>List View</span>
+                            <template if:true={isListView}>
+                                <lightning-icon icon-name="utility:check" size="xx-small" class="view-check-icon"></lightning-icon>
+                            </template>
+                        </div>
+                        <div class={calendarViewOptionClass} onclick={selectCalendarView}>
+                            <lightning-icon icon-name="utility:date_input" size="xx-small" class="view-opt-icon"></lightning-icon>
+                            <span>Calendar View</span>
+                            <template if:true={isCalendarView}>
+                                <lightning-icon icon-name="utility:check" size="xx-small" class="view-check-icon"></lightning-icon>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>            
+
+            <lightning-button
+                label="New Care Observation"
+                variant="brand"
+                icon-name="utility:add"
+                onclick={openModal}>
+            </lightning-button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-row">
+
+                <template if:false={isRecordPageContext}>
+                    <div class="filter-field">
+                        <lightning-combobox
+                            label="Client"
+                            value={selectedPatientId}
+                            options={patientOptions}
+                            onchange={handlePatientChange}>
+                        </lightning-combobox>
+                    </div>
+                </template>
+
+                <div class="filter-field">
+                    <lightning-combobox
+                        label="Quick Range"
+                        value={selectedQuickRange}
+                        options={quickRangeOptions}
+                        onchange={handleQuickRangeChange}>
+                    </lightning-combobox>
+                </div>
+
+                <div class="filter-field">
+                    <lightning-combobox
+                        label="Category"
+                        value={selectedCategory}
+                        options={categoryOptions}
+                        onchange={handleCategoryChange}>
+                    </lightning-combobox>
+                </div>
+
+                <div class="filter-field">
+                    <lightning-input
+                        type="date"
+                        label="From Date"
+                        value={fromDate}
+                        class="from-date"
+                        disabled={isManualDateDisabled}
+                        onchange={handleFromDate}>
+                    </lightning-input>
+                </div>
+
+                <div class="filter-field">
+                    <lightning-input
+                        type="date"
+                        label="To Date"
+                        value={toDate}
+                        class="to-date"
+                        disabled={isManualDateDisabled}
+                        onchange={handleToDate}>
+                    </lightning-input>
+                </div>
+
+                <div class="filter-actions">
+                    <lightning-button
+                        label="Apply"
+                        variant="brand"
+                        disabled={isApplyDisabled}
+                        onclick={applyFilter}>
+                    </lightning-button>
+                    <lightning-button
+                        label="Clear"
+                        variant="neutral"
+                        disabled={isClearDisabled}
+                        onclick={handleClear}>
+                    </lightning-button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <template if:true={isLoading}>
+            <div class="spinner-wrap">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                <p class="spinner-text">Loading vital records...</p>
+            </div>
+        </template>
+
+        <!-- Content -->
+        <template if:false={isLoading}>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!--  LIST VIEW                                  -->
+            <!-- ═══════════════════════════════════════════ -->
+            <template if:true={isListView}>
+
+                <template if:true={hasListData}>
+
+                    <!-- List pagination -->
+                    <div class="date-nav">
+                        <button class="nav-btn" disabled={isListPrevDisabled} onclick={handleListPrev}>
+                            &#8249;
+                        </button>
+                        <span class="page-info">{listPageInfo}</span>
+                        <button class="nav-btn" disabled={isListNextDisabled} onclick={handleListNext}>
+                            &#8250;
+                        </button>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table class="list-table">
+                            <thead>
+                                <tr>
+                                    <th class="th-list-vital">Vital Sign</th>
+                                    <th class="th-list-value">Value</th>
+                                    <th class="th-list-date">Date</th>
+                                    <th class="th-list-time">Time</th>
+                                    <template if:false={isRecordPageContext}>
+                                        <th class="th-list-client">Client</th>
+                                    </template>
+                                    <th class="th-list-actions"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={paginatedListData} for:item="row">
+                                    <tr key={row.id} class="list-row">
+                                        <td>
+                                            <span class={row.categoryClass}>{row.vital}</span>
+                                        </td>
+                                        <td>
+                                            <span class="value-pill">{row.value}</span>
+                                        </td>
+                                        <td class="td-date">{row.displayDate}</td>
+                                        <td class="td-time">{row.time}</td>
+                                        <template if:false={isRecordPageContext}>
+                                            <td class="td-client">{row.patientName}</td>
+                                        </template>
+                                    
+                                    <td class="td-actions">
+                                    <lightning-button-icon
+                                        icon-name="utility:edit"
+                                        alternative-text="Edit"
+                                        title="Edit"
+                                        data-id={row.recordId}
+                                        data-vital={row.vital}
+                                        data-value={row.value}
+                                        data-datetime={row.fullDateTime}
+                                        onclick={handleEdit}
+                                        class="slds-m-right_x-small">
+                                    </lightning-button-icon>
+
+                                    <lightning-button-icon
+                                        icon-name="utility:delete"
+                                        alternative-text="Delete"
+                                        title="Delete"
+                                        data-id={row.recordId}
+                                        onclick={handleDelete}>
+                                    </lightning-button-icon>
+                                    </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </template>
+
+                <template if:false={hasListData}>
+                    <div class="empty-state">
+                        <div class="empty-icon">&#128203;</div>
+                        <div class="empty-title">No Records Found</div>
+                        <div class="empty-sub">No vital records match the selected filters.</div>
+                    </div>
+                </template>
+
+            </template>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!--  CALENDAR VIEW                              -->
+            <!-- ═══════════════════════════════════════════ -->
+            <template if:true={isCalendarView}>
+
+                <template if:true={hasData}>
+
+                    <div class="date-nav">
+                        <button class="nav-btn" disabled={isPrevDisabled} onclick={handlePrev}>
+                            &#8249;
+                        </button>
+                        <span class="page-info">{pageInfo}</span>
+                        <button class="nav-btn" disabled={isNextDisabled} onclick={handleNext}>
+                            &#8250;
+                        </button>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table class="vital-table">
+                            <thead>
+                                <tr>
+                                    <th class="th-sticky col-vital">Vital Sign</th>
+                                    <template for:each={displayDates} for:item="col">
+                                        <th key={col.full} class="th-date">
+                                            <span class="date-day">{col.day}</span>
+                                            <span class="date-month">{col.month}</span>
+                                        </th>
+                                    </template>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={paginatedTableData} for:item="patient">
+                                    <template for:each={patient.vitals} for:item="vr">
+                                        <tr key={vr.key} class="vital-row">
+                                            <td class="td-sticky col-vital">
+                                                <span class="vital-badge">{vr.vital}</span>
+                                            </td>
+                                            <template for:each={vr.values} for:item="val">
+                                                <td key={val.date}>
+                                                    <template if:false={val.isEmpty}>
+                                                        <div class="cell-block">
+                                                            <template for:each={val.valueList} for:item="item">
+                                                                <span key={item} class="value-pill">{item}</span>
+                                                            </template>
+                                                            <span class="cell-time">{val.time}</span>
+                                                        </div>
+                                                    </template>
+                                                    <template if:true={val.isEmpty}>
+                                                        <span class="value-empty">—</span>
+                                                    </template>
+                                                </td>
+                                            </template>
+                                        </tr>
+                                    </template>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </template>
+
+                <template if:false={hasData}>
+                    <div class="empty-state">
+                        <div class="empty-icon">&#128203;</div>
+                        <div class="empty-title">No Records Found</div>
+                        <div class="empty-sub">No vital records match the selected filters.</div>
+                    </div>
+                </template>
+
+            </template>
+
+        </template>
+
+        <!-- Modal -->
+        <template if:true={isModalOpen}>
+            <section role="dialog"
+                    tabindex="-1"
+                    aria-modal="true"
+                    class="slds-modal slds-fade-in-open modal-medium">
+
+                <div class="slds-modal__container custom-modal-container">
+
+                    <header class="slds-modal__header">
+                        <button
+                            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close"
+                            onclick={closeModal}>
+                            <lightning-icon
+                                icon-name="utility:close"
+                                alternative-text="Close"
+                                size="small">
+                            </lightning-icon>
+                        </button>
+                        <h2 class="slds-text-heading_medium slds-text-align_center">
+                            {modalTitle}
+                        </h2>
+                    </header>
+
+                    <div class="slds-modal__content slds-p-around_medium modal-content">
+
+                        <lightning-input
+                            type="datetime-local"
+                            label="Effective Date & Time"
+                            value={modalDateTime}
+                            onchange={handleModalDateTime}
+                            class="effective-datetime"
+                            required>
+                        </lightning-input>
+
+                        <lightning-combobox
+                            label="Category"
+                            value={modalCategory}
+                            options={modalCategoryOptions}
+                            placeholder="Select a category"
+                            onchange={handleModalCategory}
+                            required>
+                        </lightning-combobox>
+
+                        <template if:true={modalCategory}>
+
+                            <template if:true={activeConfig.helpText}>
+                                <div class="slds-text-color_weak slds-m-top_x-small">
+                                    {activeConfig.helpText}
+                                </div>
+                            </template>
+
+                            <template if:true={isNumberInput}>
+                                <lightning-input
+                                    type="number"
+                                    label={activeConfig.label}
+                                    value={modalValue}
+                                    placeholder={activeConfig.placeholder}
+                                    min={activeConfig.min}
+                                    max={activeConfig.max}
+                                    step="0.1"
+                                    onchange={handleModalValue}
+                                    required>
+                                </lightning-input>
+                            </template>
+
+                            <template if:true={isTextInput}>
+                                <lightning-input
+                                    type="text"
+                                    label={activeConfig.label}
+                                    value={modalValue}
+                                    placeholder={activeConfig.placeholder}
+                                    onchange={handleModalValue}
+                                    onkeypress={handleBpKeyPress}
+                                    required>
+                                </lightning-input>
+                            </template>
+
+                            <template if:true={isPicklistInput}>
+                                <lightning-combobox
+                                    label={activeConfig.label}
+                                    value={modalValue}
+                                    options={activePicklistOptions}
+                                    placeholder="Select a value"
+                                    onchange={handleModalValue}
+                                    required>
+                                </lightning-combobox>
+                            </template>
+
+                            <template if:true={activeConfig.unit}>
+                                <div class="slds-m-top_x-small">
+                                    <span class="unit-badge">{activeConfig.unit}</span>
+                                </div>
+                            </template>
+                        </template>
+
+                        <template if:true={modalError}>
+                            <div class="slds-text-color_error slds-m-top_small">
+                                {modalError}
+                            </div>
+                        </template>
+
+                    </div>
+
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            label="Cancel"
+                            variant="neutral"
+                            onclick={closeModal}>
+                        </lightning-button>
+                        <lightning-button
+                            label="Save"
+                            variant="brand"
+                            class="slds-m-left_small"
+                            onclick={handleSave}
+                            disabled={isSaving}>
+                        </lightning-button>
+                    </footer>
+
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+    </div>
+</template>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Within 48 hours</fullName>
+        <default>false</default>
+        <label>Within 48 hours</label>
+    </customValue>
+    <customValue>
+        <fullName>Within 1 week</fullName>
+        <default>false</default>
+        <label>Within 1 week</label>
+    </customValue>
+    <customValue>
+        <fullName>Within 1 month</fullName>
+        <default>false</default>
+        <label>Within 1 month</label>
+    </customValue>
+    <customValue>
+        <fullName>Planning ahead / no urgency</fullName>
+        <default>false</default>
+        <label>Planning ahead / no urgency</label>
+    </customValue>
+    <customValue>
+        <fullName>Exploring options</fullName>
+        <default>false</default>
+        <label>Exploring options</label>
+    </customValue>
+    <masterLabel>Urgency of Need</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

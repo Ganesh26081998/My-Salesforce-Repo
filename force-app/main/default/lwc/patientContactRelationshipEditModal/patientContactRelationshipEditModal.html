@@ -1,0 +1,139 @@
+<template>
+    <lightning-modal-header label="Edit Relationship"></lightning-modal-header>
+
+    <lightning-modal-body>
+        <template if:true={isLoading}>
+            <div class="slds-align_absolute-center slds-p-vertical_large">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:false={isLoading}>
+            <div class="slds-m-top_medium">
+             <lightning-input
+        label="Name"
+        value={contactName}
+        readonly>
+    </lightning-input>
+    </div>
+            <!-- Contact Name (read-only display) -->
+            <!-- <div class="slds-box slds-m-bottom_medium slds-theme_shade"> -->
+                <!-- <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_xx-small">Contact</p> -->
+                <!-- <p class="slds-text-heading_small"><strong>{contactName}</strong></p> -->
+                <!-- <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">Type: {ccrType}</p> -->
+             <!-- </div>  -->
+
+            <!-- ─── FAMILY CONTACT fields ─── -->
+            <template if:true={isFamilyType}>
+                <div class="slds-m-top_medium">
+                    <lightning-combobox
+                        data-id="relationshipToClient"
+                        name="relationshipToClient"
+                        label="Relationship to Client"
+                        value={relationshipToClient}
+                        options={relationshipToClientOptions}
+                        onchange={handleRelationshipToClientChange}
+                        required>
+                    </lightning-combobox>
+
+                    <template if:true={showFamilyRelationship}>
+                        <div class="slds-m-top_medium">
+                            <lightning-combobox
+                                data-id="familyRelationship"
+                                name="familyRelationship"
+                                label="Family Relationship"
+                                value={familyRelationship}
+                                options={familyRelationshipOptions}
+                                onchange={handleFamilyRelationshipChange}
+                                required>
+                            </lightning-combobox>
+                        </div>
+                    </template>
+
+                    <template if:true={showOtherRelationship}>
+                        <div class="slds-m-top_medium">
+                            <lightning-input
+                                data-id="otherRelationshipToClient"
+                                type="text"
+                                label="Other Relationship to Client"
+                                value={otherRelationshipToClient}
+                                onchange={handleOtherRelationshipChange}
+                                required>
+                            </lightning-input>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- ─── COUPLE HOUSEHOLD fields ─── -->
+            <template if:true={isCoupleHouseholdType}>
+                <div class="slds-m-top_medium">
+                    <lightning-record-edit-form
+                        object-api-name="HealthCloudGA__ContactContactRelation__c"
+                        density="comfy">
+                        <lightning-input-field
+                            data-id="patientRoleField"
+                            field-name="HealthCloudGA__Role__c"
+                            value={selectedRoleId}
+                            onchange={handleRoleChange}
+                            required>
+                        </lightning-input-field>
+                    </lightning-record-edit-form>
+                </div>
+            </template>
+
+            <!-- ─── BUSINESS CONTACT fields ─── -->
+            <template if:true={isBusinessType}>
+                <div class="slds-m-top_medium">
+                    <!-- <lightning-record-edit-form
+                        object-api-name="Contact"
+                        record-id={contactId}
+                        density="comfy">
+                        <lightning-input-field
+                            data-id="businessType"
+                            field-name="Type__c"
+                            value={selectedBusinessType}
+                            onchange={handleBusinessTypeChange}
+                            required>
+                        </lightning-input-field>
+                    </lightning-record-edit-form> -->
+
+                    <lightning-combobox
+                        data-id="businessType"
+                        name="businessType"
+                        label="Type"
+                        value={selectedBusinessType}
+                        options={businessTypeOptions}
+                        onchange={handleBusinessTypeChange}
+                        required>
+                    </lightning-combobox>
+
+                    <div class="slds-m-top_medium">
+                        <lightning-input
+                            type="checkbox"
+                            label="Referral Source for Client?"
+                            checked={isReferral}
+                            onchange={handleIsReferralChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </template>
+        </template>
+
+        <template if:true={isSaving}>
+            <div class="slds-align_absolute-center slds-p-vertical_small">
+                <lightning-spinner alternative-text="Saving..." size="medium"></lightning-spinner>
+            </div>
+        </template>
+    </lightning-modal-body>
+
+    <lightning-modal-footer>
+        <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+        <lightning-button
+            class="slds-m-left_small"
+            variant="brand"
+            label="Save"
+            onclick={handleSave}>
+        </lightning-button>
+    </lightning-modal-footer>
+</template>

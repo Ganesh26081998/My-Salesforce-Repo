@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InvoiceType__c</fullName>
+    <label>Invoice Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Standard Invoice</fullName>
+                <default>false</default>
+                <label>Standard Invoice</label>
+            </value>
+            <value>
+                <fullName>Household Invoice</fullName>
+                <default>false</default>
+                <label>Household Invoice</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,40 @@
+.search-results {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.caller-item,
+.patient-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.caller-item:hover,
+.patient-item:hover {
+    background-color: #f3f2f2;
+}
+
+.business-card {
+    cursor: pointer;
+    transition: all 0.2s;
+    height: 100%;
+}
+
+.business-card:hover {
+    background-color: #f3f2f2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.business-card[data-selected="true"] {
+    border: 2px solid #0070d2;
+    background-color: #e8f4ff;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.slds-modal__container {
+    max-width: 60rem;
+    width: 95%;
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_External_Id__c</fullName>
+    <defaultValue>false</defaultValue>
+    <inlineHelpText>Used to flag this field as the one that contains the value that should be used for upserts.</inlineHelpText>
+    <label>Is External Id</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

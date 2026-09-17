@@ -1,0 +1,19 @@
+<template>
+    <template if:true={showWarning}>
+        <section
+            class="slds-notify slds-notify_alert slds-theme_warning slds-m-bottom_small"
+            role="alert"
+        >
+            <span class="slds-assistive-text">Warning</span>
+
+            <lightning-icon
+                icon-name="utility:warning"
+                size="small"
+                alternative-text="Warning"
+                class="slds-m-right_small"
+            ></lightning-icon>
+
+            <h2 class="slds-text-body_regular">{warningMessage}</h2>
+        </section>
+    </template>
+</template>

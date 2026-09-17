@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Not_a_fit_Deactivate__c</fullName>
+    <label>Not a fit - Deactivate</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Intake_Disposition__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Medicaid</fullName>
+                <default>false</default>
+                <label>Medicaid</label>
+            </value>
+            <value>
+                <fullName>Hospice</fullName>
+                <default>false</default>
+                <label>Hospice</label>
+            </value>
+            <value>
+                <fullName>Death</fullName>
+                <default>false</default>
+                <label>Death</label>
+            </value>
+            <value>
+                <fullName>Family asked to remove from list — cost</fullName>
+                <default>false</default>
+                <label>Family asked to remove from list — cost</label>
+            </value>
+            <value>
+                <fullName>Outside current service geography</fullName>
+                <default>false</default>
+                <label>Outside current service geography</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Not a fit - Will deactivate</controllingFieldValue>
+            <valueName>Medicaid</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not a fit - Will deactivate</controllingFieldValue>
+            <valueName>Hospice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not a fit - Will deactivate</controllingFieldValue>
+            <valueName>Death</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not a fit - Will deactivate</controllingFieldValue>
+            <valueName>Family asked to remove from list — cost</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not a fit - Will deactivate</controllingFieldValue>
+            <valueName>Outside current service geography</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

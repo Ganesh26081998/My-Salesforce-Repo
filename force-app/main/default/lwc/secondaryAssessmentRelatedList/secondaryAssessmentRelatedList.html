@@ -1,0 +1,65 @@
+<template>
+
+    <lightning-card icon-name="custom:custom27" title={cardTitle}>
+
+        <lightning-button-menu slot="actions" alternative-text="Show menu" menu-alignment="auto" onselect={handleMenuSelect}>
+            <lightning-menu-item value="new" label="New"></lightning-menu-item>
+        </lightning-button-menu>
+
+       <template if:true={displayedAssessments.length}>
+
+            <ul>
+                <template
+                    for:each={displayedAssessments}
+                    for:item="assessment">
+                    <li
+                        key={assessment.Id}
+                        class="slds-item">
+                        <div
+                            class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center
+                                slds-p-bottom_small slds-p-left_small slds-p-right_small">
+                            <a
+                                href="javascript:void(0);"
+                                data-id={assessment.Id}
+                                onclick={handleRecordClick}
+                                style="text-decoration: underline; text-decoration-style: dotted;">
+                                {assessment.displayLabel}
+                            </a>
+                            <lightning-button-menu
+                                alternative-text="Actions"
+                                icon-size="x-small"
+                                menu-alignment="right"
+                                data-id={assessment.Id}
+                                onselect={handleRowAction}>
+
+                                <lightning-menu-item
+                                    value="edit"
+                                    label="Edit">
+                                </lightning-menu-item>
+
+                                <lightning-menu-item
+                                    value="delete"
+                                    label="Delete">
+                                </lightning-menu-item>
+
+                            </lightning-button-menu>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+
+        </template>
+
+        <template if:true={hasMoreAssessments}>
+            <div style="border-top: 1px solid #c9c9c9; text-align: center; padding-top: 0.75rem;">
+                <a
+                    href="javascript:void(0);"
+                    onclick={handleViewAll}>
+                    View All
+                </a>
+            </div>
+        </template> 
+
+    </lightning-card>
+
+</template>

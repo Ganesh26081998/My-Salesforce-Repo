@@ -1,0 +1,259 @@
+/* WellSpringForm.css */
+
+:host {
+    --lwc-colorBrand: #E5F7E5;
+    --lwc-colorBrandLight: #e3f2fd;
+    --lwc-spacingSmall: 0.5rem;
+    --lwc-spacingMedium: 1rem;
+    --lwc-spacingLarge: 1.5rem;
+    --lwc-spacingXLarge: 2rem;
+}
+
+.page-bg {
+    background: linear-gradient(135deg, #E5F7E5 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--lwc-spacingMedium);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.form-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 3rem;
+    max-width: 1000px;
+    width: 95%;
+    animation: slideInUp 0.3s ease-out;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 1rem 0;
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0 0 2rem 0;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: var(--lwc-spacingXLarge);
+}
+
+/* Full width for specific fields */
+.form-grid > :nth-child(5),
+.form-grid > :nth-child(6),
+.form-grid > :nth-child(12) {
+    grid-column: 1 / -1;
+}
+
+.info-message {
+    grid-column: 1 / -1;
+    padding: var(--lwc-spacingMedium);
+    background-color: #fef3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 4px;
+    color: #856404;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    margin: var(--lwc-spacingXLarge) 0;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 16px 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.submit-btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Spinner styling inside button */
+.submit-btn ::part(spinner) {
+    color: white;
+}
+
+.submit-btn lightning-spinner {
+    margin-right: 8px;
+}
+
+.submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.footer-text {
+    font-size: 0.75rem;
+    color: #999;
+    margin: var(--lwc-spacingLarge) 0 0 0;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.footer-text a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-text a:hover {
+    text-decoration: underline;
+}
+
+/* Thank You Page */
+.thankyou-page {
+    background: linear-gradient(135deg, #E5F7E5 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--lwc-spacingMedium);
+}
+
+.thankyou-text {
+    color: rgb(68, 90, 234);
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    max-width: 600px;
+    line-height: 1.4;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Lightning Component Overrides */
+:host ::part(input) {
+    border-radius: 4px;
+}
+
+:host ::part(combobox) {
+    border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 2rem;
+        max-width: 100%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .form-grid > :nth-child(5),
+    .form-grid > :nth-child(6),
+    .form-grid > :nth-child(12) {
+        grid-column: 1;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .thankyou-text {
+        font-size: 1.75rem;
+    }
+
+    .submit-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-bg {
+        padding: var(--lwc-spacingSmall);
+    }
+
+    .form-container {
+        padding: var(--lwc-spacingMedium);
+    }
+
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .subtitle {
+        font-size: 0.875rem;
+    }
+
+    .footer-text {
+        font-size: 0.65rem;
+    }
+}
+
+/* Loading state */
+.submit-btn.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Animation for form appearance */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-container {
+    animation: slideInUp 0.3s ease-out;
+}
+
+/* Toast notification styling */
+:host ::part(toast) {
+    font-size: 0.875rem;
+}

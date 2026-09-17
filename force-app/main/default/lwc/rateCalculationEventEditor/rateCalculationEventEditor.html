@@ -1,0 +1,345 @@
+<template>
+    <lightning-card class="custom-card">
+
+        <!-- Edit Icon -->
+        <!-- <div slot="actions">
+            <template if:true={isSaved}>
+                <lightning-button-icon
+                    icon-name="utility:edit"
+                    alternative-text="Edit"
+                    title="Edit"
+                    onclick={handleEdit}
+                    variant="border-filled">
+                </lightning-button-icon>
+            </template>
+        </div> -->
+
+         <template if:true={showEditButton}>
+            <div slot="actions">
+        <lightning-button-icon
+            icon-name="utility:edit"
+            alternative-text="Edit"
+            title="Edit"
+            onclick={handleEdit}
+            variant="border-filled">
+        </lightning-button-icon>
+            </div>
+    </template>
+    
+    <template if:true={isBillingSynced}>
+        <div slot="actions">
+        <lightning-button-icon
+            icon-name="utility:info"
+            alternative-text="Billing is Synced"
+            title="This event’s billable has already been generated. Rate details can no longer be edited."
+            variant="border-filled">
+        </lightning-button-icon>
+        </div>
+    </template>
+
+        <lightning-accordion
+            allow-multiple-sections-open
+            active-section-name={activeSections}>
+
+            <!-- USER & LOCATION -->
+            <lightning-accordion-section name="user" label="User & Location">
+                <div class="slds-grid slds-gutters slds-p-around_small">
+                    <lightning-input
+                        class="slds-col slds-size_1-of-2"
+                        label="Assigned User"
+                        value={assignedUserName}
+                        disabled>
+                    </lightning-input>
+
+                    <lightning-combobox
+                        class="slds-col slds-size_1-of-2"
+                        label="Location"
+                        options={locationOptions}
+                        value={selectedLocationId}
+                        onchange={handleLocationChange}
+                        disabled={isFormDisabled}
+                        required>
+                    </lightning-combobox>
+                </div>
+
+                <template if:true={noLocationMessage}>
+                    <div class="slds-p-around_small">
+                        <p class="slds-text-color_error">{noLocationMessage}</p>
+                    </div>
+                </template>
+            </lightning-accordion-section>
+
+            <!-- CLIENT RATE -->
+            <lightning-accordion-section name="client" label="Client Rate">
+                <div class="slds-grid slds-gutters slds-p-around_small">
+
+                    <!-- Rate Type -->
+                    <lightning-combobox
+                        class="slds-col slds-size_1-of-2"
+                        label="Rate Type"
+                        options={rateTypeOptions}
+                        value={clientRateType}
+                        onchange={handleClientRateTypeChange}
+                        disabled={isFormDisabled}>
+                    </lightning-combobox>
+
+                    <!-- Rate dropdown (hide if Live In) -->
+                    <template if:false={isClientFlatRate}>
+                        <lightning-combobox
+                            class="slds-col slds-size_1-of-2"
+                            label="Rate"
+                            options={crRateOptions}
+                            value={clientRateValue}
+                            onchange={handleClientRateChange}
+                            disabled={isClientRateComboDisabled}
+                            placeholder="Select Rate">
+                        </lightning-combobox>
+                    </template>
+
+                    <!-- Flat Rate input (show if Live In) -->
+            <!--        <template if:true={isClientLiveIn}>
+                        <lightning-input
+                            class="slds-col slds-size_1-of-2"
+                            label="Client Flat Rate Amount"
+                            type="number"
+                            formatter="currency"
+                            value={clientFlatRateAmount}
+                            onchange={handleClientFlatRateChange}
+                            disabled={isFormDisabled}>
+                        </lightning-input>
+                    </template>
+                -->
+
+
+                <!-- WITH this -->
+                <template if:true={isClientFlatRate}>
+                    <lightning-input
+                        class="slds-col slds-size_1-of-2"
+                        label="Client Flat Rate Amount"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        message-when-range-underflow="Negative values can't be accepted"
+                        
+                        value={clientFlatRateAmount}
+                        onchange={handleClientFlatRateChange}
+                        disabled={isFormDisabled}>
+                    </lightning-input>
+                </template>
+                </div>
+            </lightning-accordion-section>
+
+            <!-- CAREGIVER RATE -->
+            <lightning-accordion-section name="caregiver" label="Care Manager Rate">
+                <div class="slds-grid slds-gutters slds-p-around_small">
+
+                    <!-- Rate Type -->
+                    <lightning-combobox
+                        class="slds-col slds-size_1-of-2"
+                        label="Rate Type"
+                        options={caregiverRateTypeOptions}
+                        value={caregiverRateType}
+                        onchange={handleCaregiverRateTypeChange}
+                        disabled={isFormDisabled}>
+                    </lightning-combobox>
+
+                    <!-- Rate dropdown (hide if Live In) -->
+                    <template if:false={isCaregiverFlatRate}>
+                        <lightning-combobox
+                            class="slds-col slds-size_1-of-2"
+                            label="Rate"
+                            options={cmrRateOptions}
+                            value={caregiverRateValue}
+                            onchange={handleCaregiverRateChange}
+                            disabled={isCaregiverRateComboDisabled}
+                            placeholder="Select Rate">
+                        </lightning-combobox>
+                    </template>
+
+                    <!-- Flat Rate input (show if Live In) -->
+            <!--        <template if:true={isCaregiverLiveIn}>
+                        <lightning-input
+                            class="slds-col slds-size_1-of-2"
+                            label="Caregiver Flat Rate Amount"
+                            type="number"
+                            formatter="currency"
+                            value={caregiverFlatRateAmount}
+                            onchange={handleCaregiverFlatRateChange}
+                            disabled={isFormDisabled}>
+                        </lightning-input>
+                    </template>
+                -->
+
+                <!-- WITH this -->
+                <template if:true={isCaregiverFlatRate}>
+                    <lightning-input
+                        class="slds-col slds-size_1-of-2"
+                        label="Care Manager Flat Rate Amount"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        message-when-range-underflow="Negative values can't be accepted"
+                        
+                        value={caregiverFlatRateAmount}
+                        onchange={handleCaregiverFlatRateChange}
+                        disabled={isFormDisabled}>
+                    </lightning-input>
+                </template>
+                </div>
+            </lightning-accordion-section>
+
+            <!-- MILEAGE -->
+            <!-- --- Changed by Prasad - Start --- -->
+            <lightning-accordion-section name="mileage" label="Mileage">
+                <template for:each={mileageEntries} for:item="entry">
+                    <div key={entry.id}
+                        class="slds-grid slds-gutters slds-p-around_small slds-m-bottom_small slds-box">
+
+                        <lightning-input
+                            class="slds-col slds-size_2-of-3"
+                            label="Description"
+                            value={entry.description}
+                            data-id={entry.id}
+                            data-field="description"
+                            onchange={handleEntryChange}
+                            disabled={isFormDisabled}>
+                        </lightning-input>
+
+                        <lightning-input
+                            class="slds-col slds-size_1-of-3"
+                            label="Enter Miles"
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            message-when-range-underflow="Negative values can't be accepted"
+                            value={entry.miles}
+                            data-id={entry.id}
+                            data-field="miles"
+                            onchange={handleEntryChange}
+                            disabled={isFormDisabled}>
+                        </lightning-input>
+
+                        <template if:true={entry.showRemove}>
+                            <template if:false={isFormDisabled}>
+                                <lightning-button-icon
+                                    icon-name="utility:delete"
+                                    alternative-text="Remove"
+                                    onclick={removeEntry}
+                                    data-id={entry.id}
+                                    variant="bare"
+                                    class="slds-m-left_xx-small">
+                                </lightning-button-icon>
+                            </template>
+                        </template>
+                    </div>
+                </template>
+
+                <template if:false={isFormDisabled}>
+                    <lightning-button
+                        label="Add Mileage Entry"
+                        onclick={addEntry}
+                        disabled={isAddEntryDisabled}
+                        icon-name="utility:add">
+                    </lightning-button>
+                </template>
+            </lightning-accordion-section>
+            <!-- --- Changed by Prasad - End --- -->
+
+            <!-- EXPENSE -->
+            <lightning-accordion-section name="expense" label="Expense">
+                <template for:each={expenseEntries} for:item="entry">
+                    <div key={entry.id}
+                        class="slds-grid slds-gutters slds-p-around_small slds-m-bottom_small slds-box">
+
+                        <lightning-input
+                            class="slds-col slds-size_2-of-3"
+                            label="Description"
+                            value={entry.description}
+                            data-id={entry.id}
+                            data-field="description"
+                            onchange={handleexpenseEntryChange}
+                            disabled={isFormDisabled}>
+                        </lightning-input>
+<!--
+                        <lightning-input
+                            class="slds-col slds-size_1-of-3"
+                            label="Amount"
+                            type="number"
+                            value={entry.amount}
+                            data-id={entry.id}
+                            data-field="amount"
+                            onchange={handleexpenseEntryChange}
+                            disabled={isFormDisabled}
+                            formatter="currency">
+                        </lightning-input>
+                    -->
+
+
+                    <!-- WITH this -->
+<lightning-input
+    class="slds-col slds-size_1-of-3"
+    label="Amount"
+    type="number"
+    min="0"
+    step="0.01"
+    message-when-range-underflow="Negative values can't be accepted"
+    value={entry.amount}
+    data-id={entry.id}
+    data-field="amount"
+    onchange={handleexpenseEntryChange}
+    disabled={isFormDisabled}
+    >
+</lightning-input>
+
+
+                        <template if:true={entry.showRemove}>
+                            <template if:false={isFormDisabled}>
+                                <lightning-button-icon
+                                    icon-name="utility:delete"
+                                    alternative-text="Remove"
+                                    onclick={removeEntrys}
+                                    data-id={entry.id}
+                                    variant="bare"
+                                    class="slds-m-left_xx-small">
+                                </lightning-button-icon>
+                            </template>
+                        </template>
+                    </div>
+                </template>
+
+                <template if:false={isFormDisabled}>
+                    <lightning-button
+                        label="Add Expense Entry"
+                        onclick={addEntrys}
+                        disabled={isExpenseAddEntryDisabled}
+                        icon-name="utility:add">
+                    </lightning-button>
+                </template>
+            </lightning-accordion-section>
+
+        </lightning-accordion>
+
+        <!-- FOOTER -->
+        <template if:false={isSaved}>
+            <!-- <div class="slds-grid slds-grid_align-spread slds-m-top_medium"> -->
+                <div class="slds-align_absolute-center">
+                <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+                <lightning-button
+                    class="slds-m-left_medium"
+                    variant="brand"
+                    label="Save"
+                    onclick={handleSave}
+                    disabled={isSaveDisabled}>
+                </lightning-button>
+            </div>
+        </template>
+
+        <!-- SPINNER -->
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+
+    </lightning-card>
+
+   
+</template>

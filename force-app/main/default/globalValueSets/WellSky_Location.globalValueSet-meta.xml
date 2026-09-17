@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Detroit</fullName>
+        <default>false</default>
+        <label>Detroit</label>
+    </customValue>
+    <customValue>
+        <fullName>Milwaukee</fullName>
+        <default>false</default>
+        <label>Milwaukee</label>
+    </customValue>
+    <customValue>
+        <fullName>Cincinnati</fullName>
+        <default>false</default>
+        <label>Cincinnati</label>
+    </customValue>
+    <customValue>
+        <fullName>Madison</fullName>
+        <default>false</default>
+        <label>Madison</label>
+    </customValue>
+    <customValue>
+        <fullName>Dallas</fullName>
+        <default>false</default>
+        <label>Dallas</label>
+    </customValue>
+    <masterLabel>WellSky Location</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

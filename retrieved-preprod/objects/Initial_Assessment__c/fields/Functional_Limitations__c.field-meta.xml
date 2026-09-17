@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Functional_Limitations__c</fullName>
+    <label>Functional Limitations</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Amputation</fullName>
+                <default>false</default>
+                <label>Amputation</label>
+            </value>
+            <value>
+                <fullName>Bowel/Bladder (Incontinence)</fullName>
+                <default>false</default>
+                <label>Bowel/Bladder (Incontinence)</label>
+            </value>
+            <value>
+                <fullName>Contracture</fullName>
+                <default>false</default>
+                <label>Contracture</label>
+            </value>
+            <value>
+                <fullName>Hearing</fullName>
+                <default>false</default>
+                <label>Hearing</label>
+            </value>
+            <value>
+                <fullName>Paralysis</fullName>
+                <default>false</default>
+                <label>Paralysis</label>
+            </value>
+            <value>
+                <fullName>Endurance</fullName>
+                <default>false</default>
+                <label>Endurance</label>
+            </value>
+            <value>
+                <fullName>Ambulation</fullName>
+                <default>false</default>
+                <label>Ambulation</label>
+            </value>
+            <value>
+                <fullName>Speech</fullName>
+                <default>false</default>
+                <label>Speech</label>
+            </value>
+            <value>
+                <fullName>Legally Blind</fullName>
+                <default>false</default>
+                <label>Legally Blind</label>
+            </value>
+            <value>
+                <fullName>Dyspnea with Minimal Exertion</fullName>
+                <default>false</default>
+                <label>Dyspnea with Minimal Exertion</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

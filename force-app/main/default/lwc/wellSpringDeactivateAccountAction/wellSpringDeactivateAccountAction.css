@@ -1,0 +1,12 @@
+﻿/* Full-page overlay spinner - SLDS spinner_container uses position:absolute;
+   override to fixed so it covers the entire viewport during load */
+.spinner-fixed {
+    position: fixed;
+    z-index: 10000;
+    backdrop-filter: blur(2px);
+}
+
+/* Minimum height so the save spinner doesn't collapse the modal body */
+.save-spinner-body {
+    min-height: 160px;
+}

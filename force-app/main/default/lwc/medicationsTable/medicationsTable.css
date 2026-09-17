@@ -1,0 +1,152 @@
+/* ─── Card Title ─────────────────────────────────────────────── */
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.title-icon {
+    color: #e8475f;
+}
+
+.title-text {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: #1b1b1b;
+}
+
+/* ─── Subtitle ───────────────────────────────────────────────── */
+.subtitle {
+    font-size: 0.825rem;
+    color: #5a6a7a;
+    margin-bottom: 0.85rem;
+}
+
+/* ─── Loading ────────────────────────────────────────────────── */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* ─── Table Container ────────────────────────────────────────── */
+.table-container {
+    overflow-x: auto;
+    border-radius: 6px;
+    border: 1px solid #dde3ea;
+}
+
+/* ─── Table ──────────────────────────────────────────────────── */
+.medication-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+}
+
+/* ─── Column Headers ─────────────────────────────────────────── */
+.col-header {
+    background-color: #f3f5f8;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #3e4a59;
+    padding: 0.65rem 0.9rem;
+    border-bottom: 2px solid #dde3ea;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.sort-icon {
+    opacity: 0.45;
+    flex-shrink: 0;
+}
+
+/* ─── Rows ───────────────────────────────────────────────────── */
+.medication-row td {
+    padding: 0.65rem 0.9rem;
+    font-size: 0.855rem;
+    color: #1b1b1b;
+    border-bottom: 1px solid #edf0f4;
+    vertical-align: middle;
+}
+
+.medication-row:last-child td {
+    border-bottom: none;
+}
+
+.medication-row:hover td {
+    background-color: #f7f9fb;
+}
+
+/* ─── Drug Name Link ─────────────────────────────────────────── */
+.drug-name-link {
+    color: #0070d2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.drug-name-link:hover {
+    text-decoration: underline;
+    color: #005ba6;
+}
+
+/* ─── Still Taking Icons ─────────────────────────────────────── */
+.still-taking-cell {
+    text-align: center;
+}
+
+.check-icon {
+    --sds-c-icon-color-foreground-default: #2e844a;
+}
+
+.close-icon {
+    --sds-c-icon-color-foreground-default: #ba0517;
+}
+
+/* ─── Empty State ────────────────────────────────────────────── */
+.empty-state {
+    text-align: center;
+    padding: 2.5rem 1rem !important;
+}
+
+.empty-state-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    color: #8a96a3;
+    font-size: 0.875rem;
+}
+
+.empty-icon {
+    opacity: 0.4;
+}
+
+/* ─── Error State ────────────────────────────────────────────── */
+.error-state {
+    display: flex;
+    align-items: center;
+    color: #ba0517;
+    font-size: 0.875rem;
+    padding: 0.75rem;
+    background: #fff1f0;
+    border: 1px solid #f5c0be;
+    border-radius: 4px;
+}
+
+.custom-modal {
+    max-width: 75rem !important;
+    width: 75% !important;
+}
+
+.custom-modal-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+}

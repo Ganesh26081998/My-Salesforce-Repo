@@ -1,0 +1,216 @@
+<template>
+    <lightning-card title="Hospitalizations" icon-name="standard:care_plan">
+        <div class="slds-p-horizontal_medium slds-m-top_small slds-text-align_right">
+            <template if:true={isClient}>
+                <lightning-button
+                    label="Hospitalize"
+                    variant="brand"
+                    onclick={handleNewHospitalization}>
+                </lightning-button>
+            </template>
+            <template if:false={isClient}>
+                <p class="stage-message">Hospitalisations can be created at client stage</p>
+            </template>
+        </div>
+
+        <div class="slds-p-around_medium">
+            <template lwc:if={hasHospitalizations}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={hospitalizations}
+                    columns={columns}
+                    hide-checkbox-column
+                    onrowaction={handleRowAction}>
+                </lightning-datatable>
+            </template>
+            <template lwc:else>
+                <p class="slds-text-color_weak hospital-empty">No hospitalization records found for this account.</p>
+            </template>
+
+            <template lwc:if={loadError}>
+                <p class="slds-text-color_error slds-m-top_small">{loadError}</p>
+            </template>
+        </div>
+    </lightning-card>
+
+    <template lwc:if={isModalOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="Close" size="small"></lightning-icon>
+                    </button>
+                    <h2 class="slds-text-heading_medium">Hospitalization: {selectedHospitalizationName}</h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-record-view-form object-api-name="Hospitalization__c" record-id={selectedHospitalizationId}>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-output-field field-name="Hospitalization_Status__c"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-output-field field-name="Account__c"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-output-field field-name="Admission_Type__c"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-output-field field-name="Admission_Date__c"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-output-field field-name="Hospital_Name__c"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-output-field field-name="Primary_diagnosis__c"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-output-field field-name="Discharge_Date__c"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-output-field field-name="Role_during_hospitalization__c"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1">
+                                <lightning-output-field field-name="Reason_for_admission__c"></lightning-output-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-output-field field-name="Current_Hospitalization__c"></lightning-output-field>
+                            </div>
+                        </div>
+                    </lightning-record-view-form>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal}>Close</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template lwc:if={isEditModalOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <lightning-record-edit-form
+                    object-api-name="Hospitalization__c"
+                    record-id={editHospitalizationId}
+                    onsubmit={preventEditNativeSubmit}
+                    onload={handleEditLoad}>
+
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={closeEditModal} type="button">
+                            <lightning-icon icon-name="utility:close" alternative-text="Close" size="small"></lightning-icon>
+                        </button>
+                        <h2 class="slds-text-heading_medium">Edit Hospitalization: {editHospitalizationName}</h2>
+                    </header>
+
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class={editStatusClass}>
+                                    <lightning-input-field field-name="Hospitalization_Status__c" onchange={handleEditStatusChange}></lightning-input-field>
+                                    <template lwc:if={errEditStatus}><p class="errtext">{errEditStatus}</p></template>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class={editAdmTypeClass}>
+                                    <lightning-input-field field-name="Admission_Type__c" onchange={handleEditAdmissionTypeChange}></lightning-input-field>
+                                    <template lwc:if={errEditAdmissionType}><p class="errtext">{errEditAdmissionType}</p></template>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class={editAdmDateClass}>
+                                    <lightning-input-field field-name="Admission_Date__c" onchange={handleEditAdmissionDateChange}></lightning-input-field>
+                                    <template lwc:if={errEditAdmissionDate}><p class="errtext">{errEditAdmissionDate}</p></template>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class={editHospitalNameClass}>
+                                    <lightning-input-field field-name="Hospital_Name__c" onchange={handleEditHospitalNameChange}></lightning-input-field>
+                                    <template lwc:if={errEditHospitalName}><p class="errtext">{errEditHospitalName}</p></template>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class={editPrimaryDiagClass}>
+                                    <lightning-input-field field-name="Primary_diagnosis__c" onchange={handleEditPrimaryDiagChange}></lightning-input-field>
+                                    <template lwc:if={errEditPrimaryDiag}><p class="errtext">{errEditPrimaryDiag}</p></template>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class={editDischDateClass}>
+                                    <lightning-input-field field-name="Discharge_Date__c" disabled={isEditDischargeDateDisabled} onchange={handleEditDischargeDateChange}></lightning-input-field>
+                                    <template lwc:if={errEditDischargeDate}><p class="errtext">{errEditDischargeDate}</p></template>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class={editRoleClass}>
+                                    <lightning-input-field field-name="Role_during_hospitalization__c" onchange={handleEditRoleChange}></lightning-input-field>
+                                    <template lwc:if={errEditRole}><p class="errtext">{errEditRole}</p></template>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1">
+                                <div class={editReasonClass}>
+                                    <lightning-input-field field-name="Reason_for_admission__c" onchange={handleEditReasonChange}></lightning-input-field>
+                                    <template lwc:if={errEditReason}><p class="errtext">{errEditReason}</p></template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" type="button" onclick={closeEditModal}>Cancel</button>
+                        <button class="slds-button slds-button_brand" type="button" onclick={handleEditSave} disabled={editIsSaving}>Save</button>
+                    </footer>
+                </lightning-record-edit-form>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template lwc:if={isCreateModalOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={closeCreateModal}>
+                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                    </button>
+                    <h2 class="slds-text-heading_medium">New Hospitalization</h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    <c-well-spring-patient-hospitalization-action
+                        record-id={recordId}
+                        existing-hospitalizations={rawHospitalizations}
+                        onclose={handleCreateSuccess}>
+                    </c-well-spring-patient-hospitalization-action>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template lwc:if={deleteConfirmId}>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container slds-modal__container_small">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Delete Hospitalization</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>Are you sure you want to delete <strong>{deleteConfirmName}</strong>? This action cannot be undone.</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={cancelDelete}>Cancel</button>
+                    <button class="slds-button slds-button_destructive" onclick={confirmDelete}>Delete</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

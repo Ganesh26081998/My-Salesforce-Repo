@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_s__c</fullName>
+    <label>Reason&apos;s</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>Overall_Fit_with_WellSpring_Services__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Outside current service geography</fullName>
+                <default>false</default>
+                <label>Outside current service geography</label>
+            </value>
+            <value>
+                <fullName>Needs exceed level of clinical intensity we provide</fullName>
+                <default>false</default>
+                <label>Needs exceed level of clinical intensity we provide</label>
+            </value>
+            <value>
+                <fullName>Requires services we do not offer</fullName>
+                <default>false</default>
+                <label>Requires services we do not offer</label>
+            </value>
+            <value>
+                <fullName>Financial mismatch</fullName>
+                <default>false</default>
+                <label>Financial mismatch</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Not at this time — temporary limitation</controllingFieldValue>
+            <controllingFieldValue>No — outside WellSpring scope</controllingFieldValue>
+            <valueName>Outside current service geography</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not at this time — temporary limitation</controllingFieldValue>
+            <controllingFieldValue>No — outside WellSpring scope</controllingFieldValue>
+            <valueName>Needs exceed level of clinical intensity we provide</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not at this time — temporary limitation</controllingFieldValue>
+            <controllingFieldValue>No — outside WellSpring scope</controllingFieldValue>
+            <valueName>Requires services we do not offer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not at this time — temporary limitation</controllingFieldValue>
+            <controllingFieldValue>No — outside WellSpring scope</controllingFieldValue>
+            <valueName>Financial mismatch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not at this time — temporary limitation</controllingFieldValue>
+            <controllingFieldValue>No — outside WellSpring scope</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

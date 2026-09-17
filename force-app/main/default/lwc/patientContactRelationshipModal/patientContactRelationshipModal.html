@@ -1,0 +1,703 @@
+<template>
+    <lightning-modal-header label="Add Relationship"></lightning-modal-header>
+
+    <lightning-modal-body>
+
+       
+        
+        <lightning-tabset active-tab-value={activeTab}>
+
+            
+            <lightning-tab label="Family Contact" value="caller" onactive={handleTabChange}>
+
+                <lightning-radio-group
+                    label="Family Contact"
+                    options={familyModeOptions}
+                    value={familyMode}
+                    type="button"
+                    onchange={handleFamilyModeChange}>
+                </lightning-radio-group>
+
+                <template if:true={isLoadingForCaller}>
+                    <div class="slds-align_absolute-center slds-p-vertical_large">
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </div>
+                </template>
+
+                <template if:true={isSaving}>
+    <div class="slds-align_absolute-center slds-p-vertical_small">
+        <lightning-spinner alternative-text="Saving..." size="medium"></lightning-spinner>
+    </div>
+</template>
+            <template if:true={isNewFamily}>
+                <div class="slds-m-top_medium">
+                    <div class="slds-box slds-m-top_small">
+                        
+                        <template if:true={defaultAccountId}>
+                        <lightning-record-edit-form
+                            data-id="callerForm"
+                            object-api-name="Contact"
+                            record-type-id={recordTypeId}
+                            density="comfy"
+                            onload={handleLoad}
+                            onsuccess={handleSuccess}
+                            onerror={handleError}>
+                            
+                            <lightning-accordion class="slds-m-top_medium" active-section-name="contactInfo">
+                                    <lightning-accordion-section name="contactInfo" label="Contact Information">
+
+                                        <div class="slds-grid slds-wrap slds-gutters">
+
+                                            <!-- LEFT COLUMN -->
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <!-- Name -->
+                                                <lightning-input-field field-name="Salutation"></lightning-input-field>
+                                                <lightning-input-field field-name="FirstName"></lightning-input-field>
+                                                <lightning-input-field field-name="MiddleName"></lightning-input-field>
+                                                <lightning-input-field field-name="LastName" required></lightning-input-field>
+                                                <lightning-input-field field-name="Suffix"></lightning-input-field>
+
+                                                <!-- Preferred Name -->
+                                                <lightning-input-field field-name="Preferred_Name__c"></lightning-input-field>
+                                                <lightning-input-field field-name="Location__c"></lightning-input-field>
+
+                                                
+                                                <lightning-input-address
+                                                    data-id="callerAddress"
+                                                    address-label="Search Address"
+                                                    address-lookup-placeholder="Search by place or address"
+                                                    street-label="Address (Street)"
+                                                    city-label="Address (City)"
+                                                    country-label="Address (CountryCode)"
+                                                    province-label="Address (StateCode)"
+                                                    postal-code-label="Address (PostalCode)"
+                                                    show-address-lookup
+                                                    street={street}
+                                                    city={city}
+                                                    country={country}
+                                                    province={state}
+                                                    postal-code={postalCode}
+                                                    onchange={handleAddressChange}
+                                                >
+                                                </lightning-input-address>
+<!-- 
+                                                <lightning-input
+                                                    class="slds-m-top_medium"
+                                                    type="checkbox"
+                                                    label="Create as Caller"
+                                                    checked={createAsCaller}
+                                                    onchange={handleCreateAsCallerToggle}>
+                                                </lightning-input> -->
+
+
+                                            </div>
+
+                                            <!-- RIGHT COLUMN -->
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <!-- Account -->
+                                                <lightning-input-field field-name="AccountId" value={defaultAccountId} disabled={defaultAccountId}></lightning-input-field>
+
+                                                <!-- Phones / Email / Title / Birthdate / Additional duties -->
+                                                <lightning-input-field field-name="Initial_Caller__c"></lightning-input-field>
+                                                <!-- <lightning-input-field field-name="Title"></lightning-input-field> -->
+                                                <lightning-input-field field-name="Email"></lightning-input-field>
+                                                <lightning-input-field field-name="HomePhone"></lightning-input-field>
+                                                <lightning-input-field field-name="Phone"></lightning-input-field>
+                                                <lightning-input-field field-name="MobilePhone"></lightning-input-field>
+                                                <lightning-input-field field-name="Birthdate"></lightning-input-field>
+                                                <lightning-input-field field-name="Additional_duties__c"></lightning-input-field>
+                                            </div>
+
+                                        </div>
+                                    </lightning-accordion-section>
+                                </lightning-accordion>
+
+                                <!-- COMMUNICATION PREFERENCES -->
+                                <lightning-accordion class="slds-m-top_medium" active-section-name="communication">
+                                    <lightning-accordion-section name="communication" label="Communication Preferences">
+
+                                        <div class="slds-grid slds-wrap slds-gutters">
+
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <lightning-input-field
+                                                    field-name="What_they_want_to_know_related_to_client__c"
+                                                    onchange={handlePicklistChange}>
+                                                </lightning-input-field>
+
+                                                
+                                                    <lightning-input-field field-name="other_What_they_want_to_know__c"></lightning-input-field>
+                                                
+
+                                                <lightning-input-field
+                                                    field-name="HowTheyPreferToCommunicate__c"
+                                                    onchange={handlePicklistChange}>
+                                                </lightning-input-field>
+
+                                                <template if:true={showOtherHowCommunicate}>
+                                                    <lightning-input-field field-name="Other_How_they_prefer_to_communicate__c"></lightning-input-field>
+                                                </template>
+                                            </div>
+
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <lightning-input-field
+                                                    field-name="HowOftenTheyPreferToReceiveUpdates__c"
+                                                    onchange={handlePicklistChange}>
+                                                </lightning-input-field>
+
+                                                <template if:true={showOtherHowOften}>
+                                                    <lightning-input-field field-name="Other_How_often_they_prefer_to_receive_u__c"></lightning-input-field>
+                                                </template>
+                                            </div>
+
+                                        </div>
+
+                                    </lightning-accordion-section>
+                                </lightning-accordion>
+
+                        </lightning-record-edit-form>
+                        </template>
+
+                        <!-- Role picker lives OUTSIDE the form intentionally -->
+                        <!-- <div class="slds-m-top_medium">
+                            <lightning-record-picker
+                                label="Select Role"
+                                placeholder="Search by role name..."
+                                object-api-name="HealthCloudGA__ReciprocalRole__c"
+                                value={selectedCallerRoleId}
+                                onchange={handleCallerRoleChange}
+                                data-id="callerRole">
+                            </lightning-record-picker>
+                            
+                        </div> -->
+
+                            <div class="slds-m-top_medium">
+                                    <lightning-combobox
+                                        data-id="relationshipToClient"
+                                        name="relationshipToClient"
+                                        label="Relationship to Client"
+                                        value={relationshipToClient}
+                                        options={relationshipToClientOptions}
+                                        onchange={handleRelationshipToClientChange}
+                                        required>
+                                    </lightning-combobox>
+
+                                    <template if:true={showFamilyRelationship}>
+                                        <div class="slds-m-top_medium">
+                                            <lightning-combobox
+                                                data-id="familyRelationship"
+                                                name="familyRelationship"
+                                                label="Family Relationship"
+                                                value={familyRelationship}
+                                                options={familyRelationshipOptions}
+                                                onchange={handleFamilyRelationshipChange}
+                                                required>
+                                            </lightning-combobox>
+                                        </div>
+                                    </template>
+
+                                    <template if:true={showOtherRelationship}>
+                                        <div class="slds-m-top_medium">
+                                            <lightning-input
+                                                data-id="otherRelationshipToClient"
+                                                type="text"
+                                                name="otherRelationshipToClient"
+                                                label="Other Relationship to Client"
+                                                value={otherRelationshipToClient}
+                                                onchange={handleOtherRelationshipChange}
+                                                required>
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                        </div>
+
+
+                    </div>
+                </div>
+                </template>
+                
+                <template if:true={isExistingFamily}>
+    <div class="slds-box slds-m-top_small">
+        <!-- <div class="slds-text-heading_small slds-m-bottom_medium">
+            <lightning-icon
+                icon-name="standard:contact"
+                size="small"
+                class="slds-m-right_x-small">
+            </lightning-icon>
+            Select Existing Contact
+        </div>  -->
+
+        <lightning-record-picker
+            label="Search Family Contact"
+            placeholder="Search by contact name..."
+            object-api-name="Contact"
+            filter={familyContactFilter}
+            onchange={handleExistingFamilyContactChange}
+            data-id="existingFamilyContact">
+        </lightning-record-picker>
+
+        <template if:true={selectedExistingFamilyContactId}>
+            <div class="slds-m-top_medium">
+                <lightning-combobox
+                    data-id="relationshipToClient"
+                    name="relationshipToClient"
+                    label="Relationship to Client"
+                    value={relationshipToClient}
+                    options={relationshipToClientOptions}
+                    onchange={handleRelationshipToClientChange}
+                    required>
+                </lightning-combobox>
+
+                <template if:true={showFamilyRelationship}>
+                    <div class="slds-m-top_medium">
+                        <lightning-combobox
+                            data-id="familyRelationship"
+                            name="familyRelationship"
+                            label="Family Relationship"
+                            value={familyRelationship}
+                            options={familyRelationshipOptions}
+                            onchange={handleFamilyRelationshipChange}
+                            required>
+                        </lightning-combobox>
+                    </div>
+                </template>
+
+                <template if:true={showOtherRelationship}>
+                    <div class="slds-m-top_medium">
+                        <lightning-input
+                            data-id="otherRelationshipToClient"
+                            type="text"
+                            name="otherRelationshipToClient"
+                            label="Other Relationship to Client"
+                            value={otherRelationshipToClient}
+                            onchange={handleOtherRelationshipChange}
+                            required>
+                        </lightning-input>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>
+
+    <template if:true={showCallerDuplicateWarning}>
+    <div class="slds-notify slds-notify_alert slds-theme_warning slds-m-top_medium" role="alert">
+        <lightning-icon icon-name="utility:warning" alternative-text="Warning" size="small" class="slds-m-right_small"></lightning-icon>
+        <h2>A similar contact already exists. Do you still want to save?</h2>
+        <div class="slds-m-top_small">
+            <lightning-button label="Save Anyway" variant="brand" onclick={handleDuplicateConfirm} class="slds-m-right_small"></lightning-button>
+            <lightning-button label="Cancel" variant="neutral" onclick={handleDuplicateCancel}></lightning-button>
+        </div>
+    </div>
+</template>
+
+            
+            
+            </lightning-tab>
+
+            <!-- ───────────── PATIENT TAB ───────────── -->
+            <lightning-tab label="Couple Household" value="patient" onactive={handleTabChange}>
+                <div class="slds-m-top_medium">
+                    <lightning-record-picker
+                        label="Search Couple Household"
+                        placeholder="Search by Couple Household name..."
+                        object-api-name="Account"
+                        onchange={handlePatientChange}
+                        value={selectedPatientId}
+                        filter={personAccountFilter}
+                        data-id="patientAccount">
+                    </lightning-record-picker>
+
+                    <div class="slds-m-top_medium">
+                        <!-- <lightning-record-picker
+                            label="Select Role"
+                            placeholder="Search by role name..."
+                            object-api-name="HealthCloudGA__ReciprocalRole__c"
+                            value={selectedRoleId}
+                            onchange={handleRoleChange}
+                            data-id="patientRole">
+                        </lightning-record-picker> -->
+
+
+                        <lightning-record-edit-form object-api-name="HealthCloudGA__ContactContactRelation__c" density="comfy">
+                                <lightning-input-field
+                                    data-id="patientRoleField"
+                                    
+                                    field-name="HealthCloudGA__Role__c"
+                                    onchange={handleRoleChange}
+                                    required>
+                                </lightning-input-field>
+                            </lightning-record-edit-form>
+                    </div>
+                </div>
+            </lightning-tab>
+
+            <!-- ───────────── BUSINESS TAB ───────────── -->
+            <lightning-tab label="Business Contact" value="business" onactive={handleTabChange}>
+                    <lightning-radio-group
+                        label="Business Contact"
+                        options={businessModeOptions}
+                        value={businessMode}
+                        type="button"
+                        onchange={handleBusinessModeChange}>
+                    </lightning-radio-group>
+
+                    <template if:true={isSaving}>
+                        <div class="slds-align_absolute-center slds-p-vertical_small">
+                            <lightning-spinner alternative-text="Saving..." size="medium"></lightning-spinner>
+                        </div>
+                    </template>
+
+
+                <div class="slds-m-top_medium">
+                   
+                    <template if:true={isExistingBusiness}>
+
+    <!-- Search Existing Business Contact -->
+    <lightning-record-picker
+        label="Search Business Contact"
+        placeholder="Search by Business contact name..."
+        object-api-name="Contact"
+        onchange={handleBusinessContactChange}
+        filter={businessContactFilter}
+        data-id="businessContact">
+    </lightning-record-picker>
+
+    <!-- SHOW ONLY AFTER CONTACT SELECTED -->
+    <template if:true={selectedBusinessContactId}>
+
+        <!-- Contact Type -->
+        <!-- <div class="slds-m-top_medium">
+            <lightning-dual-listbox
+                name="existingContactType"
+                label="Contact Type"
+                source-label="Available"
+                selected-label="Selected"
+                options={existingContactTypeOptions}
+                value={selectedExistingContactTypes}
+                onchange={handleExistingContactTypeChange}>
+            </lightning-dual-listbox>
+        </div>
+
+        <template if:true={showExistingPrimaryRoleInput}>
+            <div class="slds-m-top_medium">
+                <lightning-input
+                    data-id="primaryRoleExisting"
+                    label="Primary Role"                    
+                    onchange={handleExistingPrimaryRoleChange}
+                    value={existingPrimaryRoleValue}
+                    placeholder="Enter primary role"
+                    >
+                </lightning-input>
+            </div>
+        </template> -->
+        
+
+
+        <div class="slds-m-top_medium">
+            <lightning-record-edit-form object-api-name="Contact"   record-id={selectedBusinessContactId} density="comfy">
+                <lightning-input-field
+                    field-name="ReferralType__c"
+                    data-id="existingBusinessType"
+                    
+                    onchange={handleExistingBusinessTypeChange}
+                    required>
+                </lightning-input-field>
+            </lightning-record-edit-form>
+        </div>
+        <div class="slds-m-top_medium">
+            <lightning-input
+                type="checkbox"
+                label="Referral Source for Client?"
+                checked={isReferral}
+                onchange={handleIsReferralChange}>
+            </lightning-input>
+        </div>
+
+    </template>
+
+</template>
+
+        <template if:true={isNewBusiness}>
+            <div class="slds-box slds-m-top_medium">
+
+                <template if:true={isLoadingForNewBusiness}>
+                    <div class="slds-align_absolute-center slds-p-vertical_large">
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </div>
+                </template>
+
+                <lightning-record-edit-form
+                    object-api-name="Contact"
+                    record-type-id={businessRecordTypeId}
+                    density="comfy"
+                    onsuccess={handleNewBusinessSuccess}
+                    onsubmit={handleNewBusinessSubmit}
+                    onload={handleNewBusinessLoad}
+                    onerror={handleError}
+                    data-id="newBusinessForm">                                          
+        
+                    <lightning-accordion class="slds-m-top_medium">
+                        <lightning-accordion-section name="contactInfo" label="Contact Information">
+
+                            <div class="slds-grid slds-wrap slds-gutters">
+
+                                <!-- LEFT COLUMN -->
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field field-name="Salutation"></lightning-input-field>
+                                    <lightning-input-field field-name="FirstName"></lightning-input-field>
+                                    <lightning-input-field field-name="MiddleName"></lightning-input-field>
+                                    <lightning-input-field field-name="LastName" required></lightning-input-field>
+                                    <lightning-input-field field-name="Suffix"></lightning-input-field>
+
+                                    <!-- Added (from pic) -->
+                                    <lightning-input-field field-name="Preferred_Name__c"></lightning-input-field>
+
+                                    <!-- KEEP (don’t remove) -->
+                                    <lightning-input-field field-name="Title"></lightning-input-field>
+                                    <lightning-input-field field-name="Location__c"></lightning-input-field>
+                                    <!-- <lightning-input-field field-name="Relationship_Owner__c"></lightning-input-field> -->
+                                    <!-- <lightning-input-field field-name="Contact_Type__c" onchange={handleContactTypeChange}></lightning-input-field>
+                                    <template if:true={showPrimaryRoleInput}>
+                                        <lightning-input
+                                            data-id="primaryRoleNew"
+                                            label="Primary Role"                        
+                                            onchange={handlePrimaryRoleChange}
+                                            value={primaryRoleValue}
+                                            placeholder="Enter primary role"
+                                            required>
+                                        </lightning-input>
+                                    </template> -->
+                                    <!-- Added Address (from pic) -->
+                                    <!-- <lightning-input-field class="styled-input" field-name="Address__Street__s"></lightning-input-field>
+                                    <lightning-input-field class="styled-input" field-name="Address__City__s"></lightning-input-field>
+                                    <lightning-input-field class="styled-input" field-name="Address__StateCode__s"></lightning-input-field>
+                                    <lightning-input-field class="styled-input" field-name="Address__PostalCode__s"></lightning-input-field>
+                                    <lightning-input-field class="styled-input" field-name="Address__CountryCode__s"></lightning-input-field> -->
+
+                                    <lightning-input-address
+                                        data-id="businessAddress"
+                                        address-label="Search Address"
+                                        address-lookup-placeholder="Search by place or address"
+                                        street-label="Address (Street)"
+                                        city-label="Address (City)"
+                                        country-label="Address (Country)"
+                                        province-label="Address (State)"
+                                        postal-code-label="Address (Postal Code)"
+                                        show-address-lookup
+                                        street={bstreet}
+                                        city={bcity}
+                                        country={bcountry}
+                                        province={bstate}
+                                        postal-code={bpostalCode}
+                                        onchange={bhandleAddressChange}
+                                    >
+                                    </lightning-input-address>
+                                    
+                                </div>
+
+                                <!-- RIGHT COLUMN -->
+                                <div class="slds-col slds-size_1-of-2">                                   
+                                    
+                                    <lightning-record-picker
+                                        label="Account Name"
+                                        object-api-name="Account"
+                                        filter={businessAccountFilter}
+                                        value={selectedBusinessAccountId}
+                                        onchange={handleBusinessAccountChange}
+                                        data-id="businessAccountPicker">
+                                    </lightning-record-picker>
+
+                                    <lightning-button
+                                        label="Create New Business Account"
+                                        variant="base"
+                                        class="slds-m-top_x-small"
+                                        onclick={handleOpenAccountCreate}>
+                                    </lightning-button>            
+
+                    
+                                    <!-- Added (from pic) -->
+                                    <lightning-input-field field-name="HomePhone"></lightning-input-field>
+                                     <lightning-input-field field-name="Phone"></lightning-input-field>
+                                    <lightning-input-field field-name="MobilePhone"></lightning-input-field>
+                                    <lightning-input-field field-name="Email"></lightning-input-field>
+                                    <lightning-input-field field-name="Fax_Number__c"></lightning-input-field>
+                                    <lightning-input-field field-name="Website__c"></lightning-input-field>
+                                    <lightning-input-field field-name="Birthdate"></lightning-input-field>
+                                    <lightning-input-field field-name="ReferralType__c" data-id="newBusinessType" required></lightning-input-field>
+                                    <div class="slds-m-top_medium">
+                                    <lightning-input
+                                        type="checkbox"
+                                        label="Referral Source for Client?"
+                                        checked={isReferral}
+                                        onchange={handleIsReferralChange}>
+                                    </lightning-input>
+                                </div>
+                                    
+                                    <!-- <lightning-input-field field-name="Relationship_Owner__c"></lightning-input-field> -->
+                                    <!-- <lightning-input-field field-name="Use_Organization_Address__c"></lightning-input-field> -->
+
+                                    <!-- existing -->
+                                    <!-- <lightning-input-field field-name="Additional_duties__c"></lightning-input-field> -->
+                                </div>
+
+                            </div>
+
+                        </lightning-accordion-section>
+                    </lightning-accordion>
+
+
+                    <lightning-accordion
+                    class="slds-m-top_medium"
+                    active-section-name="communication">
+
+                    <lightning-accordion-section
+                        name="communication"
+                        label="Communication preferences">
+
+                        <div class="slds-grid slds-wrap slds-gutters">
+
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="What_they_want_to_know_related_to_client__c" onchange={handlePicklistChange}></lightning-input-field>
+                                
+                                    <lightning-input-field field-name="other_What_they_want_to_know__c"></lightning-input-field>
+                                
+                                
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-2">
+                                
+                                <lightning-input-field field-name="HowOftenTheyPreferToReceiveUpdates__c" onchange={handlePicklistChange}></lightning-input-field>
+                                
+                                <template if:true={showOtherHowOften}>
+                                    <lightning-input-field field-name="Other_How_often_they_prefer_to_receive_u__c"></lightning-input-field>
+                                </template>
+
+                                <lightning-input-field field-name="HowTheyPreferToCommunicate__c" onchange={handlePicklistChange}></lightning-input-field>
+                                <template if:true={showOtherHowCommunicate}>
+                                <lightning-input-field field-name="Other_How_they_prefer_to_communicate__c"></lightning-input-field>
+                                </template>
+                            </div>
+
+                        </div>
+
+                    </lightning-accordion-section>
+                    </lightning-accordion>
+
+                    <lightning-accordion
+                    class="slds-m-top_medium"
+                    active-section-name="Notes">
+
+                    <lightning-accordion-section
+                        name="Notes"
+                        label="Additional Notes">
+
+                         <div class="slds-grid slds-wrap slds-gutters">
+
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="Notes__c"></lightning-input-field>
+
+                            </div>
+                         </div>
+
+
+                        </lightning-accordion-section>
+                    </lightning-accordion>
+
+
+
+                </lightning-record-edit-form>
+
+            </div>
+        
+        
+        </template>
+        </div>
+        
+       
+
+
+        </lightning-tab>
+
+        </lightning-tabset>
+    </lightning-modal-body>
+
+    <!-- <lightning-modal-footer>
+        <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+        <lightning-button
+            class="slds-m-left_small"
+            variant="brand"
+            label="Save"
+            onclick={handleSave}
+           
+            >
+        </lightning-button>
+    </lightning-modal-footer> -->
+
+
+<lightning-modal-footer>
+
+    <!-- <template if:true={showDuplicateWarning}>
+        <div class="slds-scoped-notification slds-media slds-media_center slds-theme_warning slds-m-bottom_x-small" role="alert">
+            <div class="slds-media__figure">
+                <lightning-icon
+                    icon-name="utility:warning"
+                    alternative-text="Warning"
+                    size="x-small"
+                    class="slds-m-right_x-small">
+                </lightning-icon>
+            </div>
+            <div class="slds-media__body  slds-text-align_center">
+                <p class="slds-text-body_small">
+                    <strong>Duplicate found.</strong> A similar contact already exists. Save anyway?
+                </p>
+            </div>
+        </div>
+    </template> -->
+
+    <template if:true={showDuplicateWarning}>
+    
+
+    <div class="slds-notify slds-scoped-notification slds-notify_alert slds-theme_warning slds-m-bottom_medium" role="alert">
+        <span class="slds-assistive-text">warning</span>
+        <lightning-icon icon-name="utility:warning" alternative-text="Warning"
+            size="small" class="slds-m-right_small"></lightning-icon>
+        <h2>
+            <strong>Duplicate found.</strong> A similar contact already exists. Save anyway?
+        </h2>
+    </div>   
+    </template> 
+
+
+    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+        <div class="slds-col"></div>
+        <div class="slds-col slds-no-flex">
+            <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+
+            <template if:false={showDuplicateWarning}>
+                <lightning-button
+                    class="slds-m-left_small"
+                    variant="brand"
+                    label="Save"
+                    onclick={handleSave}>
+                </lightning-button>
+            </template>
+
+            <template if:true={showDuplicateWarning}>
+                <lightning-button
+                    class="slds-m-left_small"
+                    variant="brand"
+                    label="Save Anyway"
+                    onclick={handleDuplicateConfirm}>
+                </lightning-button>
+                <lightning-button
+                    class="slds-m-left_small"
+                    variant="destructive-text"
+                    label="Discard"
+                    onclick={handleDuplicateCancel}>
+                </lightning-button>
+            </template>
+        </div>
+    </div>
+
+</lightning-modal-footer>
+</template>

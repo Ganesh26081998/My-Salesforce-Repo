@@ -1,0 +1,181 @@
+<template>
+    <div class="bap-container">
+
+        <!-- ── Header ──────────────────────────────────────── -->
+        <div class="bap-header">
+            <div class="bap-header-left">
+                <div class="bap-icon-wrap">
+                    <lightning-icon icon-name="standard:people" size="medium"></lightning-icon>
+                </div>
+                <div>
+                    <h2 class="bap-title">Clients</h2>
+                    <!-- <p class="bap-subtitle">Linked Clients for this business account</p> -->
+                </div>
+            </div>
+            <button class="bap-clear-btn" onclick={handleClear}>Clear</button>
+        </div>
+
+        <!-- ── Search ──────────────────────────────────────── -->
+        <div class="bap-search-wrap">
+            <lightning-icon icon-name="utility:search" size="x-small" class="bap-search-icon"></lightning-icon>
+            <input
+                type="text"
+                class="bap-search-input"
+                placeholder="Search by Clients or business contact name..."
+                value={searchTerm}
+                oninput={handleSearchChange} />
+        </div>
+
+        <!-- ── Filters ─────────────────────────────────────── -->
+        <div class="bap-filters">
+            <div class="bap-filter-group">
+                <label class="bap-filter-label">Stage</label>
+                <div class="bap-select-wrap">
+                    <select class="bap-select" onchange={handleStageChange}>
+                        <template for:each={stageOptions} for:item="opt">
+                            <option key={opt.value} value={opt.value} selected={opt.selected}>{opt.label}</option>
+                        </template>
+                    </select>
+                    <lightning-icon icon-name="utility:chevrondown" size="x-small" class="bap-select-arrow"></lightning-icon>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Results section ─────────────────────────────── -->
+        <div class="bap-results-section">
+
+            <!-- Results header: dot · label · per-page buttons · count -->
+            <div class="bap-results-header">
+                <span class="bap-results-dot"></span>
+                <span class="bap-results-label">Results</span>
+
+                <!-- Per-page selector -->
+                <div class="bap-per-page">
+                    <span class="bap-per-page-label">Show:</span>
+                    <template for:each={pageSizeOptions} for:item="opt">
+                        <button
+                            key={opt.value}
+                            class={opt.btnClass}
+                            data-value={opt.value}
+                            onclick={handlePerPage}>
+                            {opt.label}
+                        </button>
+                    </template>
+                </div>
+
+                <template if:true={patients}>
+                    <span class="bap-results-count">{filteredCount} item{filteredCountSuffix}</span>
+                </template>
+            </div>
+
+            <!-- ── Skeleton loader ──────────────────────────── -->
+            <template if:false={patients}>
+                <template for:each={skeletonRows} for:item="sk">
+                    <div key={sk} class="bap-card bap-card--skeleton">
+                        <div class="bap-card-body">
+                            <div class="sk-line sk-line--title"></div>
+                            <div class="sk-info-grid">
+                                <div class="sk-info-col">
+                                    <div class="sk-line sk-line--label"></div>
+                                    <div class="sk-pill"></div>
+                                </div>
+                                <div class="sk-info-col">
+                                    <div class="sk-line sk-line--label"></div>
+                                    <div class="sk-line sk-line--phone"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sk-btn"></div>
+                    </div>
+                </template>
+            </template>
+
+            <!-- ── Patient cards ────────────────────────────── -->
+            <template if:true={patients}>
+
+                <template if:true={hasFiltered}>
+                    <template for:each={pagedPatients} for:item="patient">
+                        <div key={patient.patientId} class="bap-card">
+
+                            <div class="bap-card-body">
+
+                                <!-- Patient name -->
+                                <h3 class="bap-card-name">{patient.patientName}</h3>
+
+                                <!-- Three-column info row: Stage | Mobile | Business Contact -->
+                                <div class="bap-info-grid">
+
+                                    <div class="bap-info-col">
+                                        <span class="bap-info-label">
+                                            <lightning-icon icon-name="utility:kanban" size="xx-small" class="bap-info-icon"></lightning-icon>
+                                            Stage
+                                        </span>
+                                        <template if:true={patient.accountStatus}>
+                                            <span class={patient.statusTagClass}>{patient.accountStatus}</span>
+                                        </template>
+                                        <template if:false={patient.accountStatus}>
+                                            <span class="bap-info-empty">—</span>
+                                        </template>
+                                    </div>
+
+                                    <div class="bap-info-divider"></div>
+
+                                    <div class="bap-info-col">
+                                        <span class="bap-info-label">
+                                            <lightning-icon icon-name="utility:call" size="xx-small" class="bap-info-icon"></lightning-icon>
+                                            Mobile
+                                        </span>
+                                        <template if:true={patient.phone}>
+                                            <span class="bap-phone-value">{patient.phone}</span>
+                                        </template>
+                                        <template if:false={patient.phone}>
+                                            <span class="bap-info-empty">—</span>
+                                        </template>
+                                    </div>
+
+                                    <div class="bap-info-divider"></div>
+
+                                    <div class="bap-info-col">
+                                        <span class="bap-info-label">
+                                            <lightning-icon icon-name="utility:contact" size="xx-small" class="bap-info-icon"></lightning-icon>
+                                            Business Contact
+                                        </span>
+                                        <template if:true={patient.businessContactNames}>
+                                            <span class="bap-contact-value" title={patient.businessContactNames}>{patient.businessContactNames}</span>
+                                        </template>
+                                        <template if:false={patient.businessContactNames}>
+                                            <span class="bap-info-empty">—</span>
+                                        </template>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- View button -->
+                            <div class="bap-card-action">
+                                <a href={patient.patientUrl} target="_blank" rel="noopener noreferrer" class="bap-view-btn">View +</a>
+                            </div>
+
+                        </div>
+                    </template>
+
+                    <!-- Showing X of Y footer -->
+                    <div class="bap-showing-label">{showingLabel}</div>
+
+                </template>
+
+                <!-- No results after filter -->
+                <template if:false={hasFiltered}>
+                    <div class="bap-empty">
+                        <lightning-icon icon-name="utility:search" size="large" class="bap-empty-icon"></lightning-icon>
+                        <p class="bap-empty-title">No Clients Found</p>
+                        <p class="bap-empty-sub">Try adjusting your search or filter.</p>
+                    </div>
+                </template>
+
+            </template>
+
+        </div>
+    </div>
+</template>

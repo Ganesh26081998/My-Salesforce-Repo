@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Qualified Prospect — fits WellSpring services</fullName>
+        <default>false</default>
+        <label>Qualified Prospect — fits WellSpring services</label>
+    </customValue>
+    <customValue>
+        <fullName>Not a fit - Future outreach appropriate</fullName>
+        <default>false</default>
+        <label>Not a fit - Future outreach appropriate</label>
+    </customValue>
+    <customValue>
+        <fullName>Not a fit - Will deactivate</fullName>
+        <default>false</default>
+        <label>Not a fit - Will deactivate</label>
+    </customValue>
+    <customValue>
+        <fullName>Unable to reach</fullName>
+        <default>false</default>
+        <label>Unable to reach</label>
+    </customValue>
+    <customValue>
+        <fullName>Not interested</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Not interested</label>
+    </customValue>
+    <customValue>
+        <fullName>Assessment Scheduled</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Assessment Scheduled</label>
+    </customValue>
+    <customValue>
+        <fullName>Duplicate</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Duplicate</label>
+    </customValue>
+    <customValue>
+        <fullName>Referred Externally</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Referred Externally</label>
+    </customValue>
+    <customValue>
+        <fullName>Not a fit — cost</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Not a fit — cost</label>
+    </customValue>
+    <customValue>
+        <fullName>Not a fit — scope</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Not a fit — scope</label>
+    </customValue>
+    <masterLabel>Intake Disposition</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

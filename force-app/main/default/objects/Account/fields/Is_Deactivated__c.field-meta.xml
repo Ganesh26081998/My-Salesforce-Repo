@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Deactivated__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Checked automatically when an Account Deactivation record is created. Triggers a permanent record lock via AccountTrigger.</description>
+    <label>Is Deactivated</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

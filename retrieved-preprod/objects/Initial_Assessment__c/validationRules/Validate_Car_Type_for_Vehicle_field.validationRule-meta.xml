@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Car_Type_for_Vehicle_field</fullName>
+    <active>true</active>
+    <description>The Car Type field is required for the Needs Caregiver To Drive value in Vehicle field in the Driving Section</description>
+    <errorConditionFormula>AND(
+    INCLUDES(Vehicle__c, &quot;Needs Caregiver To Drive&quot;),
+    ISBLANK(TEXT(Car_Type__c))
+)</errorConditionFormula>
+    <errorDisplayField>Car_Type__c</errorDisplayField>
+    <errorMessage>Please provide details when &quot;Needs Caregiver To Drive&quot; is selected for the Vehicle field in the Driving Section</errorMessage>
+</ValidationRule>

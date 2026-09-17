@@ -1,0 +1,54 @@
+.referral-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px 26px 28px;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08);
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    text-align: center;
+}
+
+.label {
+    font-size: 15px;
+    color: #6b7280;
+    margin-bottom: 6px;
+}
+
+.value {
+    font-size: 38px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.revenue {
+    grid-column: span 2;
+    margin-top: 14px;
+}
+
+.revenue-value {
+    font-size: 44px;
+    font-weight: 800;
+    color: #16a34a;
+}
+
+.updated-box {
+    grid-column: span 2;
+    background: #f9fafb;
+    border-radius: 14px;
+    padding: 18px;
+    margin-top: 24px;
+}
+
+.date {
+    font-size: 16px;
+    color: #374151;
+}
+
+.action {
+    margin-top: 28px;
+    text-align: center;
+}

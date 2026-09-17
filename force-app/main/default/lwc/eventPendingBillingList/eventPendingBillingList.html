@@ -1,0 +1,49 @@
+<template>
+
+    <lightning-card title="Billing Events">
+
+        <!-- ✅ SINGLE shared filter — controls both the table AND the Run Billing Job button -->
+        <div class="slds-p-around_medium slds-grid slds-gutters">
+
+            <div class="slds-col">
+                <lightning-input 
+                    type="date"
+                    label="Start Date"
+                    value={startDate}
+                    onchange={handleStartDate}>
+                </lightning-input>
+            </div>
+
+            <div class="slds-col">
+                <lightning-input 
+                    type="date"
+                    label="End Date"
+                    value={endDate}
+                    onchange={handleEndDate}>
+                </lightning-input>
+            </div>
+
+            <div class="slds-col slds-m-top_large">
+                <lightning-button 
+                    label="Apply Filter"
+                    onclick={applyFilter}
+                    variant="brand">
+                </lightning-button>
+            </div>
+
+        </div>
+
+        <!-- TABLE — NO CHANGES -->
+        <lightning-datatable
+            key-field="Id"
+            data={events}
+            columns={columns}
+            hide-checkbox-column
+            enable-infinite-loading
+            onloadmore={loadMoreData}
+            is-loading={isLoading}>
+        </lightning-datatable>
+
+    </lightning-card>
+
+</template>

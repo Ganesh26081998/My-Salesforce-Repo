@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Aids_for_Ambulation__c</fullName>
+    <label>Aids</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Cane</fullName>
+                <default>false</default>
+                <label>Cane</label>
+            </value>
+            <value>
+                <fullName>Walker</fullName>
+                <default>false</default>
+                <label>Walker</label>
+            </value>
+            <value>
+                <fullName>Wheel Chair</fullName>
+                <default>false</default>
+                <label>Wheel Chair</label>
+            </value>
+            <value>
+                <fullName>Geri-Chair</fullName>
+                <default>false</default>
+                <label>Geri-Chair</label>
+            </value>
+            <value>
+                <fullName>Scooter</fullName>
+                <default>false</default>
+                <label>Scooter</label>
+            </value>
+            <value>
+                <fullName>Cane Walker Scooter</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cane Walker Scooter</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>
