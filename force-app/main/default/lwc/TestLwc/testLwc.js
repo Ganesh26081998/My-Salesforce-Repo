@@ -6,5 +6,6 @@ export default class TestLwc extends LightningElement {
         console.log('testLwc component loaded');
         console.log('testLwc new component loaded');
         console.log('testLwc new branch component loaded');
+        console.log('testLwc after merge loaded');
     }
 }
